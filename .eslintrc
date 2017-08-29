@@ -1,0 +1,22 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    // rule is incompatible with the current version of airbnb config
+    "jsx-a11y/href-no-hash": 0,
+    // do not require .jsx extensions
+    "react/jsx-filename-extension": 0
+  }
+}
