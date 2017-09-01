@@ -1,0 +1,32 @@
+.PageLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.PageLayout__content {
+  flex: 1;
+  text-align: center;
+}
+
+.Header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.Header__logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.Footer {
+  text-align: center;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

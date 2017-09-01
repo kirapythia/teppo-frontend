@@ -17,6 +17,10 @@
     // rule is incompatible with the current version of airbnb config
     "jsx-a11y/href-no-hash": 0,
     // do not require .jsx extensions
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    // do not require prop type validations
+    "react/prop-types": 0,
+    // do not require defaults for optional props
+    "react/require-default-props": 0
   }
 }
