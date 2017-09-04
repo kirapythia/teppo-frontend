@@ -21,6 +21,14 @@
     // do not require prop type validations
     "react/prop-types": 0,
     // do not require defaults for optional props
-    "react/require-default-props": 0
+    "react/require-default-props": 0,
+    // comma rules
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "ignore",
+      "exports": "ignore",
+      "functions": "ignore"
+    }]
   }
 }
