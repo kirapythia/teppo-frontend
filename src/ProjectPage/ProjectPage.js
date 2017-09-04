@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'redux-little-router';
 
-import * as ROUTES from '../constants/routes';
-import Layout from '../Layout';
+import { HOME } from '../constants/routes';
 
+/**
+ * Page for project details
+ */
 const ProjectPage = () => (
-  <Layout>
+  <div>
     <h2>Project</h2>
-    <Link to={ROUTES.HOME}>&lt; home page</Link>
-  </Layout>
+    <Link href={HOME}>&lt; home page</Link>
+  </div>
 );
 
 export default ProjectPage;
