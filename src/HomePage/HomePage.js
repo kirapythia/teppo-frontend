@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'redux-little-router';
 
-import * as ROUTES from '../constants/routes';
-import Layout from '../Layout';
+import { PROJECT } from '../constants/routes';
 import Counter from '../Counter';
 
+/**
+ * Landing page
+ */
 const HomePage = () => (
-  <Layout>
+  <div>
     <h2>Home</h2>
     <Counter />
-    <Link to={ROUTES.PROJECT}>&gt; project page</Link>
-  </Layout>
+    <Link href={PROJECT}>&gt; project page</Link>
+  </div>
 );
 
 export default HomePage;

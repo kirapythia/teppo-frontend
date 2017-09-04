@@ -1,17 +1,27 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Fragment } from 'redux-little-router';
 
 import * as ROUTES from '../constants/routes';
+import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
 
+const Page = Component => <Layout><Component /></Layout>;
+
+/**
+ * Main level router for the app
+ */
 const AppRouter = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path={ROUTES.HOME} component={HomePage} />
-      <Route path={ROUTES.PROJECT} component={ProjectPage} />
-    </Switch>
-  </BrowserRouter>
+  <Fragment forRoute={ROUTES.HOME}>
+    <div>
+      <Fragment forRoute={ROUTES.HOME}>
+        { Page(HomePage) }
+      </Fragment>
+      <Fragment forRoute={ROUTES.PROJECT}>
+        { Page(ProjectPage) }
+      </Fragment>
+    </div>
+  </Fragment>
 );
 
 export default AppRouter;
