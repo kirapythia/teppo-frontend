@@ -7,7 +7,6 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
-    "react-scripts": "1.0.12",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-little-router": "^14.2.0",
@@ -23,10 +22,13 @@
     "test-coverage": "react-scripts test --env=jsdom --coverage --collectCoverageFrom=src/**/*js --collectCoverageFrom=!src/index.js"
   },
   "devDependencies": {
+    "enzyme": "^2.9.1",
     "eslint": "^4.5.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0"
+    "eslint-plugin-react": "^7.3.0",
+    "react-test-renderer": "^15.6.1",
+    "react-scripts": "1.0.12"
   }
 }

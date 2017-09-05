@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Counter } from './counter-stateless';
+import { Counter } from './Counter';
 
 describe('Counter', () => {
   it('should render a div', () => {
