@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fragment } from 'redux-little-router';
 
-import * as ROUTES from '../constants/routes';
+import * as ROUTES from '../../constants/routes';
 import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
@@ -13,7 +13,7 @@ const Page = Component => <Layout><Component /></Layout>;
  */
 const AppRouter = () => (
   <Fragment forRoute={ROUTES.HOME}>
-    <div>
+    <div className="full-height">
       <Fragment forRoute={ROUTES.HOME}>
         { Page(HomePage) }
       </Fragment>

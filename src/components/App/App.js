@@ -3,7 +3,7 @@ import React from 'react';
 import { initializeCurrentLocation } from 'redux-little-router';
 import { Provider } from 'react-redux';
 import AppRouter from '../AppRouter';
-import store from '../redux/store';
+import store from '../../redux/store';
 
 import './App.css';
 

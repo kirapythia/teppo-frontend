@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 
-import { HOME } from '../constants/routes';
+import { HOME } from '../../constants/routes';
 
 /**
  * Page for project details

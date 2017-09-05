@@ -1,4 +1,4 @@
-import * as Counter from '../Counter';
+import * as Counter from '../components/Counter';
 
 /**
  * All redux reducers as an object. Reducer name as key and reducer function as value
