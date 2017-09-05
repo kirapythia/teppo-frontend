@@ -1,5 +1,6 @@
 {
   "app.name": "Pythia Client",
   "button.add_project": "Uusi projekti",
+  "button.cancel": "Peruuta",
   "footer.copyright": "Espoon Kaupunki"
 }
