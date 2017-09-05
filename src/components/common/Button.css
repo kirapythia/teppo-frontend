@@ -1,0 +1,23 @@
+.button {
+  display: inline-block;
+  padding: 1em;
+  border-radius: 2px;
+}
+
+.button a {
+  text-decoration: none;
+}
+
+.button a:visited {
+  color: #000;
+}
+
+.button.primary {
+  background-color: #B7B7B7;
+  color: #000;
+  transition: background-color .15s ease-in;
+}
+
+.button.primary:hover {
+  background-color: #aaa;
+}
