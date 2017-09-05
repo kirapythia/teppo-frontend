@@ -5,8 +5,8 @@
 }
 
 .PageLayout__content {
+  padding: 1em 2em;
   flex: 1;
-  text-align: center;
 }
 
 .Header {

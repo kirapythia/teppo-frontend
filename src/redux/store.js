@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import { routerForBrowser } from 'redux-little-router';
 
+import authenticationMiddleware from './authentication-middleware';
 import routes from '../constants/routes';
 import reducers from './reducers';
 
@@ -12,7 +13,10 @@ const {
 } = routerForBrowser({ routes });
 
 // redux middleware
-const middleware = [routerMiddleware];
+const middleware = [
+  routerMiddleware,
+  authenticationMiddleware,
+];
 
 // only use logger in development environment
 if (process.env.NODE_ENV === 'development') {

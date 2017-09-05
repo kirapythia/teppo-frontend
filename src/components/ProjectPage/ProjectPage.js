@@ -10,9 +10,12 @@ import t from '../../locale';
  */
 const ProjectPage = () => (
   <div>
-    <Link href={HOME}>&lt; {t('link.home_page')}</Link>
+    <h2>{ t('button.add_project') }</h2>
     <Button typeClass="primary">
       {t('button.save_project')}
+    </Button>
+    <Button typeClass="primary">
+      <Link href={HOME}>{t('button.cancel')}</Link>
     </Button>
   </div>
 );
