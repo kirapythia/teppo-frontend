@@ -2,5 +2,11 @@
   "app.name": "Pythia Client",
   "button.add_project": "Uusi projekti",
   "button.cancel": "Peruuta",
-  "footer.copyright": "Espoon Kaupunki"
+  "footer.copyright": "Espoon Kaupunki",
+  "project.name": "Projektin nimi",
+  "project.description": "Projektin lisätiedot",
+  "project.hansuProjectId": "Hankenumero",
+  "project.plan_primary_id": "Suunnitelman päänumero",
+  "project.alternative_names": "Muut nimet",
+  "project.alternative_names.placeholder": "Lista nimiä pilkulla eroteltuna"
 }

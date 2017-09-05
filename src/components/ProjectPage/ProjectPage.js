@@ -4,6 +4,7 @@ import { Link } from 'redux-little-router';
 import { HOME } from '../../constants/routes';
 import t from '../../locale';
 import Button from '../common/Button';
+import ProjectForm from './ProjectForm';
 
 /**
  * Page for project details
@@ -11,6 +12,7 @@ import Button from '../common/Button';
 const ProjectPage = () => (
   <div>
     <h2>{ t('button.add_project') }</h2>
+    <ProjectForm />
     <Button typeClass="primary">
       <Link href={HOME}>{t('button.cancel')}</Link>
     </Button>
