@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
+import createValidators from '../validation';
+
 const chooseComponent = ({ type, input, placeholder, touched, error }) => {
   const hasError = touched && error;
   const className = cx({ error: hasError });
@@ -13,7 +15,7 @@ const chooseComponent = ({ type, input, placeholder, touched, error }) => {
   }
 };
 
-export default ({
+export const renderField = ({
   placeholder,
   type,
   input,
@@ -27,3 +29,14 @@ export default ({
     {touched && error && <div className="text-danger">{error}</div>}
   </fieldset>
 );
+
+/**
+ * Form a map of fields from field definitions. Create validator functions based on validation rules
+ * @param {object} fields
+ * @returns {object[]}
+ */
+export const createFieldsWithValidations = fields =>
+  Object.keys(fields).map((name) => {
+    const fieldProps = fields[name];
+    return { ...fieldProps, name, validators: createValidators(fieldProps.validation) };
+  });
