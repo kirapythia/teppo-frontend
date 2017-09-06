@@ -11,7 +11,7 @@ describe('type validations', () => {
     });
 
     it('should pass if given an empty string', () => {
-      expect(validators.type('string')('')).toBe(undefined);
+      expect(validators.type('string')('')).toEqual(undefined);
     });
 
     it('should pass if given null', () => {
@@ -100,9 +100,13 @@ describe('type validations', () => {
       expect(validators.type('array')([])).toEqual(undefined);
     });
 
+    it('should pass validation if given a falsy value', () => {
+      expect(validators.type('array')(null)).toEqual(undefined);
+      expect(validators.type('array')('')).toEqual(undefined);
+    });
+
     it('should not pass validation if value is not an array', () => {
       expect(validators.type('array')({})).not.toEqual(undefined);
-      expect(validators.type('array')(null)).not.toEqual(undefined);
     });
   });
 });
