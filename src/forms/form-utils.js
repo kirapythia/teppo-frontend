@@ -14,16 +14,16 @@ const chooseComponent = ({ type, input, placeholder, touched, error }) => {
 };
 
 export default ({
-  validation,
   placeholder,
   type,
   input,
   label,
+  validation = {},
   meta: { form, touched, error },
 }) => (
   <fieldset>
     <label htmlFor={`${form}_${input.name}`}>{`${label} ${validation.required ? '*' : ''}`}</label>
     { chooseComponent({ type, input, placeholder, touched, error })}
-    {touched && error && <span>{error}</span>}
+    {touched && error && <div className="text-danger">{error}</div>}
   </fieldset>
 );

@@ -8,5 +8,11 @@
   "project.hansuProjectId": "Hankenumero",
   "project.plan_primary_id": "Suunnitelman päänumero",
   "project.alternative_names": "Muut nimet",
-  "project.alternative_names.placeholder": "Lista nimiä pilkulla eroteltuna"
+  "project.alternative_names.placeholder": "Lista nimiä pilkulla eroteltuna",
+  "validation.message.maxlength": "Arvon tulee olla enintään ${max} merkkiä",
+  "validation.message.minlength": "Arvon tulee olla vähintään ${min} merkkiä",
+  "validation.message.required": "Kenttä on pakollinen",
+  "validation.message.type.string": "Arvon tulee olla teksti",
+  "validation.message.type.number": "Arvon tulee olla numero",
+  "validation.message.type.integer": "Arvon tulee olla kokonaisluku"
 }
