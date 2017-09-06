@@ -8,9 +8,7 @@ import { PROJECT } from '../../constants/routes';
  */
 const HomePage = () => (
   <div>
-    <button className="button">
-      <Link href={PROJECT}>{t('button.add_project')}</Link>
-    </button>
+    <Link className="button" href={PROJECT}>{t('button.add_project')}</Link>
   </div>
 );
 
