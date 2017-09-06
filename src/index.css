@@ -1,3 +1,36 @@
+.text-danger {
+  color: #721c24;
+}
+
+.text-success {
+  color: #155724;
+}
+
+.alert {
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
 html, body, #root {
   height: 100%;
 }
@@ -10,28 +43,4 @@ body {
 
 .full-height {
   height: 100%;
-}
-
-.button {
-  display: inline-block;
-  padding: 1em;
-  border-radius: 2px;
-}
-
-.button a {
-  text-decoration: none;
-}
-
-.button a:visited {
-  color: #000;
-}
-
-.button.primary {
-  background-color: #B7B7B7;
-  color: #000;
-  transition: background-color .15s ease-in;
-}
-
-.button.primary:hover {
-  background-color: #aaa;
 }

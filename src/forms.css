@@ -1,0 +1,47 @@
+fieldset {
+  border: 0;
+  margin-bottom: 1em;
+}
+
+label {
+  display: inline-block;
+  margin: 0;
+  line-height: 1;
+  margin-top: .5em;
+  text-align: left;
+  width: 100%;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: .75em;
+  box-sizing: border-box;
+  font: inherit;
+  border: 0;
+}
+
+input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+input,
+textarea {
+  border-bottom: 1px solid #ddd;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-bottom: 1px solid #777;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+form .error {
+  background-color: #f8d7da;
+}
