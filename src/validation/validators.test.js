@@ -94,6 +94,17 @@ describe('type validations', () => {
       expect(validators.type('integer')(null)).not.toEqual(undefined);
     });
   });
+
+  describe('Array', () => {
+    it('should pass validation if value is an array', () => {
+      expect(validators.type('array')([])).toEqual(undefined);
+    });
+
+    it('should not pass validation if value is not an array', () => {
+      expect(validators.type('array')({})).not.toEqual(undefined);
+      expect(validators.type('array')(null)).not.toEqual(undefined);
+    });
+  });
 });
 
 describe('minLength', () => {

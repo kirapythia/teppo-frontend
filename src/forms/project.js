@@ -1,4 +1,5 @@
 import t from '../locale';
+import { stringToList } from '../forms/normalizers';
 
 const fields = {
   hansuProjectId: {
@@ -31,8 +32,9 @@ const fields = {
   alternativeNames: {
     type: 'text',
     label: t('project.alternative_names'),
+    normalize: stringToList,
     validation: {
-      type: 'string',
+      type: 'array',
     },
   },
 

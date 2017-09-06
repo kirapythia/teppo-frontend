@@ -20,6 +20,8 @@ const validators = {
         return isNil(value) || isNumber(value) ? undefined : t('validation.message.type.number');
       case 'integer':
         return isNumber(value) && Number.isInteger(value) ? undefined : t('validation.message.type.integer');
+      case 'array':
+        return Array.isArray(value) ? undefined : t('validation.message.type.array');
       default:
         return true;
     }

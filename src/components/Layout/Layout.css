@@ -5,7 +5,7 @@
 }
 
 .PageLayout__content {
-  padding: 1em 2em;
+  padding: 1.5rem 2.5rem;
   flex: 1;
 }
 
@@ -16,16 +16,6 @@
   text-align: center;
 }
 
-.Header__logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .Footer {
   text-align: center;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
