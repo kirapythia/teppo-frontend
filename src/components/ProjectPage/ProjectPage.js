@@ -1,6 +1,6 @@
 import React from 'react';
 import t from '../../locale';
-import ProjectForm from './ProjectForm';
+import ProjectForm from '../ProjectForm';
 
 /**
  * Page for project details
