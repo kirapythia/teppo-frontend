@@ -10,7 +10,7 @@ const fields = {
     },
   },
 
-  planMainId: {
+  mainNo: {
     type: 'text',
     label: t('project.plan_primary_id'),
     validation: {
@@ -25,15 +25,12 @@ const fields = {
     validation: {
       type: 'string',
       required: true,
-      minLength: 3,
-      maxLength: 100,
     },
   },
 
   alternativeNames: {
     type: 'text',
     label: t('project.alternative_names'),
-    placeholder: t('project.alternative_names.placeholder'),
     validation: {
       type: 'string',
     },
@@ -42,9 +39,6 @@ const fields = {
   description: {
     type: 'textarea',
     label: t('project.description'),
-    validation: {
-      maxLength: 1024,
-    },
   },
 };
 
