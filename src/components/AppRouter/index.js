@@ -5,6 +5,8 @@ import * as ROUTES from '../../constants/routes';
 import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
+import ProjectDetails from '../ProjectDetails';
+
 
 const Page = Component => <Layout><Component /></Layout>;
 
@@ -19,6 +21,9 @@ const AppRouter = () => (
       </Fragment>
       <Fragment forRoute={ROUTES.PROJECT}>
         { Page(ProjectPage) }
+      </Fragment>
+      <Fragment forRoute={ROUTES.PROJECT_DETAILS}>
+        { Page(ProjectDetails) }
       </Fragment>
     </div>
   </Fragment>

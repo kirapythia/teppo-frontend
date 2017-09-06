@@ -4,7 +4,6 @@ import { Link } from 'redux-little-router';
 import { HOME } from '../../constants/routes';
 import t from '../../locale';
 
-import Button from '../common/Button';
 import ProjectForm from './ProjectForm';
 
 /**
