@@ -43,6 +43,5 @@ textarea {
 }
 
 form .error {
-  background-color: #d9534f;
-  color: #fff;
+  background-color: #f8d7da;
 }
