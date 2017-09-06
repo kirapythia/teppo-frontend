@@ -21,7 +21,7 @@ const validators = {
       case 'integer':
         return isNumber(value) && Number.isInteger(value) ? undefined : t('validation.message.type.integer');
       case 'array':
-        return Array.isArray(value) ? undefined : t('validation.message.type.array');
+        return !value || Array.isArray(value) ? undefined : t('validation.message.type.array');
       default:
         return true;
     }
