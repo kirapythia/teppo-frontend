@@ -1,25 +1,6 @@
 fieldset {
-  border: 0;
-  margin-bottom: 1em;
-}
-
-label {
-  display: inline-block;
-  margin: 0;
-  line-height: 1;
-  margin-top: .5em;
-  text-align: left;
-  width: 100%;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: .75em;
-  box-sizing: border-box;
-  font: inherit;
-  border: 0;
+  padding: 0;
+  margin-bottom: 2rem;
 }
 
 input::-webkit-input-placeholder {
@@ -28,20 +9,14 @@ input::-webkit-input-placeholder {
 
 input,
 textarea {
-  border-bottom: 1px solid #ddd;
-  outline: none;
-}
-
-input:focus,
-textarea:focus {
-  border-bottom: 1px solid #777;
+  letter-spacing: .5pt;
 }
 
 textarea {
   resize: none;
-  height: 100px;
 }
 
 form .error {
   background-color: #f8d7da;
+  border-color: #721c24;
 }
