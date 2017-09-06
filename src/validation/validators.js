@@ -1,6 +1,6 @@
 import t, { tpl } from '../locale';
 
-const isNumber = value => typeof value === 'number' && !isNaN(Number(value));
+const isNumber = value => !isNaN(Number(value));
 const isString = value => typeof value === 'string';
 const isNil = value => value === null || value === undefined;
 /**

@@ -61,7 +61,7 @@ describe('type validations', () => {
     });
 
     it('should not pass if given an array', () => {
-      expect(validators.type('number')([])).not.toEqual(undefined);
+      expect(validators.type('number')([1, 2])).not.toEqual(undefined);
     });
   });
 
