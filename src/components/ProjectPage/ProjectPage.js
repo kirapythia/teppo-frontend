@@ -14,12 +14,10 @@ const ProjectPage = () => (
   <div>
     <h2>{ t('button.add_project') }</h2>
     <ProjectForm />
-    <Button typeClass="primary">
+    <button className="button">
       {t('button.save_project')}
-    </Button>
-    <Button typeClass="primary">
-      <Link href={HOME}>{t('button.cancel')}</Link>
-    </Button>
+    </button>
+    <Link className="button" href={HOME}>{t('button.cancel')}</Link>
   </div>
 );
 
