@@ -1,29 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { Field, reduxForm, startSubmit } from 'redux-form';
+import { bindActionCreators, compose } from 'redux';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'redux-little-router';
+
 import { HOME } from '../../constants/routes';
-import fields from '../../forms/project';
-import { createFieldsWithValidations, renderField } from '../../forms/form-utils';
 import t from '../../locale';
-import { actions } from './ProjectForm-ducks';
+import { createFieldsWithValidations, renderField } from '../../forms/form-utils';
+
+import fields from '../../forms/project';
+import { NAME, actions } from './ProjectForm-ducks';
+import Message from '../common/Message';
 
 const formConfig = {
-  form: 'project',
+  form: NAME,
   destroyOnUnmount: true,
 };
-
 
 // form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);
 
-const mapDispatchToProps = dispatch => ({
-  createProject: (values) => {
-    dispatch(startSubmit(formConfig.form));
-    dispatch(actions.createProject(values));
-  },
+const mapStateToProps = state => ({
+  formSendError: state.projectForm.error,
 });
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createProject: actions.createProject,
+  clearError: actions.clearSendError,
+}, dispatch);
 
 /**
  * Form for creating a new project
@@ -36,10 +40,11 @@ const ProjectForm = ({
   pristine,
   submitting,
   createProject,
+  formSendError,
+  clearError,
 }) => (
   <form className="ProjectForm" onSubmit={handleSubmit(createProject)}>
-    { JSON.stringify(startSubmit) }
-    { JSON.stringify(createProject) }
+    { formSendError && <Message message={formSendError.message} onClose={clearError} /> }
     {fieldsWithValidations.map(field => (
       <Field
         name={field.name}
@@ -72,5 +77,5 @@ const ProjectForm = ({
 
 export default compose(
   reduxForm(formConfig),
-  connect(() => ({}), mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(ProjectForm);

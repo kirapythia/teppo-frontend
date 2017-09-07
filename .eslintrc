@@ -29,6 +29,7 @@
       "imports": "ignore",
       "exports": "ignore",
       "functions": "ignore"
-    }]
+    }],
+    "import/prefer-default-export": 0
   }
 }
