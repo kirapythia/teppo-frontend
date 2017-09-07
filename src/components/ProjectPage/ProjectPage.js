@@ -3,7 +3,7 @@ import t from '../../locale';
 import ProjectForm from './ProjectForm';
 
 /**
- * Page for project details
+ * Page for creating a new project
  */
 const ProjectPage = () => (
   <div>

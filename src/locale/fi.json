@@ -1,5 +1,6 @@
 {
   "app.name": "Pythia Client",
+  "button.add_plan": "Uusi suunnitelma",
   "button.add_project": "Uusi projekti",
   "button.cancel": "Peruuta",
   "button.save_project": "Tallenna projekti",
