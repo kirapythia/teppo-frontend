@@ -7,29 +7,32 @@ import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
 import ProjectDetails from '../ProjectDetails';
 import PlanPage from '../PlanPage';
+import NotFoundPage from '../NotFoundPage';
 
-
-const Page = Component => <Layout><Component /></Layout>;
+const is404Page = location => location.path === ROUTES.NOT_FOUND_PAGE;
 
 /**
  * Main level router for the app
  */
 const AppRouter = () => (
   <Fragment forRoute={ROUTES.HOME}>
-    <div className="full-height">
+    <Layout>
       <Fragment forRoute={ROUTES.HOME}>
-        { Page(HomePage) }
+        <HomePage />
       </Fragment>
       <Fragment forRoute={ROUTES.PROJECT}>
-        { Page(ProjectPage) }
+        <ProjectPage />
       </Fragment>
-      <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+$/.test(location.pathname)} >
-        { Page(ProjectDetails) }
+      <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+$/.test(location.pathname)}>
+        <ProjectDetails />
       </Fragment>
       <Fragment forRoute={ROUTES.PLAN}>
-        { Page(PlanPage) }
+        <PlanPage />
       </Fragment>
-    </div>
+      <Fragment forNoMatch withConditions={is404Page}>
+        <NotFoundPage />
+      </Fragment>
+    </Layout>
   </Fragment>
 );
 
