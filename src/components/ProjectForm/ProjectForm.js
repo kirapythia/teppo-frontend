@@ -1,29 +1,50 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'redux-little-router';
+
 import { HOME } from '../../constants/routes';
-import fields from '../../forms/project';
-import { createFieldsWithValidations, renderField } from '../../forms/form-utils';
 import t from '../../locale';
+import { createFieldsWithValidations, renderField } from '../../forms/form-utils';
+
+import fields from '../../forms/project';
+import { NAME, actions } from './ProjectForm-ducks';
+import Message from '../common/Message';
 
 const formConfig = {
-  form: 'project',
+  form: NAME,
   destroyOnUnmount: true,
 };
 
 // form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);
 
+const mapStateToProps = state => ({
+  formSendError: state.projectForm.error,
+});
 
-const submit = () => false;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createProject: actions.createProject,
+  clearError: actions.clearSendError,
+}, dispatch);
 
 /**
  * Form for creating a new project
  * @param {Object} props
  * @param {function} props.handleSubmit
  */
-const ProjectForm = ({ handleSubmit, valid, pristine, submitting }) => (
-  <form className="ProjectForm" onSubmit={handleSubmit(submit)}>
+const ProjectForm = ({
+  handleSubmit,
+  valid,
+  pristine,
+  submitting,
+  createProject,
+  formSendError,
+  clearError,
+}) => (
+  <form className="ProjectForm" onSubmit={handleSubmit(createProject)}>
+    { formSendError && <Message message={formSendError.message} onClose={clearError} /> }
     {fieldsWithValidations.map(field => (
       <Field
         name={field.name}
@@ -54,4 +75,7 @@ const ProjectForm = ({ handleSubmit, valid, pristine, submitting }) => (
   </form>
 );
 
-export default reduxForm(formConfig)(ProjectForm);
+export default compose(
+  reduxForm(formConfig),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ProjectForm);

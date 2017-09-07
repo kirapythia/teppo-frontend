@@ -1,0 +1,9 @@
+.Message {
+  position: relative;
+}
+
+.Message .CloseIconButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

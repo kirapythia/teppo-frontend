@@ -1,5 +1,5 @@
 import { reducer as formReducer } from 'redux-form';
-import * as Counter from '../components/Counter';
+import * as ProjectForm from '../components/ProjectForm';
 
 
 /**
@@ -8,5 +8,5 @@ import * as Counter from '../components/Counter';
  */
 export default {
   form: formReducer,
-  [Counter.NAME]: Counter.reducer,
+  [ProjectForm.NAME]: ProjectForm.reducer,
 };

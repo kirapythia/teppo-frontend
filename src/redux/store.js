@@ -1,5 +1,6 @@
-import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { routerForBrowser } from 'redux-little-router';
+import { combineReducers, install } from 'redux-loop';
 
 import authenticationMiddleware from './authentication-middleware';
 import routes from '../constants/routes';
@@ -9,7 +10,7 @@ import reducers from './reducers';
 const {
   reducer: routerReducer,
   middleware: routerMiddleware,
-  enhancer,
+  enhancer: routerEnhancer,
 } = routerForBrowser({ routes });
 
 // redux middleware
@@ -35,5 +36,5 @@ export default createStore(
   // initial state
   {},
   // apply all the middleware
-  compose(enhancer, applyMiddleware(...middleware))
+  compose(install(), routerEnhancer, applyMiddleware(...middleware))
 );
