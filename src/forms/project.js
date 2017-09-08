@@ -33,6 +33,7 @@ const fields = {
     type: 'text',
     label: t('project.alternative_names'),
     normalize: stringToList,
+    format: value => (value || []).join(', '),
     validation: {
       type: 'array',
     },

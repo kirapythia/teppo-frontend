@@ -2,16 +2,18 @@ import React from 'react';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import t from '../../locale';
+import ShowDetails from './ShowDetails';
 
 const mapStateToProps = state => ({
   projectId: state.router.params.projectId,
+  project: state.projects[0],
 });
 /**
  * Show project details
  */
-const ProjectDetails = ({ projectId }) => (
-  <div>
-    <h2>Projektin tiedot</h2>
+const ProjectDetails = ({ projectId, project }) => (
+  <div className="container">
+    <ShowDetails project={project} />
     <Link className="button" href={`/project/${projectId}/plan/new`}>
       <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
     </Link>
