@@ -1,17 +1,16 @@
-import React from 'react';
 import { reduxForm } from 'redux-form';
-import { compose } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import fields from '../../forms/plan';
+import { getCurrentProjectId } from '../../selectors';
+import { NAME, actions } from './PlanForm-ducks';
 
-import FormFields from '../Form/FormFields';
-import FormCancelButton from '../Form/FormCancelButton';
-import FormSubmitButton from '../Form/FormSubmitButton';
+import CreateAndSaveForm from '../Form/CreateAndSaveForm';
 
 const formConfig = {
-  form: 'planForm',
+  form: NAME,
   destroyOnUnmount: true,
 };
 
@@ -19,38 +18,21 @@ const formConfig = {
 const fieldsWithValidations = createFieldsWithValidations(fields);
 
 const mapStateToProps = state => ({
-  projectId: state.router.params.projectId,
+  projectId: getCurrentProjectId(state),
+  formSendError: state.planForm.error,
+  fields: fieldsWithValidations,
+  cancelHref: `/project/${getCurrentProjectId(state)}`,
 });
 
-const onSubmit = () => ({});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  saveAction: actions.savePlan,
+  clearSendError: actions.clearSendError,
+}, dispatch);
 
 /**
- * Form for creating a new project
- * @param {Object} props
- * @param {function} props.handleSubmit
+ * Form component for creating and saving a plan entity
  */
-const PlanForm = ({
-  handleSubmit,
-  valid,
-  pristine,
-  submitting,
-  projectId,
-}) => (
-  <form className="PlanForm" onSubmit={handleSubmit(onSubmit)}>
-    <FormFields fields={fieldsWithValidations} />
-
-    <div className="row">
-      <div className="column column-40">
-        <FormCancelButton href={`/project/${projectId}`} />
-      </div>
-      <div className="column column-40 column-offset-20">
-        <FormSubmitButton disabled={!valid || pristine || submitting} />
-      </div>
-    </div>
-  </form>
-);
-
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   reduxForm(formConfig)
-)(PlanForm);
+)(CreateAndSaveForm);

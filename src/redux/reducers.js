@@ -1,5 +1,6 @@
 import { reducer as formReducer } from 'redux-form';
 import * as ProjectForm from '../components/ProjectForm';
+import * as PlanForm from '../components/PlanForm';
 
 
 /**
@@ -9,4 +10,5 @@ import * as ProjectForm from '../components/ProjectForm';
 export default {
   form: formReducer,
   [ProjectForm.NAME]: ProjectForm.reducer,
+  [PlanForm.NAME]: PlanForm.reducer,
 };
