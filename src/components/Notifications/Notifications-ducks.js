@@ -33,7 +33,7 @@ export const actions = {
   /**
    * Add error notification (red)
    */
-  addErrorNotification: createNotificationAction(constants.DANGER, -1),
+  addErrorNotification: createNotificationAction(constants.DANGER, 1 * 60 * 1000),
   /**
    * Add warning notification (yellow)
    */
