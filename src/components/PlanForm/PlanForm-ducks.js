@@ -2,7 +2,8 @@ import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push } from 'redux-little-router';
 import { savePlan } from './model';
-import { getCurrentProjectId } from '../../selectors';
+import { actions as NotificationActions } from '../Notifications';
+import t from '../../locale';
 
 export const NAME = 'planForm';
 
@@ -53,9 +54,14 @@ export default handleActions({
     })
   ),
   // handle savePlan success action
-  [SAVE_PLAN_SUCCESS]: state => loop(
+  [SAVE_PLAN_SUCCESS]: (state, action) => loop(
     state,
-    Cmd.action(push(`/project/${getCurrentProjectId(state)}`))
+    Cmd.batch([
+      Cmd.action(NotificationActions.addSuccessNotification(
+        t('plan.message.save_success')
+      )),
+      Cmd.action(push(`/project/${action.payload.projectId}`)),
+    ])
   ),
   // handle savePlan fail action
   [SAVE_PLAN_FAIL]: (state, action) => ({ ...state, error: action.payload }),

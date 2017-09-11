@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import AppRouter from '../AppRouter';
 import store from '../../redux/store';
 
+import Notifications from '../Notifications';
 import './App.css';
 
 // set up redux routing
@@ -20,6 +21,7 @@ if (initialLocation) {
 const App = () => (
   <Provider store={store}>
     <div className="App">
+      <Notifications />
       <AppRouter />
     </div>
   </Provider>

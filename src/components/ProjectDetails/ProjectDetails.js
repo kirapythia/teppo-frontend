@@ -3,11 +3,13 @@ import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import t from '../../locale';
 import ShowDetails from './ShowDetails';
+import { getCurrentProjectId } from '../../selectors';
 
 const mapStateToProps = state => ({
-  projectId: state.router.params.projectId,
+  projectId: getCurrentProjectId(state),
   project: state.projects[0],
 });
+
 /**
  * Show project details
  */
