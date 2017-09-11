@@ -3,18 +3,18 @@ import { push } from 'redux-little-router';
 import reducer, { actions } from './ProjectForm-ducks';
 import { saveProject } from './model';
 
-describe('createProject action', () => {
+describe('saveProject action', () => {
   it('should set error to null', () => {
     const state = { error: new Error('error') };
     const payload = {};
-    const result = reducer(state, actions.createProject(payload));
+    const result = reducer(state, actions.saveProject(payload));
     expect(result[0].error).toEqual(null);
   });
 
   it('should send project to the server', () => {
     const state = { error: null };
     const payload = {};
-    const result = reducer(state, actions.createProject(payload));
+    const result = reducer(state, actions.saveProject(payload));
     expect(result).toEqual(loop(
       state,
       Cmd.run(saveProject, {
@@ -26,7 +26,7 @@ describe('createProject action', () => {
   });
 });
 
-describe('createProject success action', () => {
+describe('saveProject success action', () => {
   it('should return state unmodified', () => {
     const state = {};
     const payload = { id: 123 };
@@ -45,7 +45,7 @@ describe('createProject success action', () => {
   });
 });
 
-describe('createProject fail action', () => {
+describe('savePlan fail action', () => {
   it('should add error the state', () => {
     const state = {};
     const payload = new Error();

@@ -1,0 +1,64 @@
+.Notifications__container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  box-sizing: border-box;
+  padding-right: 10px;
+  height: auto;
+  z-index: 9998;
+}
+
+.Notification {
+  position: relative;
+  display: block;
+  right: -320px;
+  border-radius: 2px;
+  font-size: 14px;
+  margin: 1rem 0 0 0;
+  padding: .8rem;
+  box-sizing: border-box;
+  opacity: 1;
+  cursor: pointer;
+  z-index: 1;
+  transition: right 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.Notification--visible {
+  right: 0;
+}
+
+.Notification--success {
+  color: rgb(75, 88, 58);
+  border-top: 4px solid rgb(94, 164, 0);
+  background-color: rgb(240, 245, 234);
+  box-shadow: rgba(94, 164, 0, 0.9) 0px 0px 1px;
+}
+
+.Notification--danger {
+  color: rgb(65, 47, 47);
+  box-shadow: rgba(236, 61, 61, 0.9) 0px 0px 1px;
+  border-top: 4px solid rgb(236, 61, 61);
+  background-color: rgb(244, 233, 233);
+}
+
+.Notification--warning {
+  color: rgb(90, 83, 67);
+  box-shadow: rgba(235, 173, 23, 0.9) 0px 0px 1px;
+  border-top: 2px solid rgb(235, 173, 26);
+  background-color: rgb(249, 246, 240);
+}
+
+.Notification__title-wrapper {
+  position: relative;
+}
+
+.Notification__title {
+  margin-bottom: .5rem;
+}
+
+.Notification .CloseIconButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

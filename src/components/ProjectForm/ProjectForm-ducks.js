@@ -14,12 +14,12 @@ export const actions = {
   /**
    * Send a newly created project to the server
    */
-  createProject: createAction(
+  saveProject: createAction(
     CREATE_PROJECT,
     formValues => formValues
   ),
   /**
-   * Action triggered if the createProject action succeeds
+   * Action triggered if the saveProject action succeeds
    */
   saveProjectSuccessAction: createAction(
     CREATE_PROJECT_SUCCESS,
@@ -42,7 +42,7 @@ export const actions = {
 
 // ProjectForm reducer
 export default handleActions({
-  // handle createProject action
+  // handle saveProject action
   [CREATE_PROJECT]: (state, action) => loop(
     { ...state, error: null },
     Cmd.run(saveProject, {
@@ -51,12 +51,12 @@ export default handleActions({
       args: [action.payload],
     })
   ),
-  // handle createProject success action
+  // handle saveProject success action
   [CREATE_PROJECT_SUCCESS]: (state, action) => loop(
     state,
     Cmd.action(push(`/project/${action.payload.id}`))
   ),
-  // handle createProject fail action
+  // handle saveProject fail action
   [CREATE_PROJECT_FAIL]: (state, action) => ({ ...state, error: action.payload }),
   // handle clear send error action
   [CLEAR_SEND_ERROR]: state => ({ ...state, error: null }),
