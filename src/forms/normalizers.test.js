@@ -44,3 +44,36 @@ describe('listToString', () => {
     expect(normalizers.listToString(null)).toEqual('');
   });
 });
+
+describe('toNumber', () => {
+  it('should format string to number', () => {
+    const value = '6';
+    expect(normalizers.toNumber(value)).toEqual(Number(value));
+  });
+
+  it('should not format empty string to zero', () => {
+    const value = 'abc';
+    expect(normalizers.toNumber(value)).not.toEqual(NaN);
+  });
+
+  it('should format string zero to number zero', () => {
+    const value = '0';
+    expect(normalizers.toNumber(value)).toEqual(0);
+  });
+
+  it('should return value unmodified if it is null', () => {
+    expect(normalizers.toNumber(null)).toEqual(null);
+  });
+
+  it('should return value unmodified if it is  undefined', () => {
+    expect(normalizers.toNumber()).toEqual(undefined);
+  });
+
+  it('should return an empty string when value is an empty string', () => {
+    expect(normalizers.toNumber('')).toEqual(null);
+  });
+
+  it('should return value unmodified if it is NaN', () => {
+    expect(normalizers.toNumber(NaN)).toEqual(NaN);
+  });
+});
