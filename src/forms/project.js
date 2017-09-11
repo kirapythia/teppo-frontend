@@ -1,5 +1,5 @@
 import t from '../locale';
-import { stringToList, toNumber } from '../forms/normalizers';
+import { stringToList } from '../forms/normalizers';
 
 const fields = {
   hansuProjectId: {
@@ -14,7 +14,6 @@ const fields = {
   mainNo: {
     type: 'text',
     label: t('plan.primary_id'),
-    normalize: toNumber,
     validation: {
       required: true,
       type: 'number',
