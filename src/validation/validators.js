@@ -1,8 +1,9 @@
 import t, { tpl } from '../locale';
+import { isNil } from '../utils';
 
 const isNumber = value => !isNaN(Number(value));
 const isString = value => typeof value === 'string';
-const isNil = value => value === null || value === undefined;
+
 /**
  * A set of validator function
  * @type {object}
