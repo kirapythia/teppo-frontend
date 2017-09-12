@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import Dropzone from 'react-dropzone';
 
 import createValidators from '../validation';
 
@@ -21,6 +22,15 @@ const chooseElement = ({ type, input, placeholder, touched, error }) => {
   switch (type) {
     case 'textarea':
       return <textarea {...{ ...input, placeholder, className }} />;
+    case 'file':
+      return (
+        <Dropzone
+          {...input}
+          onDrop={input.onChange}
+        >
+          <span>{placeholder}</span>
+        </Dropzone>
+      );
     default:
       return <input {...{ ...input, type, placeholder, className }} />;
   }
