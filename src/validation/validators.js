@@ -5,8 +5,17 @@ const isNumber = value => !isNaN(Number(value));
 const isString = value => typeof value === 'string';
 
 /**
- * A set of validator function
- * @type {object}
+ * A set of validator function creators. Each validator takes rule value as first argument
+ * and then returns an curried function whitch takes the actual value as a parameter. Validator
+ * function will return an error string if validation fails and undefined if validation passes.
+ * @namespace
+ * @property {function} type Will produce an error if value's type is wrong
+ * @property {function} maxLength Will produce an error if value's length is greater
+ *                                than given length
+ * @property {function} minLength Will produce an error if value's length is less
+ *                                than given length
+ * @property {function} required Will produce an error if value is missing
+ *
  */
 const validators = {
   /**

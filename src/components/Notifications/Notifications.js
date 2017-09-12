@@ -7,14 +7,30 @@ import CloseIconButton from '../common/CloseIconButton';
 
 import './Notifications.css';
 
+/**
+ * Gather all the props needed from the application state
+ * @param {object} state
+ * @return {object}
+ */
 const mapStateToProps = state => ({
   notifications: state.notifications.notifications,
 });
 
+/**
+ * Gather all the action creators needed
+ * @param {function} dispatch the dispatcher function
+ * @return {object}
+ */
 const mapDispatchToProps = dispatch => bindActionCreators({
   removeNotification: actions.removeNotification,
 }, dispatch);
 
+/**
+ * Notification container. Displays notifications to the user
+ * @param {object} props
+ * @param {object[]} props.notifications A list of notification objects
+ * @param {function} props.removeNotification An action for removing a notification
+ */
 const Notifications = ({ notifications, removeNotification }) => (
   <div className="Notifications__container">
     {notifications.map(({ id, type, title, message, isVisible }) => (
