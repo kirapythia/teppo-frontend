@@ -18,6 +18,8 @@ node {
     }
 
     stage('Publish') {
-        sh 'make publish'
+        if (env.BRANCH_NAME == 'master') {
+            sh 'make publish'
+        }
     }
 }
