@@ -9,11 +9,11 @@ describe('savePlan action', () => {
     const state = { error: new Error('error') };
     const payload = {};
     const result = reducer(state, actions.savePlan(payload));
-    expect(result[0].error).toEqual(null);
+    expect(result[0].error).toEqual(undefined);
   });
 
   it('should send project to the server', () => {
-    const state = { error: null };
+    const state = {};
     const payload = {};
     const result = reducer(state, actions.savePlan(payload));
     expect(result).toEqual(loop(
