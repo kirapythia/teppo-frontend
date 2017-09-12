@@ -3,7 +3,7 @@ import t from '../locale';
 /**
  * Field definitions for the plan form. Object key is field name and
  * id value is an object containing all field definitions
- * @namespace
+ * @namespace fields
  * @property {string} type Field input type
  * @property {string} label Field label text
  * @property {string} placeholder Field placeholder text
@@ -31,6 +31,12 @@ const fields = {
       required: true,
       type: 'number',
     },
+  },
+
+  files: {
+    type: 'file',
+    label: t('plan.files'),
+    placeholder: t('dropzone.placeholder'),
   },
 };
 
