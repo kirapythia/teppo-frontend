@@ -30,6 +30,8 @@
       "exports": "ignore",
       "functions": "ignore"
     }],
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "func-names": 0,
+    "prefer-arrow-callback": 0
   }
 }

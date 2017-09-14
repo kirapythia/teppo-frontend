@@ -1,5 +1,5 @@
 /**
- * Arrange project object by selected criteria
+ * Rearrange project object by selected criteria
  */
 
 export const tidy = (project) => {
