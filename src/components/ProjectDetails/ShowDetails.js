@@ -1,36 +1,25 @@
 import React from 'react';
 import fields from '../../forms/project';
-import { omit } from '../../utils';
+// import { omit } from '../../utils';
 
 /**
- * Component to show project details.
+ * Component show project details.
  */
-const ShowDetails = ({ project }) => {
-  const values = omit(['id', 'name', 'alternativeNames'], project);
-  return (
-    <div>
-      <h2>{project.name}</h2>
-      {Object.keys(values).map(propName => (
-        <div key={propName} className="row">
-          <div className="column">
-            {(fields[propName] || {}).label}
-          </div>
-          <div className="column">
-            {project[propName]}
-          </div>
-        </div>
-      ))}
-
-      <div className="row">
-        <div className="column">
-          {fields.alternativeNames.label}
+const ShowDetails = ({ project }) => (
+  <div >
+    <h2>{project.title}</h2>
+    {Object.keys(project.details).map(propName => (
+      <div key={propName} className="row">
+        <div className="column column-30">
+          {(fields[propName] || {}).label}
         </div>
         <div className="column">
-          {(project.alternativeNames || []).join(', ')}
+          <b>{project.details[propName]}</b>
         </div>
       </div>
-    </div>
-  );
-};
+    ))}
+
+  </div >
+);
 
 export default ShowDetails;
