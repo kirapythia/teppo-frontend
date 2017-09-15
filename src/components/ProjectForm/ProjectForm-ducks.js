@@ -11,8 +11,8 @@ import { omit } from '../../utils';
 export const NAME = 'projectForm';
 
 const CREATE_PROJECT = 'pythia-webclient/ProjectForm/CREATE_PROJECT';
-const CREATE_PROJECT_SUCCESS = 'pythia-webclient/ProjectForm/CREATE_PROJECT_SUCCESS';
-const CREATE_PROJECT_FAIL = 'pythia-webclient/ProjectForm/CREATE_PROJECT_FAIL';
+const SAVE_PROJECT_SUCCESS = 'pythia-webclient/ProjectForm/CREATE_PROJECT_SUCCESS';
+const SAVE_PROJECT_FAIL = 'pythia-webclient/ProjectForm/CREATE_PROJECT_FAIL';
 const CLEAR_SEND_ERROR = 'pythia-webclient/ProjectForm/CLEAR_SEND_ERROR';
 
 export const actions = {
@@ -31,7 +31,7 @@ export const actions = {
    * @return {object} action object
    */
   saveProjectSuccessAction: createAction(
-    CREATE_PROJECT_SUCCESS,
+    SAVE_PROJECT_SUCCESS,
     project => project
   ),
   /**
@@ -40,7 +40,7 @@ export const actions = {
    * @return {object} action object
    */
   saveProjectFailAction: createAction(
-    CREATE_PROJECT_FAIL,
+    SAVE_PROJECT_FAIL,
     err => err
   ),
   /**
@@ -71,7 +71,7 @@ export default handleActions({
     })
   ),
   // handle saveProject success action
-  [CREATE_PROJECT_SUCCESS]: (state, action) => loop(
+  [SAVE_PROJECT_SUCCESS]: (state, action) => loop(
     // return state unmodified
     state,
     // (middleware will) run (react-little-router's) push action to navigate
@@ -80,7 +80,7 @@ export default handleActions({
   ),
   // handle saveProject fail action
   // just add error to the state
-  [CREATE_PROJECT_FAIL]: (state, action) => ({ ...state, error: action.payload }),
+  [SAVE_PROJECT_FAIL]: (state, action) => ({ ...state, error: action.payload }),
   // handle clear send error action
   // just remove error from the state
   [CLEAR_SEND_ERROR]: state => omit(['error'], state),

@@ -1,3 +1,4 @@
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
@@ -39,6 +40,10 @@ const mapStateToProps = state => ({
   formSendError: state.planForm.error,
   fields: fieldsWithValidations,
   cancelHref: `/project/${getCurrentProjectId(state)}`,
+  project: state.projectDetails.project,
+  initialValues: state.projectDetails.project
+    ? { mainNo: state.projectDetails.project.mainNo }
+    : undefined,
 });
 
 /**
