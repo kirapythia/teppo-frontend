@@ -52,11 +52,11 @@ const fields = {
       type: 'array',
     },
   },
-
+*/
   description: {
     type: 'textarea',
     label: t('project.description'),
-  }, */
+  },
 };
 
 export default fields;

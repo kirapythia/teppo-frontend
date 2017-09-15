@@ -8,13 +8,13 @@ import PlanForm from '../PlanForm';
 import { tidy } from './model';
 
 const mapStateToProps = state => ({
-  project: state.projects[0],
+  project: state.projectDetails.project,
 });
 
 /**
  * Page for creating a new plan
  */
-const PlanPage = ({ project }) => (
+const PlanPage = ({ project = {} }) => (
   <div>
     <div className="container">
       <h2>{ t('button.add_plan') }</h2>

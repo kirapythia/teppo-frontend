@@ -8,13 +8,13 @@ import { tidy } from './model';
 
 const mapStateToProps = state => ({
   projectId: getCurrentProjectId(state),
-  project: state.projects[0],
+  project: state.projectDetails.project,
 });
 
 /**
  * Show project details
  */
-const ProjectDetails = ({ projectId, project }) => (
+const ProjectDetails = ({ projectId, project = {} }) => (
   <div className="container">
     <ShowDetails project={tidy(project)} />
     <Link className="button" href={`/project/${projectId}/plan/new`}>
