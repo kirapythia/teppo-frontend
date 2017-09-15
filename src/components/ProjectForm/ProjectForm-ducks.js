@@ -76,7 +76,7 @@ export default handleActions({
     state,
     // (middleware will) run (react-little-router's) push action to navigate
     // to the project details page
-    Cmd.action(push(`/project/${action.payload.id}`))
+    Cmd.action(push(`/project/${action.payload.projectId}`))
   ),
   // handle saveProject fail action
   // just add error to the state

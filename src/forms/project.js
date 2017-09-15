@@ -43,7 +43,7 @@ const fields = {
     },
   },
 
-  alternativeNames: {
+/*   alternativeNames: {
     type: 'text',
     label: t('project.alternative_names'),
     normalize: stringToList,
@@ -56,7 +56,7 @@ const fields = {
   description: {
     type: 'textarea',
     label: t('project.description'),
-  },
+  }, */
 };
 
 export default fields;

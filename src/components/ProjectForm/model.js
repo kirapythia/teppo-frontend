@@ -1,8 +1,5 @@
-const url = 'api/pythia/v1/projects';
-const config = {
-  method: 'POST',
-  'Content-Type': 'application/json',
-};
+const SAVE_PROJECT_URL = '/pythia/v1/projects/';
+
 /**
  * Send project to the server. FIXME: not actually implemented yet.
  * @async
@@ -12,17 +9,19 @@ const config = {
 export function saveProject(project) {
   return new Promise(function (resolve, reject) {
     // resolve({ ...project, id: 132 });
-    fetch(url, { ...config, body: project })
+    fetch(SAVE_PROJECT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(project),
+    })
       .then(function (res) {
         if (!res.ok) {
-          reject(new Error(''));
+          reject(new Error('This is error!'));
           return;
         }
         res.json()
-          .then(function (json) {
-            resolve(json);
-          })
-          .catch(reject);
+          .then(resolve)
+          .catch(() => reject(new Error('Invalid JSON')));
       })
       .catch(function () {
         reject(new Error('nmy error message'));
