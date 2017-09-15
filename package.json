@@ -36,5 +36,9 @@
     "react-scripts": "^1.0.13",
     "react-test-renderer": "^15.6.1"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": {
+    "/pythia": {
+      "target": "http://localhost:8080"
+    }
+  }
 }

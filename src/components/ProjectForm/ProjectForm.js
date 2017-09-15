@@ -24,6 +24,8 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
+
+  initialValues: Object.keys(fields).reduce((acc, key) => ({ ...acc, [key]: '' }), {}),
 };
 
 // form field configuration objects with validator functions from field definitions
