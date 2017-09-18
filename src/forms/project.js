@@ -1,5 +1,4 @@
 import t from '../locale';
-import { stringToList } from '../forms/normalizers';
 
 /**
  * Field definitions for the project form. Object key is field name and
@@ -43,7 +42,8 @@ const fields = {
     },
   },
 
-/*   alternativeNames: {
+  /*
+  alternativeNames: {
     type: 'text',
     label: t('project.alternative_names'),
     normalize: stringToList,
@@ -52,7 +52,7 @@ const fields = {
       type: 'array',
     },
   },
-*/
+  */
   description: {
     type: 'textarea',
     label: t('project.description'),
