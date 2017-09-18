@@ -40,7 +40,7 @@ describe('saveProject success action', () => {
     const result = reducer(state, actions.saveProjectSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
-      Cmd.action(push(`/project/${payload.id}`))
+      Cmd.action(push(`/project/${payload.projectId}`))
     ));
   });
 });
