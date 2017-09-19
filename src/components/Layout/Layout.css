@@ -16,6 +16,10 @@
   text-align: center;
 }
 
+a:hover {
+  color: inherit;
+}
+
 .Footer {
   text-align: center;
 }

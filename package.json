@@ -38,7 +38,7 @@
   },
   "proxy": {
     "/pythia": {
-      "target": "http://localhost:8080"
+      "target": "http://52.214.196.107:8080"
     }
   }
 }

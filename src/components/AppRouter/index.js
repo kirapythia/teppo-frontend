@@ -23,7 +23,7 @@ const AppRouter = () => (
       <Fragment forRoute={ROUTES.PROJECT}>
         <ProjectPage />
       </Fragment>
-      <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+$/.test(location.pathname)}>
+      <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+\/?$/.test(location.pathname)}>
         <ProjectDetails />
       </Fragment>
       <Fragment forRoute={ROUTES.PLAN}>
