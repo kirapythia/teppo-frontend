@@ -16,8 +16,11 @@
   text-align: center;
 }
 
+.Header a,
+.Header a:active,
+.Header a:focus,
 .Header a:hover {
-  color: inherit;
+  color: #fff;
 }
 
 .Footer {
