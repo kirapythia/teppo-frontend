@@ -32,6 +32,8 @@ const validators = {
         return isNumber(value) && Number.isInteger(value) ? undefined : t('validation.message.type.integer');
       case 'array':
         return !value || Array.isArray(value) ? undefined : t('validation.message.type.array');
+      case 'alphanum':
+        return !value || /^[a-zA-Z0-9]*$/.test(value) ? undefined : t('validation.message.type.alphanum');
       default:
         return true;
     }

@@ -23,6 +23,7 @@
   "validation.message.maxlength": "Arvon tulee olla enintään ${max} merkkiä",
   "validation.message.minlength": "Arvon tulee olla vähintään ${min} merkkiä",
   "validation.message.required": "Kenttä on pakollinen",
+  "validation.message.type.alphanum": "Arvo saa sisältää ainoastaan kirjaimia ja numeroita",
   "validation.message.type.array": "Arvon tulee olla lista",
   "validation.message.type.string": "Arvon tulee olla teksti",
   "validation.message.type.number": "Arvon tulee olla numero",
