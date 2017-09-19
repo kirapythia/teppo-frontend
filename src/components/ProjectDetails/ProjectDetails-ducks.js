@@ -1,7 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
-import { LOCATION_CHANGED } from 'redux-little-router';
+import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { fetchProject } from './model';
+import { omit } from '../../utils';
+import * as ROUTES from '../../constants/routes';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -33,12 +35,16 @@ export default handleActions({
   // a) url has project id in it
   // b) project has changed
   [LOCATION_CHANGED]: (state, action) => {
-    const { projectId } = action.payload.params;
+    const { route, params = {} } = action.payload;
+    const { projectId } = params;
     const { project } = state;
 
+    // if navigated to the project details page
     // if there's project id in the url and it's different than previous id
     // then fetch project from the server...
-    if (projectId && (!project || Number(projectId) !== project.projectId)) {
+    if (route === ROUTES.PROJECT_DETAILS
+        && projectId
+        && (!project || Number(projectId) !== project.projectId)) {
       return loop(
         // remove error from the state
         state,
@@ -53,13 +59,23 @@ export default handleActions({
         })
       );
     }
-
     // ...otherwise return state unmodified
     return state;
   },
 
   // action that is dispatched after project was successfully fetched from the server
-  [FETCH_PROJECT_SUCCESS]: (state, action) => ({ ...state, project: action.payload }),
-
-  // TODO: add FETCH_PROJECT_ERROR handler
+  // add fetched project and remove error from state
+  [FETCH_PROJECT_SUCCESS]: (state, action) => ({ ...omit(['error'], state), project: action.payload }),
+  // action that is dispatched after project fetching fails for some reason
+  // add an error to the state and if fetch fails
+  // because resource was not found then redirect to the home page
+  [FETCH_PROJECT_ERROR]: (state, action) => {
+    const stateWithError = { ...state, error: action.payload };
+    return (action.payload.type === 'ResourceNotFoundError')
+      ? loop(
+        stateWithError,
+        Cmd.action(push(ROUTES.NOT_FOUND_PAGE))
+      )
+      : stateWithError;
+  },
 }, {});

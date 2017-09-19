@@ -4,22 +4,35 @@ import { connect } from 'react-redux';
 import t from '../../locale';
 import ShowDetails from './ShowDetails';
 import { getCurrentProjectId } from '../../selectors';
+import Message from '../common/Message';
+import * as ROUTES from '../../constants/routes';
 import { tidy } from './model';
 
 const mapStateToProps = state => ({
   projectId: getCurrentProjectId(state),
   project: state.projectDetails.project,
+  error: state.projectDetails.error,
 });
 
 /**
  * Show project details
  */
-const ProjectDetails = ({ projectId, project = {} }) => (
+const ProjectDetails = ({ projectId, error, project }) => (
   <div className="container">
-    <ShowDetails project={tidy(project)} />
-    <Link className="button" href={`/project/${projectId}/plan/new`}>
-      <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
-    </Link>
+    {error && (
+      <div>
+        <Message type="danger" message={error.message} />
+        <Link href={ROUTES.HOME}>{t('link.back_to_home_page')}.</Link>
+      </div>
+    )}
+    {!error && project && (
+      <div>
+        <ShowDetails project={tidy(project)} />
+        <Link className="button" href={`/project/${projectId}/plan/new`}>
+          <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
+        </Link>
+      </div>
+    )}
   </div>
 );
 
