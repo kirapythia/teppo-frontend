@@ -16,7 +16,7 @@
   text-align: center;
 }
 
-a:hover {
+.Header a:hover {
   color: inherit;
 }
 
