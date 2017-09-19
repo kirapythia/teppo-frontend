@@ -91,7 +91,7 @@ describe('type validations', () => {
     });
 
     it('should not pass if given undefined', () => {
-      expect(validators.type('integer')(null)).not.toEqual(undefined);
+      expect(validators.type('integer')(undefined)).not.toEqual(undefined);
     });
   });
 
@@ -107,6 +107,36 @@ describe('type validations', () => {
 
     it('should not pass validation if value is not an array', () => {
       expect(validators.type('array')({})).not.toEqual(undefined);
+    });
+  });
+
+  describe('alphanum', () => {
+    it('should pass if given a string of letters', () => {
+      expect(validators.type('alphanum')('abc')).toEqual(undefined);
+    });
+
+    it('should pass if given a string of numbers', () => {
+      expect(validators.type('alphanum')('123')).toEqual(undefined);
+    });
+
+    it('should not pass if given special characters', () => {
+      expect(validators.type('alphanum')('!@#')).not.toEqual(undefined);
+    });
+
+    it('should not pass if given a string of letters and special characters', () => {
+      expect(validators.type('alphanum')('abc!')).not.toEqual(undefined);
+    });
+
+    it('should not pass if given a string of letters and special characters', () => {
+      expect(validators.type('alphanum')('@123')).not.toEqual(undefined);
+    });
+
+    it('should pass if given an empty string', () => {
+      expect(validators.type('alphanum')('')).toEqual(undefined);
+    });
+
+    it('should pass if given undefined', () => {
+      expect(validators.type('alphanum')(undefined)).toEqual(undefined);
     });
   });
 });

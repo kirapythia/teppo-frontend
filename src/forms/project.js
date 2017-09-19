@@ -20,7 +20,7 @@ const fields = {
     label: t('project.hansuProjectId'),
     validation: {
       required: true,
-      type: 'string',
+      type: 'alphanum',
     },
   },
 
