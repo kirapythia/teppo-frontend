@@ -26,6 +26,12 @@ if (process.env.NODE_ENV === 'development') {
   middleware.push(logger);
 }
 
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  : compose;
+/* eslint-enable no-underscore-dangle */
+
 /**
  * App store
  * @type {Redux.Store}
@@ -36,5 +42,5 @@ export default createStore(
   // initial state
   {},
   // apply all the middleware
-  compose(install(), routerEnhancer, applyMiddleware(...middleware))
+  composeEnhancers(install(), routerEnhancer, applyMiddleware(...middleware))
 );
