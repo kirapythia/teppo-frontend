@@ -10,24 +10,6 @@ const FETCH_PROJECT_URL = '/pythia/v1/projects/';
 export class ResourceNotFoundError extends Error {}
 
 /**
- * Rearrange project object by selected criteria
- */
-
-export const tidy = (project) => {
-  const titleAndDetails = {
-    title: project.name,
-    details: {
-      hansuProjectId: project.hansuProjectId,
-      mainNo: project.mainNo,
-      /* alternativeNames: (project.alternativeNames || []).join(', '),
-      */
-      description: project.description,
-    },
-  };
-  return titleAndDetails;
-};
-
-/**
  * Fetch project from the server by id
  * @async
  * @param {number} projectId

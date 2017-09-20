@@ -1,0 +1,12 @@
+.ShowDetails {
+  padding: 1rem 0;
+}
+
+.ShowDetails--highlighted {
+  background-color: #ddd;
+  border-radius: 2px;
+}
+
+.ShowDetails--highlighted .row {
+  margin: .2rem 0;
+}

@@ -1,24 +1,23 @@
 import React from 'react';
+import cx from 'classnames';
 import fields from '../../forms/project';
-// import { omit } from '../../utils';
+import './ShowDetails.css';
 
 /**
- * Component show project details.
+ * Component for showing project details.
+ * @param {object} props
+ * @param {object} props.project
  */
-const ShowDetails = ({ project }) => (
-  <div >
-    <h2>{project.title}</h2>
-    {Object.keys(project.details).map(propName => (
+const ShowDetails = ({ title, details, className }) => (
+  <div className={cx('ShowDetails', className)}>
+    {title && <h2>{title}</h2>}
+
+    {Object.keys(details).map(propName => (
       <div key={propName} className="row">
-        <div className="column column-30">
-          {(fields[propName] || {}).label}
-        </div>
-        <div className="column">
-          <b>{project.details[propName]}</b>
-        </div>
+        <div className="column column-30">{(fields[propName] || {}).label}</div>
+        <div className="column"><b>{details[propName]}</b></div>
       </div>
     ))}
-
   </div >
 );
 
