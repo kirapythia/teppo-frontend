@@ -1,7 +1,6 @@
 import { reducer as formReducer } from 'redux-form';
 import * as ProjectForm from '../components/ProjectForm';
 import * as PlanForm from '../components/PlanForm';
-import projectsReducer, { NAME as projectReducerName } from './projects-ducks';
 import * as Notifications from '../components/Notifications';
 import * as ProjectDetails from '../components/ProjectDetails';
 
@@ -13,7 +12,6 @@ export default {
   form: formReducer,
   [ProjectForm.NAME]: ProjectForm.reducer,
   [PlanForm.NAME]: PlanForm.reducer,
-  [projectReducerName]: projectsReducer,
   [Notifications.NAME]: Notifications.reducer,
   [ProjectDetails.NAME]: ProjectDetails.reducer,
 };

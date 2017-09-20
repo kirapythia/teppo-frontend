@@ -35,15 +35,14 @@ export default handleActions({
   // a) url has project id in it
   // b) project has changed
   [LOCATION_CHANGED]: (state, action) => {
-    const { route, params = {} } = action.payload;
+    const { params = {} } = action.payload;
     const { projectId } = params;
     const { project } = state;
 
     // if navigated to the project details page
     // if there's project id in the url and it's different than previous id
     // then fetch project from the server...
-    if (route === ROUTES.PROJECT_DETAILS
-        && projectId
+    if (projectId
         && (!project || Number(projectId) !== project.projectId)) {
       return loop(
         // remove error from the state
