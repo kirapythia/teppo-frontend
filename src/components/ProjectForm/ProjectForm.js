@@ -10,6 +10,13 @@ import { NAME, actions } from './ProjectForm-ducks';
 import CreateAndSaveForm from '../Form/CreateAndSaveForm';
 
 /**
+ * All fields from fields configuration initialized with an empty string as value
+ * @type {object}
+ */
+const fieldsWithEmptyStringValues = Object.keys(fields)
+  .reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+
+/**
  * Redux-form configuration object
  */
 const formConfig = {
@@ -25,7 +32,10 @@ const formConfig = {
    */
   destroyOnUnmount: true,
 
-  initialValues: Object.keys(fields).reduce((acc, key) => ({ ...acc, [key]: '' }), {}),
+  /**
+   * Initial values given to
+   */
+  initialValues: { ...fieldsWithEmptyStringValues, plans: [] },
 };
 
 // form field configuration objects with validator functions from field definitions
