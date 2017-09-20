@@ -32,7 +32,7 @@ export const fetchProject = projectId => new Promise((resolve, reject) => {
 
       if (response.status === 404) {
         reject({
-          type: 'ResourceNotFoundError',
+          status: response.status,
           message: tpl('network.error.project.not_found', { projectId }),
         });
         return;
@@ -41,6 +41,6 @@ export const fetchProject = projectId => new Promise((resolve, reject) => {
       reject({ type: 'Error', message: t('network.error.project.fetch') });
     })
     // catch fetch fails and request not ok errors
-    .catch(() => reject({ type: 'Error', message: t('network.error.project.fetch') }));
+    .catch(() => reject({ status: 0, message: t('network.error.project.fetch') }));
 });
 

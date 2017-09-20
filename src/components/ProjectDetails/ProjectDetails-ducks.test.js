@@ -29,15 +29,14 @@ describe('Location change', () => {
     expect(result).toEqual(state);
   });
 
-  it('should not intiate project fetch when navigated to other than project details page', () => {
-    const action = { type: LOCATION_CHANGED, payload: { route: '/testroute', params: { projectId: '123' } } };
+  it('should not crash if params is undefined', () => {
+    const action = { type: LOCATION_CHANGED, payload: { route: '/testroute' } };
     const state = {};
-    const result = reducer(state, action);
-    expect(result).toEqual(state);
+    reducer(state, action);
   });
 
   it('should not change the state object when not navigating', () => {
-    const action = { type: LOCATION_CHANGED, payload: { route: '/testroute', params: { projectId: '123' } } };
+    const action = { type: LOCATION_CHANGED, payload: { route: '/testroute', params: { } } };
     const state = {};
     const result = reducer(state, action);
     expect(result).toBe(state);
@@ -85,28 +84,28 @@ describe('Fetch project success', () => {
 
 describe('Fetch project error', () => {
   it('should add error to the state', () => {
-    const error = new Error('Error!');
+    const error = { status: 500 };
     const action = actions.fetchProjectError(error);
     const result = reducer(undefined, action);
     expect(result.error).toBe(error);
   });
 
   it('should not erase other state properties', () => {
-    const action = actions.fetchProjectError(new Error());
+    const action = actions.fetchProjectError({ status: 500 });
     const state = { a: 1 };
     const result = reducer(state, action);
     expect(result.a).toEqual(state.a);
   });
 
   it('should not mutate the state object', () => {
-    const action = actions.fetchProjectError(new Error());
+    const action = actions.fetchProjectError({ status: 500 });
     const state = {};
     const result = reducer(state, action);
     expect(result).not.toBe(state);
   });
 
   it('should navigate to 404 page when the requested project was not found', () => {
-    const action = actions.fetchProjectError({ type: 'ResourceNotFoundError' });
+    const action = actions.fetchProjectError({ status: 404 });
     const result = reducer(undefined, action);
     expect(result).toEqual(loop(
       result[0],
