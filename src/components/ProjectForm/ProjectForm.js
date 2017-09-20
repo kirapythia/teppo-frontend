@@ -49,7 +49,7 @@ const mapStateToProps = state => ({
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   saveAction: actions.saveProject,
-  clearError: actions.clearSendError,
+  clearSendError: actions.clearSendError,
 }, dispatch);
 
 /**
