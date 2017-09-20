@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ShowDetails } from '../ProjectDetails';
-
 import t from '../../locale';
+import { pick } from '../../utils';
+import { ShowDetails } from '../ProjectDetails';
 import PlanForm from '../PlanForm';
-import { tidy } from './model';
+import './PlanPage.css';
 
 const mapStateToProps = state => ({
   project: state.projectDetails.project,
@@ -15,12 +15,13 @@ const mapStateToProps = state => ({
  * Page for creating a new plan
  */
 const PlanPage = ({ project = {} }) => (
-  <div>
-    <div className="container">
-      <h2>{ t('button.add_plan') }</h2>
-      <ShowDetails project={tidy(project)} />
-      <PlanForm />
-    </div>
+  <div className="PlanPage container">
+    <h2>{ t('button.add_plan') }</h2>
+    <ShowDetails
+      details={pick(['name', 'hansuProjectId'], project)}
+      className="ShowDetails--highlighted"
+    />
+    <PlanForm />
   </div>
 );
 

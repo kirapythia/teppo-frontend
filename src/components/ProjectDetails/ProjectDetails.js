@@ -6,7 +6,7 @@ import ShowDetails from './ShowDetails';
 import { getCurrentProjectId } from '../../selectors';
 import Message from '../common/Message';
 import * as ROUTES from '../../constants/routes';
-import { tidy } from './model';
+import { omit } from '../../utils';
 
 const mapStateToProps = state => ({
   projectId: getCurrentProjectId(state),
@@ -27,7 +27,10 @@ const ProjectDetails = ({ projectId, error, project }) => (
     )}
     {!error && project && (
       <div>
-        <ShowDetails project={tidy(project)} />
+        <ShowDetails
+          title={project.name}
+          details={omit(['name', 'projectId'], project)}
+        />
         <Link className="button" href={`/project/${projectId}/plan/new`}>
           <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
         </Link>
