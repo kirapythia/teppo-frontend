@@ -24,6 +24,16 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
+  /**
+   * Tell redux-form to reinitialize itself when initialValues change
+   * @type {boolean}
+   */
+  enableReinitialize: true,
+  /**
+   * Tell redux-form to keep it's dirty values when reinitializing
+   * @type {boolean}
+   */
+  keepDirtyOnReinitialize: true,
 };
 
 // form field configuration objects with validator functions from field definitions
@@ -34,16 +44,19 @@ const fieldsWithValidations = createFieldsWithValidations(fields);
  * @param {object} state
  * @return {object}
  */
-const mapStateToProps = state => ({
-  projectId: getCurrentProjectId(state),
-  formSendError: state.planForm.error,
-  fields: fieldsWithValidations,
-  cancelHref: `/project/${getCurrentProjectId(state)}`,
-  project: state.projectDetails.project,
-  initialValues: state.projectDetails.project
-    ? { mainNo: state.projectDetails.project.mainNo }
-    : undefined,
-});
+const mapStateToProps = (state) => {
+  const projectId = getCurrentProjectId(state);
+  const { project = {} } = state.projectDetails;
+
+  return {
+    project,
+    projectId,
+    formSendError: state.planForm.error,
+    fields: fieldsWithValidations,
+    cancelHref: `/project/${projectId}`,
+    initialValues: { mainNo: project.mainNo, projectId },
+  };
+};
 
 /**
  * Gather all the action creators needed

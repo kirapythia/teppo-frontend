@@ -12,6 +12,7 @@
   "network.error.project.fetch": "Projektin haku epäonnistui!",
   "network.error.project.failed_to_fetch": "Projektin haku epäonnistui! Ole hyvä ja tarkista, että verkkoyhteytesi on päällä ja toiminnassa.",
   "network.error.project.not_found": "Projektia ei löytynyt id:llä ${projectId}.",
+  "network.error.project.create": "Projektin luominen epäonnistui",
   "notfoundpage.message": "Haettua sivua tai resurssia ei löytynyt",
   "notfoundpage.title": "Ups, jotain meni pieleen!",
   "plan.files": "Suunnitelmaan liittyvät tiedostot",
