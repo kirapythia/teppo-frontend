@@ -70,7 +70,7 @@ export default handleActions({
   // because resource was not found then redirect to the home page
   [FETCH_PROJECT_ERROR]: (state, action) => {
     const stateWithError = { ...state, error: action.payload };
-    return (action.payload.type === 'ResourceNotFoundError')
+    return (action.payload.status === 404)
       ? loop(
         stateWithError,
         Cmd.action(push(ROUTES.NOT_FOUND_PAGE))

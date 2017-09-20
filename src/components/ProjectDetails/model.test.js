@@ -26,7 +26,7 @@ describe('Fetching a project', () => {
 
   it('should reject promise with a error object when fetch fails with status 404', () => {
     fetchMock.get(URL_MATCHER, 404);
-    return fetchProject().catch(err => expect(err.type).toEqual('ResourceNotFoundError'));
+    return fetchProject().catch(err => expect(err.status).toEqual(404));
   });
 
   it('should reject with an error containing a not found message when failing with status 404', () => {
