@@ -3,7 +3,7 @@ import { loop, Cmd } from 'redux-loop';
 import { push } from 'redux-little-router';
 import { savePlan } from './model';
 import { actions as NotificationActions } from '../Notifications';
-import t from '../../locale';
+import { tpl } from '../../locale';
 import { omit } from '../../utils';
 
 /**
@@ -13,7 +13,7 @@ import { omit } from '../../utils';
 export const NAME = 'planForm';
 
 const SAVE_PLAN = 'pythia-webclient/ProjectForm/SAVE_PLAN';
-const SAVE_PLAN_SUCCESS = 'pythia-webclient/ProjectForm/SAVE_PLAN_SUCCESS';
+export const SAVE_PLAN_SUCCESS = 'pythia-webclient/ProjectForm/SAVE_PLAN_SUCCESS';
 const SAVE_PLAN_FAIL = 'pythia-webclient/ProjectForm/SAVE_PLAN_FAIL';
 const CLEAR_SEND_ERROR = 'pythia-webclient/ProjectForm/CLEAR_SEND_ERROR';
 
@@ -81,7 +81,7 @@ export default handleActions({
       // dispatch addSuccessNotification action to display
       // a success notification
       Cmd.action(NotificationActions.addSuccessNotification(
-        t('plan.message.save_success')
+        tpl('plan.message.save_success', action.payload)
       )),
       // dispatch (react-little-router's) push action to navigate
       // to project details page

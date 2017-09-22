@@ -35,7 +35,7 @@ const formConfig = {
   /**
    * Initial values given to
    */
-  initialValues: { ...fieldsWithEmptyStringValues, plans: [] },
+  initialValues: fieldsWithEmptyStringValues,
 };
 
 // form field configuration objects with validator functions from field definitions

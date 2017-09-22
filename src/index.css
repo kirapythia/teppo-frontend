@@ -14,6 +14,11 @@ b {
   font-weight: bold;
 }
 
+.clear-list-styles {
+  list-style: none;
+  padding-left: 0;
+}
+
 .text-danger {
   color: #721c24;
 }

@@ -1,0 +1,16 @@
+.PlanListItem {
+  display: flex;
+}
+
+.PlanListItem {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ccc;
+}
+
+.PlanListItem__identifiers {
+  flex: 1;
+}
+
+.PlanListItem .IconButton {
+  margin-left: 6px;
+}

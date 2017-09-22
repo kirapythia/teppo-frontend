@@ -4,7 +4,7 @@ import { postJSON, ServerResponseError } from '../../utils/ajax';
 export const SAVE_PROJECT_URL = '/pythia/v1/projects/';
 
 /**
- * Send project to the server. FIXME: not actually implemented yet.
+ * Send project to the server.
  * @async
  * @param {object} project Values from the project form
  * @return {Promise}
