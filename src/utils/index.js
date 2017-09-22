@@ -53,3 +53,10 @@ export const wait = (time = 0, ...rest) =>
  * @return {boolean}
  */
 export const isNil = value => value === null || value === undefined;
+
+/**
+ * Function that returns the value given as parameter
+ * @param {*} value
+ * @return {*}
+ */
+export const identity = value => value;

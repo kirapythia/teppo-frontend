@@ -4,7 +4,7 @@ import { push } from 'redux-little-router';
 import { savePlan } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
-import { omit } from '../../utils';
+import { identity, omit } from '../../utils';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -25,7 +25,7 @@ export const actions = {
    */
   savePlan: createAction(
     SAVE_PLAN,
-    formValues => formValues
+    identity
   ),
   /**
    * Action triggered if the createProject action succeeds
@@ -34,7 +34,7 @@ export const actions = {
    */
   savePlanSuccessAction: createAction(
     SAVE_PLAN_SUCCESS,
-    plan => plan
+    identity
   ),
   /**
    * Action triggered if the createAction project fails
@@ -43,7 +43,7 @@ export const actions = {
    */
   savePlanFailAction: createAction(
     SAVE_PLAN_FAIL,
-    err => err
+    identity
   ),
   /**
    * Action triggered when form send error is closed
