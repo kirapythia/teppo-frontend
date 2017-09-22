@@ -1,6 +1,3 @@
-import t from '../locale';
-
-
 /**
  * An error caused by an invalid request
  * @class InvalidRequestError
