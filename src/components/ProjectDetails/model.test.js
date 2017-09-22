@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import t, { tpl } from '../../locale';
+import t from '../../locale';
 import { fetchProject } from './model';
 
 const URL_MATCHER = /^\/pythia\/\.*/;
