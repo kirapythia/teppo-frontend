@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import { HOME } from '../../constants/routes';
 import { createFieldsWithValidations } from '../../forms/form-utils';
-
+import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm-ducks';
 import CreateAndSaveForm from '../Form/CreateAndSaveForm';
@@ -31,11 +31,20 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
-
   /**
    * Initial values given to
    */
   initialValues: { ...fieldsWithEmptyStringValues, plans: [] },
+  /**
+   * Async validator for hansuProjectId
+   * @type {function}
+   */
+  asyncValidate: validateHansuProjectId,
+  /**
+   * Fields that are validated with asyncValidate
+   * @type {string[]}
+   */
+  asyncBlurFields: ['hansuProjectId'],
 };
 
 // form field configuration objects with validator functions from field definitions
