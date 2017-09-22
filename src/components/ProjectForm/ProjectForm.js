@@ -32,9 +32,9 @@ const formConfig = {
    */
   destroyOnUnmount: true,
   /**
-   * Initial values given to
+   * Initial values given to the redux form
    */
-  initialValues: { ...fieldsWithEmptyStringValues, plans: [] },
+  initialValues: fieldsWithEmptyStringValues,
   /**
    * Async validator for hansuProjectId
    * @type {function}

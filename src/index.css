@@ -1,5 +1,5 @@
 html {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 body {
@@ -12,6 +12,11 @@ html, body, #root, .full-height {
 
 b {
   font-weight: bold;
+}
+
+.clear-list-styles {
+  list-style: none;
+  padding-left: 0;
 }
 
 .text-danger {

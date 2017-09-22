@@ -5,7 +5,7 @@ export const SAVE_PROJECT_URL = '/pythia/v1/projects/';
 export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansuprojectid/';
 
 /**
- * Send project to the server. FIXME: not actually implemented yet.
+ * Send project to the server.
  * @async
  * @param {object} project Values from the project form
  * @return {Promise}

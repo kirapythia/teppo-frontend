@@ -1,0 +1,10 @@
+.IconButton {
+  cursor: pointer;
+  transition: all .2s linear;
+}
+
+.IconButton:hover,
+.IconButton:focus,
+.IconButton:active {
+  color: #5C8329;
+}
