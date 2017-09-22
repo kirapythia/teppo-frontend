@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { fetchProject } from './model';
-import { omit } from '../../utils';
+import { identity, omit } from '../../utils';
 import * as ROUTES from '../../constants/routes';
 import { SAVE_PLAN_SUCCESS } from '../PlanForm';
 /**
@@ -19,12 +19,12 @@ export const actions = {
   // successfully fetched from the server
   fetchProjectSuccess: createAction(
     FETCH_PROJECT_SUCCESS,
-    project => project
+    identity
   ),
   // action that's dispatched when project fetch fails
   fetchProjectError: createAction(
     FETCH_PROJECT_ERROR,
-    error => error
+    identity
   ),
 };
 
