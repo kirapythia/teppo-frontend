@@ -1,5 +1,6 @@
 import t from '../../locale';
 import { get, postJSON, ServerResponseError } from '../../utils/ajax';
+import { withTimeout } from '../../utils';
 
 export const SAVE_PROJECT_URL = '/pythia/v1/projects/';
 export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansuprojectid/';
@@ -11,10 +12,10 @@ export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansup
  * @return {Promise}
  */
 export const saveProject = project =>
-  postJSON(SAVE_PROJECT_URL, project)
+  withTimeout(2 * 60 * 1000, postJSON(SAVE_PROJECT_URL, project)
     .catch((error) => {
       throw new ServerResponseError(t('network.error.project.create'), error.status);
-    });
+    }));
 
 /**
  * Validate hansuProjectId on server by fetching project by hansuProjectId.
