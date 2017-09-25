@@ -14,3 +14,7 @@
 .PlanListItem .IconButton {
   margin-left: 6px;
 }
+
+.PlanListItem__RemoveButton {
+  color: #DB0202;
+}

@@ -12,7 +12,6 @@ import NotFoundPage from '../NotFoundPage';
 const is404Page = location => location.path === ROUTES.NOT_FOUND_PAGE;
 const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
 
-
 /**
  * Main level router for the app
  */
@@ -30,7 +29,9 @@ const AppRouter = () => (
       <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+\/?$/.test(location.pathname)}>
         <ProjectDetails />
       </Fragment>
-      <Fragment forRoute={ROUTES.PLAN}>
+      <Fragment withConditions={location =>
+        isOneOf(location.route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])}
+      >
         <PlanPage />
       </Fragment>
       <Fragment forNoMatch withConditions={is404Page}>

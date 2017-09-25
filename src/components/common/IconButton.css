@@ -6,5 +6,5 @@
 .IconButton:hover,
 .IconButton:focus,
 .IconButton:active {
-  color: #5C8329;
+  filter: brightness(60%);
 }

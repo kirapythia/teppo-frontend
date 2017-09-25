@@ -47,7 +47,7 @@ const ProjectDetails = ({ projectId, error, removePlan, project = { plans: [] } 
         <div className="ProjectDetails__plans-wrapper">
           <h3>Projektiin liittyvät suunnitelmat</h3>
           {project.plans.length
-            ? <PlansList plans={project.plans} removePlan={removePlan} />
+            ? <PlansList project={project} removePlan={removePlan} />
             : <div className="text-italic">{t('project.details.no_plans')}</div>}
         </div>
 

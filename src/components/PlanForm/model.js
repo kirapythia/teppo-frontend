@@ -1,8 +1,6 @@
 import t from '../../locale';
-import { postJSON, ServerResponseError } from '../../utils/ajax';
+import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
 import { withTimeout } from '../../utils';
-
-export const SAVE_PLAN_URL = '/pythia/v1/plans/';
 
 /**
  * Send plan to the server.
@@ -11,7 +9,22 @@ export const SAVE_PLAN_URL = '/pythia/v1/plans/';
  * @return {Promise}
  */
 export const savePlan = plan =>
-  withTimeout(2 * 60 * 1000, postJSON(SAVE_PLAN_URL, plan)
+  withTimeout(2 * 60 * 1000, postJSON(`/pythia/v1/projects/${plan.projectId}/plans/`, plan)
     .catch((error) => {
       throw new ServerResponseError(t('network.error.plan.create'), error.status);
     }));
+
+/**
+ * Edit and send project to the server
+ * @async
+ * @param {object} plan
+ * @return {Promise}
+ */
+export const editPlan = plan => new Promise((resolve, reject) => {
+  if (!plan.planId) return reject(new Error(t('plan.error.edit.no_id')));
+  return putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}`, plan)
+    .then(resolve)
+    .catch((error) => {
+      reject(new ServerResponseError(t('network.error.plan.edit'), error.status));
+    });
+});

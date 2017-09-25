@@ -16,7 +16,8 @@
     "redux-form": "^7.0.3",
     "redux-little-router": "^14.2.0",
     "redux-logger": "^3.0.6",
-    "redux-loop": "^3.1.2"
+    "redux-loop": "^3.1.2",
+    "reselect": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

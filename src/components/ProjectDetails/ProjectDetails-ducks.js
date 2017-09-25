@@ -4,7 +4,7 @@ import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { fetchProject } from './model';
 import { identity, omit } from '../../utils';
 import * as ROUTES from '../../constants/routes';
-import { SAVE_PLAN_SUCCESS } from '../PlanForm';
+import { PLAN_SAVE_SUCCESS, PLAN_EDIT_SUCCESS } from '../PlanForm';
 /**
  * Export reducer's name. Will be registerd to
  * the application state with this name
@@ -79,13 +79,25 @@ export default handleActions({
   },
   // handle successful plan create action
   // add the created plan to the current project
-  [SAVE_PLAN_SUCCESS]: (state, action) => {
+  [PLAN_SAVE_SUCCESS]: (state, action) => {
     const { project } = state;
     const { projectId, plans } = project;
 
     if (projectId !== action.payload.projectId) return state;
 
     const newProject = { ...project, plans: [...plans, action.payload] };
+    return { ...state, project: newProject };
+  },
+  // handle successful plan create action
+  // add the created plan to the current project
+  [PLAN_EDIT_SUCCESS]: (state, action) => {
+    const { project } = state;
+    const { projectId, plans } = project;
+
+    if (projectId !== action.payload.projectId) return state;
+
+    const withoutPlan = plans.filter(plan => plan.planId !== action.payload.planId);
+    const newProject = { ...project, plans: [...withoutPlan, action.payload] };
     return { ...state, project: newProject };
   },
 }, {});

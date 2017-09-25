@@ -119,7 +119,7 @@ describe('Save plan success', () => {
   it('should add plan to project', () => {
     const plan = {};
     const initialState = { project: { plans: [] } };
-    const action = PlanForm.actions.savePlanSuccessAction(plan);
+    const action = PlanForm.actions.planSaveSuccessAction(plan);
     const actual = reducer(initialState, action);
     expect(actual.project.plans.length).toEqual(1);
   });
@@ -127,7 +127,7 @@ describe('Save plan success', () => {
   it('should not mutate state object', () => {
     const plan = {};
     const initialState = { project: { plans: [] } };
-    const action = PlanForm.actions.savePlanSuccessAction(plan);
+    const action = PlanForm.actions.planSaveSuccessAction(plan);
     const actual = reducer(initialState, action);
     expect(actual).not.toBe(initialState);
   });
@@ -135,7 +135,7 @@ describe('Save plan success', () => {
   it('should not mutate the original project object', () => {
     const plan = {};
     const initialState = { project: { plans: [] } };
-    const action = PlanForm.actions.savePlanSuccessAction(plan);
+    const action = PlanForm.actions.planSaveSuccessAction(plan);
     const actual = reducer(initialState, action);
     expect(actual.project).not.toBe(initialState.project);
   });
@@ -143,7 +143,7 @@ describe('Save plan success', () => {
   it('should not add the plan if plan\'s project id doesn\'t match the current project\'s id', () => {
     const plan = { projectId: 2 };
     const initialState = { project: { projectId: 1, plans: [] } };
-    const action = PlanForm.actions.savePlanSuccessAction(plan);
+    const action = PlanForm.actions.planSaveSuccessAction(plan);
     const actual = reducer(initialState, action);
     expect(actual.project.plans.length).toEqual(0);
   });
@@ -151,7 +151,7 @@ describe('Save plan success', () => {
   it('should not alter the state when no plan was added', () => {
     const plan = { projectId: 2 };
     const initialState = { project: { projectId: 1, plans: [] } };
-    const action = PlanForm.actions.savePlanSuccessAction(plan);
+    const action = PlanForm.actions.planSaveSuccessAction(plan);
     const actual = reducer(initialState, action);
     expect(actual).toBe(initialState);
   });
