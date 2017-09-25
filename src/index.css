@@ -19,6 +19,10 @@ b {
   padding-left: 0;
 }
 
+.text-italic {
+  font-style: italic;
+}
+
 .text-danger {
   color: #721c24;
 }
