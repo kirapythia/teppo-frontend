@@ -18,8 +18,8 @@ describe('saveProject action', () => {
     expect(result).toEqual(loop(
       state,
       Cmd.run(saveProject, {
-        successActionCreator: actions.saveProjectSuccessAction,
-        failActionCreator: actions.saveProjectFailAction,
+        successActionCreator: actions.projectSuccessAction,
+        failActionCreator: actions.projectFailAction,
         args: [payload],
       }))
     );
@@ -30,14 +30,14 @@ describe('saveProject success action', () => {
   it('should return state unmodified', () => {
     const state = {};
     const payload = { id: 123 };
-    const result = reducer(state, actions.saveProjectSuccessAction(payload));
+    const result = reducer(state, actions.projectSuccessAction(payload));
     expect(result[0]).toBe(state);
   });
 
   it('should navigate to project details page', () => {
     const state = {};
     const payload = { id: 123 };
-    const result = reducer(state, actions.saveProjectSuccessAction(payload));
+    const result = reducer(state, actions.projectSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
       Cmd.action(push(`/project/${payload.projectId}`))
@@ -49,14 +49,14 @@ describe('savePlan fail action', () => {
   it('should add error the state', () => {
     const state = {};
     const payload = new Error();
-    const result = reducer(state, actions.saveProjectFailAction(payload));
+    const result = reducer(state, actions.projectFailAction(payload));
     expect(result.error).toBe(payload);
   });
 
   it('should not modify current state', () => {
     const state = {};
     const payload = new Error();
-    const result = reducer(state, actions.saveProjectFailAction(payload));
+    const result = reducer(state, actions.projectFailAction(payload));
     expect(result).not.toBe(state);
   });
 });

@@ -10,6 +10,8 @@ import PlanPage from '../PlanPage';
 import NotFoundPage from '../NotFoundPage';
 
 const is404Page = location => location.path === ROUTES.NOT_FOUND_PAGE;
+const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
+
 
 /**
  * Main level router for the app
@@ -20,7 +22,9 @@ const AppRouter = () => (
       <Fragment forRoute={ROUTES.HOME}>
         <HomePage />
       </Fragment>
-      <Fragment forRoute={ROUTES.PROJECT}>
+      <Fragment withConditions={location =>
+        isOneOf(location.route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])}
+      >
         <ProjectPage />
       </Fragment>
       <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+\/?$/.test(location.pathname)}>

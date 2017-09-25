@@ -7,7 +7,7 @@ import { createFieldsWithValidations } from '../../forms/form-utils';
 import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm-ducks';
-import CreateAndSaveForm from '../Form/CreateAndSaveForm';
+import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 /**
  * All fields from fields configuration initialized with an empty string as value
@@ -15,6 +15,9 @@ import CreateAndSaveForm from '../Form/CreateAndSaveForm';
  */
 const fieldsWithEmptyStringValues = Object.keys(fields)
   .reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+
+  // form field configuration objects with validator functions from field definitions
+const fieldsWithValidations = createFieldsWithValidations(fields);
 
 /**
  * Redux-form configuration object
@@ -31,43 +34,52 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
-  /**
-   * Initial values given to the redux form
-   */
-  initialValues: fieldsWithEmptyStringValues,
-  /**
-   * Async validator for hansuProjectId
-   * @type {function}
-   */
-  asyncValidate: validateHansuProjectId,
-  /**
-   * Fields that are validated with asyncValidate
-   * @type {string[]}
-   */
-  asyncBlurFields: ['hansuProjectId'],
-};
 
-// form field configuration objects with validator functions from field definitions
-const fieldsWithValidations = createFieldsWithValidations(fields);
+  /**
+   * Tell redux-form to reinitialize itself when initialValues change
+   * @type {boolean}
+   */
+  enableReinitialize: true,
+  /**
+   * Tell redux-form to keep it's dirty values when reinitializing
+   * @type {boolean}
+   */
+  keepDirtyOnReinitialize: false,
+
+  fields: fieldsWithValidations,
+};
 
 /**
  * Gather all the props needed from the application state
  * @param {object} state
  * @return {object}
  */
-const mapStateToProps = state => ({
-  formSendError: state.projectForm.error,
-  cancelHref: HOME,
-  fields: fieldsWithValidations,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { project } = ownProps;
+  const actionProps = project
+    ? {
+      initialValues: { ...ownProps.project },
+      cancelHref: `/project/${project.projectId}`,
+    }
+    : {
+      initialValues: fieldsWithEmptyStringValues,
+      cancelHref: HOME,
+      asyncValidate: validateHansuProjectId,
+      asyncBlurFields: ['hansuProjectId'],
+    };
+
+  return Object.assign({ formSendError: state.projectForm.error }, actionProps);
+};
 
 /**
  * Gather all the action creators needed
  * @param {function} dispatch the dispatcher function
  * @return {object}
  */
-const mapDispatchToProps = dispatch => bindActionCreators({
-  saveAction: actions.saveProject,
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
+  submitAction: ownProps.project
+    ? actions.editProject
+    : actions.saveProject,
   clearSendError: actions.clearSendError,
 }, dispatch);
 
@@ -78,5 +90,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm(formConfig)
-)(CreateAndSaveForm);
+)(CreateEditAndSaveForm);
 

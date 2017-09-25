@@ -1,7 +1,22 @@
+.ProjectDetails {
+  height: 100%;
+}
+
 .ProjectDetails h3 {
   margin: 2rem 0;
 }
 
-.ProjectDetails__actions_wrapper {
-  text-align: right;
+.ProjectDetails__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.ProjectDetails__plans-wrapper {
+  flex: 1;
+}
+
+.ProjectDetails__actions-wrapper {
+  margin-top: 2rem;
 }
