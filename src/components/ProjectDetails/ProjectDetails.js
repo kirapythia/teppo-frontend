@@ -29,7 +29,7 @@ const mapDispatchToProps = () => ({
  * @param {object} props.project
  * @param {function} props.removePlan
  */
-const ProjectDetails = ({ projectId, error, project, removePlan }) => (
+const ProjectDetails = ({ projectId, error, removePlan, project = { plans: [] } }) => (
   <div className="ProjectDetails container">
     {error && (
       <div>
@@ -45,7 +45,9 @@ const ProjectDetails = ({ projectId, error, project, removePlan }) => (
         />
 
         <h3>Projektiin liittyvät suunnitelmat</h3>
-        <PlansList plans={project.plans} removePlan={removePlan} />
+        {project.plans.length
+          ? <PlansList plans={project.plans} removePlan={removePlan} />
+          : <div className="text-italic">{t('project.details.no_plans')}</div>}
 
         <div className="ProjectDetails__actions_wrapper">
           <Link className="button" href={`/project/${projectId}/plan/new`}>

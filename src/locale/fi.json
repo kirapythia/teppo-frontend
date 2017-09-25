@@ -27,6 +27,7 @@
   "project.hansuProjectId": "Hankenumero",
   "project.alternative_names": "Muut nimet",
   "project.alternative_names.placeholder": "Lista nimiä pilkulla eroteltuna",
+  "project.details.no_plans": "Projektilla ei vielä ole suunnitelmia",
   "validation.message.hansu_project_id_used": "Hankenumero on jo käytössä",
   "validation.message.maxlength": "Arvon tulee olla enintään ${max} merkkiä",
   "validation.message.minlength": "Arvon tulee olla vähintään ${min} merkkiä",
