@@ -1,5 +1,6 @@
 import t from '../../locale';
 import { postJSON, ServerResponseError } from '../../utils/ajax';
+import { withTimeout } from '../../utils';
 
 export const SAVE_PLAN_URL = '/pythia/v1/plans/';
 
@@ -10,7 +11,7 @@ export const SAVE_PLAN_URL = '/pythia/v1/plans/';
  * @return {Promise}
  */
 export const savePlan = plan =>
-  postJSON(SAVE_PLAN_URL, plan)
+  withTimeout(2 * 60 * 1000, postJSON(SAVE_PLAN_URL, plan)
     .catch((error) => {
       throw new ServerResponseError(t('network.error.plan.create'), error.status);
-    });
+    }));

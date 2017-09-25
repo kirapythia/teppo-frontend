@@ -1,3 +1,6 @@
+import t from '../locale';
+import { ServerResponseError } from './ajax';
+
 /**
  * Pick a key from object when test function returns a truthy value
  * @param {function} fn test function
@@ -60,3 +63,15 @@ export const isNil = value => value === null || value === undefined;
  * @return {*}
  */
 export const identity = value => value;
+
+/**
+ * Create a promise race that will reject if given promise doesn't
+ * resolve before the timeout promise rejects
+ * @param {number} timeout Timeout in milliseconds
+ * @param {...Promise} promises
+ */
+export const withTimeout = (timeout, ...promises) => Promise.race([
+  ...promises,
+  new Promise((resolve, reject) =>
+    setTimeout(() => reject(new ServerResponseError(t('network.error.timeout'), 0)), timeout)),
+]);

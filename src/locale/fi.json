@@ -15,6 +15,7 @@
   "network.error.project.not_found": "Projektia ei löytynyt id:llä ${projectId}.",
   "network.error.project.create": "Projektin luominen epäonnistui",
   "network.error.project.hansu_project_id_validation": "Hankenumeron validointi epäonnistui",
+  "network.error.timeout": "Pyynnössä kesti liian kauan, pyyntö keskeytettiin",
   "notfoundpage.message": "Haettua sivua tai resurssia ei löytynyt",
   "notfoundpage.title": "Ups, jotain meni pieleen!",
   "plan.files": "Suunnitelmaan liittyvät tiedostot",
