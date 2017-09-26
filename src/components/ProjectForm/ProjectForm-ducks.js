@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push } from 'redux-little-router';
 import { saveProject } from './model';
-import { omit } from '../../utils';
+import { identity, omit } from '../../utils';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -23,7 +23,7 @@ export const actions = {
    */
   saveProject: createAction(
     CREATE_PROJECT,
-    formValues => formValues
+    identity
   ),
   /**
    * Action triggered if the saveProject action succeeds
@@ -32,7 +32,7 @@ export const actions = {
    */
   saveProjectSuccessAction: createAction(
     SAVE_PROJECT_SUCCESS,
-    project => project
+    identity
   ),
   /**
    * Action triggered if the createAction project fails
@@ -41,7 +41,7 @@ export const actions = {
    */
   saveProjectFailAction: createAction(
     SAVE_PROJECT_FAIL,
-    err => err
+    identity
   ),
   /**
    * Action triggered when form send error is closed

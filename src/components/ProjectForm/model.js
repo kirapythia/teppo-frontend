@@ -1,30 +1,33 @@
-const SAVE_PROJECT_URL = '/pythia/v1/projects/';
+import t from '../../locale';
+import { get, postJSON, ServerResponseError } from '../../utils/ajax';
+import { withTimeout } from '../../utils';
+
+export const SAVE_PROJECT_URL = '/pythia/v1/projects/';
+export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansuprojectid/';
 
 /**
- * Send project to the server. FIXME: not actually implemented yet.
+ * Send project to the server.
  * @async
  * @param {object} project Values from the project form
  * @return {Promise}
  */
-export function saveProject(project) {
-  return new Promise(function (resolve, reject) {
-    // resolve({ ...project, id: 132 });
-    fetch(SAVE_PROJECT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(project),
-    })
-      .then(function (res) {
-        if (!res.ok) {
-          reject(new Error('This is error!'));
-          return;
-        }
-        res.json()
-          .then(resolve)
-          .catch(() => reject(new Error('Invalid JSON')));
-      })
-      .catch(function () {
-        reject(new Error('nmy error message'));
-      });
-  });
-}
+export const saveProject = project =>
+  withTimeout(2 * 60 * 1000, postJSON(SAVE_PROJECT_URL, project)
+    .catch((error) => {
+      throw new ServerResponseError(t('network.error.project.create'), error.status);
+    }));
+
+/**
+ * Validate hansuProjectId on server by fetching project by hansuProjectId.
+ * If server responds with 404 then we can assume that the id is not used.
+ * @async
+ * @param {string} hansuprojectid
+ * @return {Promise}
+ */
+export const validateHansuProjectId = ({ hansuProjectId }) =>
+  get(`${FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL}${hansuProjectId}`)
+    .then((response) => {
+      // eslint-disable-next-line no-throw-literal
+      if (response.ok) throw { hansuProjectId: t('validation.message.hansu_project_id_used') };
+      return undefined;
+    });

@@ -1,4 +1,5 @@
 import * as utils from './index';
+import t from '../locale';
 
 describe('omit', () => {
   it('should remove given key from an object', () => {
@@ -69,5 +70,34 @@ describe('pick', () => {
     const obj = { a: 1, b: 2 };
     const actual = utils.pick(undefined, obj);
     expect(actual).toBe(obj);
+  });
+});
+
+describe('withTimeout', () => {
+  it('should resolve with given promise if it resolves first', () => {
+    const promise = new Promise(resolve => resolve(true));
+    const timeoutPromise = utils.withTimeout(100, promise);
+    return timeoutPromise.then(result => expect(result).toBe(true));
+  });
+
+  it('should take multiple promises and resolve with the one that resolves first', () => {
+    const promise1 = new Promise(resolve => setTimeout(() => resolve(3), 30));
+    const promise2 = new Promise(resolve => setTimeout(() => resolve(2), 20));
+    const promise3 = new Promise(resolve => setTimeout(() => resolve(1), 10));
+
+    const timeoutPromise = utils.withTimeout(100, promise1, promise2, promise3);
+    return timeoutPromise.then(result => expect(result).toBe(1));
+  });
+
+  it('should reject if given promise does not resolve before the timeout', () => {
+    const promise = new Promise(resolve => setTimeout(() => resolve(true), 10));
+    const timeoutPromise = utils.withTimeout(0, promise);
+    return timeoutPromise.catch(result => expect(result).not.toBe(true));
+  });
+
+  it('should reject with an error message if timeout rejects the promise', () => {
+    const promise = new Promise(resolve => setTimeout(() => resolve(true), 10));
+    const timeoutPromise = utils.withTimeout(0, promise);
+    return timeoutPromise.catch(result => expect(result.message).toBe(t('network.error.timeout')));
   });
 });

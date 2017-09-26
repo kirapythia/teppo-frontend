@@ -1,5 +1,6 @@
 import { loop, Cmd } from 'redux-loop';
 import { push } from 'redux-little-router';
+import { tpl } from '../../locale';
 import reducer, { actions } from './PlanForm-ducks';
 import { savePlan } from './model';
 import { actions as NotificationActions } from '../Notifications';
@@ -38,13 +39,13 @@ describe('savePlan success action', () => {
   it('should navigate to project details page', () => {
     const projectId = 123;
     const state = {};
-    const payload = { projectId };
+    const payload = { projectId, subNo: 1, mainNo: 1 };
     const result = reducer(state, actions.savePlanSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
       Cmd.batch([
         Cmd.action(NotificationActions.addSuccessNotification(
-          'Suunnitelma tallennettiin onnistuneesti!'
+          tpl('plan.message.save_success', payload)
         )),
         Cmd.action(push(`/project/${projectId}`)),
       ])

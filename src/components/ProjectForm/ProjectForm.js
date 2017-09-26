@@ -4,10 +4,17 @@ import { reduxForm } from 'redux-form';
 
 import { HOME } from '../../constants/routes';
 import { createFieldsWithValidations } from '../../forms/form-utils';
-
+import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm-ducks';
 import CreateAndSaveForm from '../Form/CreateAndSaveForm';
+
+/**
+ * All fields from fields configuration initialized with an empty string as value
+ * @type {object}
+ */
+const fieldsWithEmptyStringValues = Object.keys(fields)
+  .reduce((acc, key) => ({ ...acc, [key]: '' }), {});
 
 /**
  * Redux-form configuration object
@@ -24,8 +31,20 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
-
-  initialValues: Object.keys(fields).reduce((acc, key) => ({ ...acc, [key]: '' }), {}),
+  /**
+   * Initial values given to the redux form
+   */
+  initialValues: fieldsWithEmptyStringValues,
+  /**
+   * Async validator for hansuProjectId
+   * @type {function}
+   */
+  asyncValidate: validateHansuProjectId,
+  /**
+   * Fields that are validated with asyncValidate
+   * @type {string[]}
+   */
+  asyncBlurFields: ['hansuProjectId'],
 };
 
 // form field configuration objects with validator functions from field definitions
@@ -49,7 +68,7 @@ const mapStateToProps = state => ({
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   saveAction: actions.saveProject,
-  clearError: actions.clearSendError,
+  clearSendError: actions.clearSendError,
 }, dispatch);
 
 /**

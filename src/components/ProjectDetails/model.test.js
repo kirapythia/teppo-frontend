@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import t, { tpl } from '../../locale';
+import t from '../../locale';
 import { fetchProject } from './model';
 
 const URL_MATCHER = /^\/pythia\/\.*/;
@@ -24,21 +24,9 @@ describe('Fetching a project', () => {
     return fetchProject().then(resolved => expect(resolved).toEqual(project));
   });
 
-  it('should reject promise with a error object when fetch fails with status 404', () => {
+  it('should reject promise with an error object containing the response status', () => {
     fetchMock.get(URL_MATCHER, 404);
     return fetchProject().catch(err => expect(err.status).toEqual(404));
-  });
-
-  it('should reject with an error containing a not found message when failing with status 404', () => {
-    const projectId = 1;
-    const expected = tpl('network.error.project.not_found', { projectId });
-    fetchMock.get(URL_MATCHER, 404);
-    return fetchProject(projectId).catch(err => expect(err.message).toEqual(expected));
-  });
-
-  it('should reject promise with an Error when fetch fails with other status than 404', () => {
-    fetchMock.get(URL_MATCHER, 401);
-    return fetchProject().catch(err => expect(err.type).toEqual('Error'));
   });
 
   it('should reject with an error containing a general message when failing with other status than 404', () => {

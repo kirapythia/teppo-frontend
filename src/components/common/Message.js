@@ -11,7 +11,7 @@ import './Message.css';
  */
 const Message = ({ message, onClose, type = 'danger' }) => (
   <div className={cx('Message', 'alert', `alert-${type}`)}>
-    <CloseIconButton onClose={onClose} />
+    {onClose && <CloseIconButton onClose={onClose} />}
     <span>{ message }</span>
   </div>
 );
