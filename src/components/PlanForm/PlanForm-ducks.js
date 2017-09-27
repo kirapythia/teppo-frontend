@@ -1,10 +1,11 @@
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
-import { push } from 'redux-little-router';
+import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { editPlan, savePlan } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
-import { identity, omit } from '../../utils';
+import { identity, isOneOf, omit } from '../../utils';
+import * as ROUTES from '../../constants/routes';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -76,6 +77,14 @@ export const actions = {
 
 // ProjectForm reducer
 export default handleActions({
+  [LOCATION_CHANGED]: (state, action) => {
+    const { route } = action.payload;
+    // clear error when entering the form
+    if (state.error && isOneOf(route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])) {
+      return omit(['error'], state);
+    }
+    return state;
+  },
   // handle savePlan action
   // return redux loop command like object that will be
   // interpreted by redux-loop middleware
