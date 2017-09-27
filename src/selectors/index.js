@@ -7,7 +7,8 @@ import { createSelector } from 'reselect';
  * @module selectors
  */
 
-const getProjectDetails = state => (state.projectDetails || {}).project;
+const getProjectDetails = state => state.project;
+const getPlans = state => state.plans;
 
 /**
  * Return url's projectId
@@ -40,8 +41,16 @@ export const getCurrentProject = createSelector(
  */
 export const getCurrentPlan = createSelector(
   getCurrentPlanId,
-  getCurrentProject,
-  (planId, project) => planId
-    && project
-    && project.plans.find(plan => plan.planId === +planId)
+  getPlans,
+  (planId, plans = {}) => plans[planId]
+);
+
+/**
+ * Get all plans as a list
+ * @param {object} state
+ * @return {object[]} plans as a list
+ */
+export const listPlans = createSelector(
+  getPlans,
+  plans => Object.getOwnPropertyNames(plans).map(id => plans[id])
 );

@@ -4,14 +4,14 @@ import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { fetchProject } from './model';
 import { identity, omit } from '../../utils';
 import * as ROUTES from '../../constants/routes';
-import { PLAN_SAVE_SUCCESS, PLAN_EDIT_SUCCESS } from '../PlanForm';
+
 /**
  * Export reducer's name. Will be registerd to
  * the application state with this name
  */
 export const NAME = 'projectDetails';
 
-const FETCH_PROJECT_SUCCESS = 'pythia-webclient/ProjectDetails/FETCH_PROJECT_SUCCESS';
+export const FETCH_PROJECT_SUCCESS = 'pythia-webclient/ProjectDetails/FETCH_PROJECT_SUCCESS';
 const FETCH_PROJECT_ERROR = 'pythia-webclient/ProjectDetails/FETCH_PROJECT_ERROR';
 
 export const actions = {
@@ -27,7 +27,6 @@ export const actions = {
     identity
   ),
 };
-
 
 // ProjectDetails reducer
 export default handleActions({
@@ -64,7 +63,7 @@ export default handleActions({
 
   // action that is dispatched after project was successfully fetched from the server
   // add fetched project and remove error from state
-  [FETCH_PROJECT_SUCCESS]: (state, action) => ({ ...omit(['error'], state), project: action.payload }),
+  [FETCH_PROJECT_SUCCESS]: state => omit(['error'], state),
   // action that is dispatched after project fetching fails for some reason
   // add an error to the state and if fetch fails
   // because resource was not found then redirect to the home page
@@ -76,28 +75,5 @@ export default handleActions({
         Cmd.action(push(ROUTES.NOT_FOUND_PAGE))
       )
       : stateWithError;
-  },
-  // handle successful plan create action
-  // add the created plan to the current project
-  [PLAN_SAVE_SUCCESS]: (state, action) => {
-    const { project } = state;
-    const { projectId, plans } = project;
-
-    if (projectId !== action.payload.projectId) return state;
-
-    const newProject = { ...project, plans: [...plans, action.payload] };
-    return { ...state, project: newProject };
-  },
-  // handle successful plan create action
-  // add the created plan to the current project
-  [PLAN_EDIT_SUCCESS]: (state, action) => {
-    const { project } = state;
-    const { projectId, plans } = project;
-
-    if (projectId !== action.payload.projectId) return state;
-
-    const withoutPlan = plans.filter(plan => plan.planId !== action.payload.planId);
-    const newProject = { ...project, plans: [...withoutPlan, action.payload] };
-    return { ...state, project: newProject };
   },
 }, {});

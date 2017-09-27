@@ -10,9 +10,9 @@ import './PlansList.css';
  * @param {object[]} props.plans
  * @param {function} props.removePlan
  */
-const PlansList = ({ project = { plans: [] }, removePlan }) => (
+const PlansList = ({ project, plans, removePlan }) => (
   <ul className="PlansList clear-list-styles">
-    {sortPlans(project.plans).map(plan => (
+    {sortPlans(plans).map(plan => (
       <PlanListItem
         key={plan.planId}
         plan={plan}

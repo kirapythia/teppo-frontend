@@ -11,7 +11,7 @@ import { identity, omit } from '../../utils';
 export const NAME = 'projectForm';
 
 const CREATE_PROJECT = 'pythia-webclient/ProjectForm/CREATE_PROJECT';
-const PROJECT_SUCCESS = 'pythia-webclient/ProjectForm/PROJECT_SUCCESS';
+export const PROJECT_SUCCESS = 'pythia-webclient/ProjectForm/PROJECT_SUCCESS';
 const PROJECT_FAIL = 'pythia-webclient/ProjectForm/PROJECT_FAIL';
 const CLEAR_SEND_ERROR = 'pythia-webclient/ProjectForm/CLEAR_SEND_ERROR';
 const EDIT_PROJECT = 'pythia-webclient/ProjectForm/EDIT_PROJECT';
