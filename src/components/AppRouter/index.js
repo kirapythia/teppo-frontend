@@ -2,6 +2,7 @@ import React from 'react';
 import { Fragment } from 'redux-little-router';
 
 import * as ROUTES from '../../constants/routes';
+import { isOneOf } from '../../utils';
 import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
@@ -10,7 +11,6 @@ import PlanPage from '../PlanPage';
 import NotFoundPage from '../NotFoundPage';
 
 const is404Page = location => location.path === ROUTES.NOT_FOUND_PAGE;
-const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
 
 /**
  * Main level router for the app
