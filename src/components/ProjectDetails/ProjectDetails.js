@@ -38,21 +38,30 @@ const ProjectDetails = ({ projectId, error, removePlan, project = { plans: [] } 
       </div>
     )}
     {!error && project && (
-      <div>
+      <div className="ProjectDetails__content-wrapper">
         <ShowDetails
           title={project.name}
           details={omit(['name', 'projectId', 'plans'], project)}
         />
 
-        <h3>Projektiin liittyvät suunnitelmat</h3>
-        {project.plans.length
-          ? <PlansList plans={project.plans} removePlan={removePlan} />
-          : <div className="text-italic">{t('project.details.no_plans')}</div>}
+        <div className="ProjectDetails__plans-wrapper">
+          <h3>Projektiin liittyvät suunnitelmat</h3>
+          {project.plans.length
+            ? <PlansList project={project} removePlan={removePlan} />
+            : <div className="text-italic">{t('project.details.no_plans')}</div>}
+        </div>
 
-        <div className="ProjectDetails__actions_wrapper">
-          <Link className="button" href={`/project/${projectId}/plan/new`}>
-            <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
-          </Link>
+        <div className="row ProjectDetails__actions-wrapper">
+          <div className="column column-50">
+            <Link className="button" href={`/project/${projectId}/edit`}>
+              <i className="fa fa-fw fa-pencil fa-lg" aria-hidden="true" />&nbsp;{t('button.edit_project')}
+            </Link>
+          </div>
+          <div className="column column-50 text-right">
+            <Link className="button" href={`/project/${projectId}/plan/new`}>
+              <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
+            </Link>
+          </div>
         </div>
       </div>
     )}

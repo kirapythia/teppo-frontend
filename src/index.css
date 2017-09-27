@@ -23,6 +23,14 @@ b {
   font-style: italic;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
 .text-danger {
   color: #721c24;
 }
@@ -55,8 +63,6 @@ b {
   background-color: #fff3cd;
   border-color: #ffeeba;
 }
-
-
 
 .vertical-middle {
   vertical-align: middle;

@@ -32,7 +32,6 @@ export const get = url => fetch(url, {
   headers: { 'Content-Type': 'application/json' },
 });
 
-
 /**
  * Do a post request
  * @async
@@ -47,19 +46,45 @@ export const post = (url, body) => fetch(url, {
 });
 
 /**
+ * Do a put request
+ * @async
+ * @param {string} url
+ * @param {object} body
+ * @return {Promise}
+ */
+export const put = (url, body) => fetch(url, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body),
+});
+
+/**
+ * Do a request and parse it's body
+ * @private
+ * @param {function} method put, post or get
+ * @param {*} props
+ */
+const requestAndParseJSON = (method, ...props) =>
+  method(...props)
+    .then(parseJSONBody);
+
+/**
  * Do a get request and parse it's body (JSON)
  * @see post
  * @return {object} parsed JSON
  */
-export const getJSON = url =>
-  get(url)
-    .then(parseJSONBody);
+export const getJSON = url => requestAndParseJSON(get, url);
 
 /**
  * Do a post request and parse it's body (JSON)
  * @see post
  * @return {object} parsed JSON
  */
-export const postJSON = (url, body) =>
-  post(url, body)
-    .then(parseJSONBody);
+export const postJSON = (url, body) => requestAndParseJSON(post, url, body);
+
+/**
+ * Do a put request and parse it's body (JSON)
+ * @see put
+ * @return {object} parsed JSON
+ */
+export const putJSON = (url, body) => requestAndParseJSON(put, url, body);

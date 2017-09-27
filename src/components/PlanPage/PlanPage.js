@@ -3,25 +3,30 @@ import { connect } from 'react-redux';
 
 import t from '../../locale';
 import { pick } from '../../utils';
+import { getCurrentPlan } from '../../selectors';
 import { ShowDetails } from '../ProjectDetails';
 import PlanForm from '../PlanForm';
 import './PlanPage.css';
 
 const mapStateToProps = state => ({
   project: state.projectDetails.project,
+  plan: getCurrentPlan(state),
 });
 
 /**
  * Page for creating a new plan
+ * @param {object} props
+ * @param {object} props.plan
+ * @param {object} props.project
  */
-const PlanPage = ({ project = {} }) => (
+const PlanPage = ({ plan, project = {} }) => (
   <div className="PlanPage container">
-    <h2>{ t('button.add_plan') }</h2>
+    <h2>{ plan ? t('button.edit_plan') : t('button.add_plan') }</h2>
     <ShowDetails
       details={pick(['name', 'hansuProjectId'], project)}
       className="ShowDetails--highlighted"
     />
-    <PlanForm />
+    <PlanForm plan={plan} />
   </div>
 );
 

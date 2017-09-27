@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import fields from '../../forms/plan';
-import { getCurrentProjectId } from '../../selectors';
+import { getCurrentProject } from '../../selectors';
 import { NAME, actions } from './PlanForm-ducks';
 
-import CreateAndSaveForm from '../Form/CreateAndSaveForm';
+import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
+
+// form field configuration objects with validator functions from field definitions
+const fieldsWithValidations = createFieldsWithValidations(fields);
 
 /**
  * Redux-form configuration object
@@ -34,38 +37,42 @@ const formConfig = {
    * @type {boolean}
    */
   keepDirtyOnReinitialize: true,
+  /**
+   * Field definitions with validation functions
+   * @type {object[]}
+   */
+  fields: fieldsWithValidations,
 };
-
-// form field configuration objects with validator functions from field definitions
-const fieldsWithValidations = createFieldsWithValidations(fields);
 
 /**
  * Gather all the props needed from the application state
  * @param {object} state
  * @return {object}
  */
-const mapStateToProps = (state) => {
-  const projectId = getCurrentProjectId(state);
-  const { project = {} } = state.projectDetails;
+const mapStateToProps = (state, ownProps) => {
+  const { projectId, mainNo } = getCurrentProject(state) || {};
+  const { plan } = ownProps;
+  const actionProps = plan
+    ? { initialValues: { ...plan, projectId } }
+    : { initialValues: { mainNo, projectId } };
 
-  return {
-    project,
-    projectId,
+  return Object.assign({
     formSendError: state.planForm.error,
-    fields: fieldsWithValidations,
     cancelHref: `/project/${projectId}`,
-    initialValues: { mainNo: project.mainNo, projectId },
-  };
+  }, actionProps);
 };
 
 /**
  * Gather all the action creators needed
  * @param {function} dispatch the dispatcher function
+ * @param {object} ownProps actual props passed to the component
  * @return {object}
  */
-const mapDispatchToProps = dispatch => bindActionCreators({
-  saveAction: actions.savePlan,
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
   clearSendError: actions.clearSendError,
+  submitAction: ownProps.plan
+    ? actions.editPlan
+    : actions.savePlan,
 }, dispatch);
 
 /**
@@ -75,4 +82,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm(formConfig)
-)(CreateAndSaveForm);
+)(CreateEditAndSaveForm);
