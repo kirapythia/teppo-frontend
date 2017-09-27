@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 
 import t from '../../locale';
 import { pick } from '../../utils';
-import { getCurrentPlan } from '../../selectors';
+import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { ShowDetails } from '../ProjectDetails';
 import PlanForm from '../PlanForm';
 import './PlanPage.css';
 
 const mapStateToProps = state => ({
-  project: state.projectDetails.project,
+  project: getCurrentProject(state),
   plan: getCurrentPlan(state),
 });
 
