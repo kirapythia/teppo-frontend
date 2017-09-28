@@ -1,5 +1,5 @@
 import component from './HomePage';
-import reducer, { NAME } from './HomePage-ducks';
+import reducer, { actions, NAME } from '../ProjectList/ProjectList-ducks';
 
-export { reducer, NAME };
+export { actions, reducer, NAME };
 export default component;

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
-import t from '../../locale';
+// import t from '../../locale';
 import Message from '../common/Message';
-import * as ROUTES from '../../constants/routes';
-
-// { projectId: 1, hansuProjectId: '1234H', name: 'testip', mainNo: 2345, description: 'kuvaus' }
-// projectId, hansuProjectId, name, mainNo, description
+import './ProjectList.css';
+import { PROJECT_DETALS } from '../../constants/routes';
 
 /**
  * Show list of projects
@@ -16,17 +14,30 @@ const ProjectList = ({ projectList, error }) => (
     {error && (
       <div>
         <Message type="danger" message={error.message} />
-        <Link href={ROUTES.HOME}>{t('link.back_to_home_page')}.</Link>
+        {/* <Link href={ROUTES.HOME}>{t('link.back_to_home_page')}.</Link>
+        <td>{projectId}</td> */}
       </div>
     )}
     {!error && projectList && (
       <div>
-        <ul>
-          {projectList.map(({ projectId }) => (
-            <li key={projectId}>{projectId}
-            </li>
+        <table>
+          <tr><th>thPäänumero</th><th>thNimi</th></tr>
+          {projectList.map(({ projectId, hansuProjectId, name, mainNo, description }) => (
+            <tbody>
+
+
+              <tr key={projectId}>
+                <Link href={`project/${projectId}`}>
+                  <td>{mainNo}</td>
+                  <td>{name}</td>
+                </Link>
+              </tr>
+
+
+            </tbody>
           ))}
-        </ul>
+
+        </table>
       </div>
     )}
   </div>
