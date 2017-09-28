@@ -4,6 +4,8 @@ import { push, LOCATION_CHANGED } from 'redux-little-router';
 import * as ROUTES from '../../constants/routes';
 import { saveProject, editProject } from './model';
 import { identity, isOneOf, omit } from '../../utils';
+import { tpl } from '../../locale';
+import { actions as NotificationActions } from '../Notifications';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -109,9 +111,15 @@ export default handleActions({
   [PROJECT_SUCCESS]: (state, action) => loop(
     // return state unmodified
     state,
-    // (middleware will) run (react-little-router's) push action to navigate
-    // to the project details page
-    Cmd.action(push(`/project/${action.payload.projectId}`))
+    Cmd.batch([
+      // display a success notification
+      Cmd.action(NotificationActions.addSuccessNotification(
+        tpl('project.message.edit_success', action.payload)
+      )),
+      // (middleware will) run (react-little-router's) push action to navigate
+      // to the project details page
+      Cmd.action(push(`/project/${action.payload.projectId}`)),
+    ])
   ),
   // handle saveProject fail action
   // just add error to the state

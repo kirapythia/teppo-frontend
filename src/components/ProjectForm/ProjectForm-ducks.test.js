@@ -3,6 +3,8 @@ import { push, LOCATION_CHANGED } from 'redux-little-router';
 import reducer, { actions } from './ProjectForm-ducks';
 import { saveProject } from './model';
 import * as ROUTES from '../../constants/routes';
+import { tpl } from '../../locale';
+import { actions as NotificationActions } from '../Notifications';
 
 describe('saveProject action', () => {
   it('should set error to null', () => {
@@ -41,7 +43,12 @@ describe('saveProject success action', () => {
     const result = reducer(state, actions.projectSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
-      Cmd.action(push(`/project/${payload.projectId}`))
+      Cmd.batch([
+        Cmd.action(NotificationActions.addSuccessNotification(
+          tpl('project.message.edit_success', payload)
+        )),
+        Cmd.action(push(`/project/${payload.projectId}`)),
+      ])
     ));
   });
 });
