@@ -33,9 +33,9 @@ const fields = {
     },
   },
 
-  files: {
+  url: {
     type: 'file',
-    label: t('plan.files'),
+    label: t('plan.file'),
     placeholder: t('dropzone.placeholder'),
   },
 };

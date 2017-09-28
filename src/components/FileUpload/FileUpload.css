@@ -1,0 +1,29 @@
+.FileUpload {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  border: 2px dotted #68B4FF;
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+.FileUpload--active {
+  background-color: #D6E8F8;
+  border: 2px dotted #68B4FF;
+}
+
+.FileUpload__text-container {
+  flex: 1;
+}
+
+.FilesList li {
+  display: flex;
+}
+
+.FilesList li div:nth-child(2) {
+  flex: 1;
+}
+
+.FilesList li div {
+  margin-right: 1rem;
+}
