@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
-import { push, LOCATION_CHANGED } from 'redux-little-router';
+import { LOCATION_CHANGED } from 'redux-little-router';
 
 import { fetchProjectList } from './model';
 import { omit } from '../../utils';

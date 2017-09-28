@@ -7,7 +7,7 @@ import espooLogo from './espoo_logo.png';
 const Header = () => (
   <header className="Header container">
     <div className="row">
-      <div className="column column-100">
+      <div className="twelve columns">
         <h1 className="Header__title">
           <Link href={HOME}>
             <img className="Header__logo" src={espooLogo} alt="Espoo" />

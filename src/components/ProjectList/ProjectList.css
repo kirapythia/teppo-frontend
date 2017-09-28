@@ -1,16 +1,40 @@
-table tr td a {
-  display:inline-block;
+.ProjectList__header {
+  font-weight: bold;
+  overflow: auto;
+  margin-bottom: .5rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid #aaa;
+}
 
+.ProjectList ul {
   color: #222;
   text-decoration: none;
 }
 
-table tbody tr:hover {
-  background-color: lightgray;
+.ProjectList li {
+  overflow: auto;
+  padding: .2rem .5rem;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.ProjectList li .fa {
+  visibility: hidden;
+}
+
+.ProjectList li:hover .fa {
+  visibility: visible;
+}
+
+.ProjectList a {
+  color: #222;
+}
+
+.ProjectList li:hover {
+  background-color: #eee;
   color: #1EAEDB;
 }
 
-
-table tbody tr:hover {
+.ProjectList li:hover a {
   color: #1EAEDB;
 }
