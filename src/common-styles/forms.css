@@ -22,3 +22,8 @@ form .error {
   background-color: #f8d7da;
   border-color: #721c24;
 }
+
+.clear-list-styles {
+  list-style: none;
+  padding-left: 0;
+}

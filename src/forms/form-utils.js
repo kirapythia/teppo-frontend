@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import Dropzone from 'react-dropzone';
+import FileUpload from '../components/FileUpload';
 
 import createValidators from '../validation';
 
@@ -14,7 +14,7 @@ import createValidators from '../validation';
  * @param {boolean} error
  * @return {HTMLElement}
  */
-const chooseElement = ({ type, input, placeholder, touched, error }) => {
+const chooseElement = ({ type, input, placeholder, touched, error, form }) => {
   const hasError = touched && error;
   const className = cx({ error: hasError });
 
@@ -24,12 +24,11 @@ const chooseElement = ({ type, input, placeholder, touched, error }) => {
       return <textarea {...{ ...input, placeholder, className }} />;
     case 'file':
       return (
-        <Dropzone
+        <FileUpload
           {...input}
-          onDrop={input.onChange}
-        >
-          <span>{placeholder}</span>
-        </Dropzone>
+          placeholder={placeholder}
+          form={form}
+        />
       );
     default:
       return <input {...{ ...input, type, placeholder, className }} />;
@@ -58,7 +57,7 @@ export const renderField = ({
 }) => (
   <fieldset>
     <label htmlFor={`${form}_${input.name}`}>{`${label} ${validation.required ? '*' : ''}`}</label>
-    { chooseElement({ type, input, placeholder, touched, error })}
+    { chooseElement({ type, input, placeholder, touched, error, form })}
     {touched && error && <div className="text-danger">{error}</div>}
   </fieldset>
 );
