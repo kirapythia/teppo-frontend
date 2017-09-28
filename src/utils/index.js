@@ -75,3 +75,11 @@ export const withTimeout = (timeout, ...promises) => Promise.race([
   new Promise((resolve, reject) =>
     setTimeout(() => reject(new ServerResponseError(t('network.error.timeout'), 0)), timeout)),
 ]);
+
+/**
+ * Check if needle is found in haystack
+ * @param {*} needle
+ * @param {*[]} haystack
+ * @return {boolean}
+ */
+export const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;

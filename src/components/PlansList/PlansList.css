@@ -1,3 +1,7 @@
+.PlansList {
+  margin-bottom: 0;
+}
+
 .PlanListItem {
   display: flex;
 }
@@ -13,4 +17,8 @@
 
 .PlanListItem .IconButton {
   margin-left: 6px;
+}
+
+.PlanListItem__RemoveButton {
+  color: #DB0202;
 }

@@ -8,7 +8,7 @@ import './Layout.css';
 const Layout = ({ children }) => (
   <div className="PageLayout">
     <Header />
-    <div className="PageLayout__content">
+    <div className="PageLayout__content container">
       { children }
     </div>
     <Footer />

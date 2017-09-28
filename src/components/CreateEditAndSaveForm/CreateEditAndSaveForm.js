@@ -3,8 +3,8 @@ import { Field } from 'redux-form';
 import { renderField } from '../../forms/form-utils';
 
 import Message from '../common/Message';
-import FormCancelButton from '../Form/FormCancelButton';
-import FormSubmitButton from '../Form/FormSubmitButton';
+import FormCancelButton from './FormCancelButton';
+import FormSubmitButton from './FormSubmitButton';
 
 /**
  * Generic form for creating a new entity
@@ -19,7 +19,7 @@ import FormSubmitButton from '../Form/FormSubmitButton';
  * @param {function} saveAction Callback for form submit
  * @param {function} clearSendError Close callback for error message component
  */
-const CreateAndSaveForm = ({
+const CreateEditAndSaveForm = ({
   fields,
   handleSubmit,
   valid,
@@ -27,10 +27,10 @@ const CreateAndSaveForm = ({
   submitting,
   cancelHref,
   formSendError,
-  saveAction,
+  submitAction,
   clearSendError,
 }) => (
-  <form onSubmit={handleSubmit(saveAction)}>
+  <form onSubmit={handleSubmit(submitAction)}>
     { formSendError && <Message message={formSendError.message} onClose={clearSendError} /> }
 
     { fields.map(field => (
@@ -44,14 +44,14 @@ const CreateAndSaveForm = ({
     ))}
 
     <div className="row">
-      <div className="column column-40">
+      <div className="six columns">
         <FormCancelButton href={cancelHref} />
       </div>
-      <div className="column column-40 column-offset-20">
+      <div className="six columns">
         <FormSubmitButton disabled={!valid || pristine || submitting} />
       </div>
     </div>
   </form>
 );
 
-export default CreateAndSaveForm;
+export default CreateEditAndSaveForm;

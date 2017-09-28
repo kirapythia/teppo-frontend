@@ -1,19 +1,25 @@
 import React from 'react';
+import { Link } from 'redux-little-router';
+import { formIdentifier } from './model';
 import IconButton from '../common/IconButton';
 
 /**
  * Component for displaying project's plans as a list
  * @param {object} props
  * @param {object} props.plan
+ * @param {number} props.projectId
  * @param {function} props.removePlan
  */
-const PlanListItem = ({ plan = {}, removePlan }) => (
+const PlanListItem = ({ plan = {}, project = {}, removePlan }) => (
   <li className="PlanListItem">
     <div className="PlanListItem__identifiers">
-      {plan.mainNo}/{String(plan.subNo)}
+      {formIdentifier(plan)}
     </div>
     <div>
-      <IconButton className="fa-times fa-lg" onClick={removePlan} />
+      <Link href={`/project/${project.projectId}/plan/${plan.planId}`}>
+        <i className="fa fa-pencil fa-lg" />
+      </Link>
+      <IconButton className="PlanListItem__RemoveButton fa-times fa-lg" onClick={removePlan} />
     </div>
   </li>
 );

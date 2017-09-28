@@ -3,7 +3,7 @@ import { Link } from 'redux-little-router';
 // import t from '../../locale';
 import Message from '../common/Message';
 import './ProjectList.css';
-import { PROJECT_DETALS } from '../../constants/routes';
+import { PROJECT_DETAILS } from '../../constants/routes';
 
 /**
  * Show list of projects
@@ -20,20 +20,21 @@ const ProjectList = ({ projectList, error }) => (
     )}
     {!error && projectList && (
       <div>
-        <table>
-          <tr><th>thPäänumero</th><th>thNimi</th></tr>
+        <table className="u-full-width">
+          <thead>
+            <tr><th>thPäänumero</th><th>thNimi</th></tr>
+          </thead>
           {projectList.map(({ projectId, hansuProjectId, name, mainNo, description }) => (
             <tbody>
-
-
+              {/* <Link href={`project/${projectId}`}> */}
               <tr key={projectId}>
-                <Link href={`project/${projectId}`}>
-                  <td>{mainNo}</td>
-                  <td>{name}</td>
-                </Link>
+
+                <td><Link href={`project/${projectId}`}>{mainNo}</Link></td>
+
+                <td><Link href={`project/${projectId}`}>{name}</Link></td>
+
               </tr>
-
-
+              {/* */}
             </tbody>
           ))}
 

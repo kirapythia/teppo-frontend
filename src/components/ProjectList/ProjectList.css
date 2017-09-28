@@ -1,3 +1,16 @@
-.tr:hover {
-  background-color: green;
+table tr td a {
+  display:inline-block;
+
+  color: #222;
+  text-decoration: none;
+}
+
+table tbody tr:hover {
+  background-color: lightgray;
+  color: #1EAEDB;
+}
+
+
+table tbody tr:hover {
+  color: #1EAEDB;
 }
