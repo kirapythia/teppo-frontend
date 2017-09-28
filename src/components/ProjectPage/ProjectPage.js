@@ -13,10 +13,8 @@ const mapStateToProps = state => ({
  */
 const ProjectPage = ({ project }) => (
   <div>
-    <div className="container">
-      <h2>{ project ? t('button.edit_project') : t('button.add_project') }</h2>
-      <ProjectForm project={project} />
-    </div>
+    <h2>{ project ? t('button.edit_project') : t('button.add_project') }</h2>
+    <ProjectForm project={project} />
   </div>
 );
 

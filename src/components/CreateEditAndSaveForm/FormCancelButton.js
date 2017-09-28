@@ -8,8 +8,8 @@ import t from '../../locale';
  * @param {string} props.href Link href
  */
 const FormCancelButton = ({ href }) => (
-  <Link className="button button-outline full-width" href={href}>
-    <i className="fa fa-times fa-lg vertical-middle" aria-hidden="true" />&nbsp;
+  <Link className="button u-full-width" href={href}>
+    <i className="fa fa-times fa-lg" aria-hidden="true" />&nbsp;
     {t('button.cancel')}
   </Link>
 );

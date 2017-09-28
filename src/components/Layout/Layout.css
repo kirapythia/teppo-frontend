@@ -5,24 +5,33 @@
 }
 
 .PageLayout__content {
-  padding: 1.5rem 2.5rem;
   flex: 1;
 }
 
 .Header {
-  background-color: #222;
-  padding: 20px;
-  color: white;
-  text-align: center;
+  background-color: #fff;
+  padding: 1rem 0;
 }
 
-.Header a,
-.Header a:active,
-.Header a:focus,
-.Header a:hover {
-  color: #fff;
+.Header .row > .column:first-child {
+  text-align: left;
+}
+
+.Header__logo {
+  margin-right: 3rem;
+  vertical-align: bottom;
+}
+
+.Header__title {
+  font-size: 4rem;
+  vertical-align: middle;
+}
+
+.Header a {
+  text-decoration: none;
 }
 
 .Footer {
-  text-align: center;
+  background-color: #fff;
+  padding: 2rem 0;
 }

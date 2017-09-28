@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
  * @param {object} props.project
  */
 const PlanPage = ({ plan, project = {} }) => (
-  <div className="PlanPage container">
+  <div className="PlanPage">
     <h2>{ plan ? t('button.edit_plan') : t('button.add_plan') }</h2>
     <ShowDetails
       details={pick(['name', 'hansuProjectId'], project)}
