@@ -1,5 +1,4 @@
 import { combineActions, handleActions } from 'redux-actions';
-import { omit } from '../utils';
 import { actionTypes as ProjectForm } from '../components/ProjectForm';
 import { actionTypes as ProjectDetails } from '../components/ProjectDetails';
 
@@ -15,5 +14,5 @@ export default handleActions({
   [combineActions(
     ProjectForm.PROJECT_SUCCESS,
     ProjectDetails.FETCH_PROJECT_SUCCESS
-  )]: (state, action) => omit(['plans'], action.payload),
+  )]: (state, action) => ({ ...action.payload, plans: [] }),
 }, {});
