@@ -44,10 +44,10 @@ const CreateEditAndSaveForm = ({
     ))}
 
     <div className="row">
-      <div className="column column-40">
+      <div className="six columns">
         <FormCancelButton href={cancelHref} />
       </div>
-      <div className="column column-40 column-offset-20">
+      <div className="six columns">
         <FormSubmitButton disabled={!valid || pristine || submitting} />
       </div>
     </div>

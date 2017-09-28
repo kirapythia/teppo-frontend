@@ -14,8 +14,8 @@ const ShowDetails = ({ title, details, className }) => (
 
     {Object.keys(details).map(propName => (
       <div key={propName} className="row">
-        <div className="column column-30">{(fields[propName] || {}).label}</div>
-        <div className="column"><b>{details[propName] || '-'}</b></div>
+        <div className="three columns">{(fields[propName] || {}).label}</div>
+        <div className="nine columns"><b>{details[propName] || '-'}</b></div>
       </div>
     ))}
   </div >

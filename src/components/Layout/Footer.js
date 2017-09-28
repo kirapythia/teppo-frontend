@@ -1,9 +1,13 @@
 import React from 'react';
 
 const Footer = () => (
-  <div className="Footer">
-    &copy; Espoon Kaupunki 2017
-  </div>
+  <footer className="Footer">
+    <div className="container">
+      <div className="row">
+        <div className="column column-100">&copy; Espoon Kaupunki 2017</div>
+      </div>
+    </div>
+  </footer>
 );
 
 export default Footer;

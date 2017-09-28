@@ -1,3 +1,7 @@
+.PlansList {
+  margin-bottom: 0;
+}
+
 .PlanListItem {
   display: flex;
 }

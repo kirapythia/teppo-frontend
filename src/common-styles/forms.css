@@ -1,5 +1,6 @@
 fieldset {
   padding: 0;
+  border: 0;
   margin-bottom: 2rem;
 }
 
@@ -10,6 +11,7 @@ input::-webkit-input-placeholder {
 input,
 textarea {
   letter-spacing: .5pt;
+  width: 100%;
 }
 
 textarea {

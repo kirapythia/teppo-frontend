@@ -7,8 +7,8 @@ import t from '../../locale';
  * @param {boolean} props.disabled
  */
 const FormSubmitButton = ({ disabled }) => (
-  <button type="submit" className="button full-width" disabled={disabled}>
-    <i className="fa fa-floppy-o fa-lg vertical-middle" aria-hidden="true" />&nbsp;
+  <button type="submit" className="button button-primary u-full-width" disabled={disabled}>
+    <i className="fa fa-floppy-o fa-lg" aria-hidden="true" />&nbsp;
     {t('button.save')}
   </button>
 );

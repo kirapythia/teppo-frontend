@@ -1,19 +1,6 @@
-html {
-  font-size: 14px;
-}
-
-body {
-  color: #555;
-}
-
 html, body, #root, .full-height {
   height: 100%;
 }
-
-b {
-  font-weight: bold;
-}
-
 .clear-list-styles {
   list-style: none;
   padding-left: 0;
@@ -63,12 +50,3 @@ b {
   background-color: #fff3cd;
   border-color: #ffeeba;
 }
-
-.vertical-middle {
-  vertical-align: middle;
-}
-
-.full-width {
-  display: block;
-  width: 100%;
-};

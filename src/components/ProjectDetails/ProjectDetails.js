@@ -30,7 +30,7 @@ const mapDispatchToProps = () => ({
  * @param {function} props.removePlan
  */
 const ProjectDetails = ({ error, removePlan, project, plans }) => (
-  <div className="ProjectDetails container">
+  <div className="ProjectDetails">
     {error && (
       <div>
         <Message type="danger" message={error.message} />
@@ -52,13 +52,13 @@ const ProjectDetails = ({ error, removePlan, project, plans }) => (
         </div>
 
         <div className="row ProjectDetails__actions-wrapper">
-          <div className="column column-50">
-            <Link className="button" href={`/project/${project.projectId}/edit`}>
+          <div className="six columns">
+            <Link className="button u-full-width" href={`/project/${project.projectId}/edit`}>
               <i className="fa fa-fw fa-pencil fa-lg" aria-hidden="true" />&nbsp;{t('button.edit_project')}
             </Link>
           </div>
-          <div className="column column-50 text-right">
-            <Link className="button" href={`/project/${project.projectId}/plan/new`}>
+          <div className="six columns">
+            <Link className="button button-primary u-full-width" href={`/project/${project.projectId}/plan/new`}>
               <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
             </Link>
           </div>
