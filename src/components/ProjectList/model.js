@@ -1,22 +1,11 @@
-import t, { tpl } from '../../locale';
+import t from '../../locale';
+import { getJSON, ServerResponseError } from '../../utils/ajax';
+import { withTimeout } from '../../utils';
 
 const FETCH_PROJECT_LIST_URL = '/pythia/v1/projects/';
 
-export const fetchProjectList = () => new Promise((resolve, reject) => {
-  fetch(
-    FETCH_PROJECT_LIST_URL, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then((response) => {
-      if (response.ok) {
-        resolve(response.json());
-        return;
-      }
-      reject({
-        type: 'Error',
-        message: t('network.error.project_list.fetch'),
-      });
-    })
-    .catch(() => reject({ status: 0, message: t('network.error.project_list.fetch') }));
-});
+export const fetchProjectList = () =>
+  withTimeout(2 * 60 * 1000, getJSON(FETCH_PROJECT_LIST_URL))
+    .catch((error) => {
+      throw new ServerResponseError(t('network.error.project_list.fetch'), error.status);
+    });
