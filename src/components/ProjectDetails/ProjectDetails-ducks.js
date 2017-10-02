@@ -28,6 +28,13 @@ export const actions = {
   ),
 };
 
+/**
+ * Initial part of the state handled by this reducer
+ */
+const initialState = {
+  isFetching: false,
+};
+
 // ProjectDetails reducer
 export default handleActions({
   // react to url change if
@@ -41,11 +48,11 @@ export default handleActions({
     // if navigated to the project details page
     // if there's project id in the url and it's different than previous id
     // then fetch project from the server...
-    if (projectId
-        && (!project || Number(projectId) !== project.projectId)) {
+    if (projectId && (!project || Number(projectId) !== project.projectId)) {
+
       return loop(
         // remove error from the state
-        state,
+        { ...state, isFetching: true },
         // Middleware will call fetchProject and if it succeeds
         // then fetchProjectSuccess action will be dispatched
         // otherwise fetchProjectError action will be dispatched
@@ -63,12 +70,12 @@ export default handleActions({
 
   // action that is dispatched after project was successfully fetched from the server
   // add fetched project and remove error from state
-  [FETCH_PROJECT_SUCCESS]: state => omit(['error'], state),
+  [FETCH_PROJECT_SUCCESS]: state => ({ ...omit(['error'], state), isFetching: false }),
   // action that is dispatched after project fetching fails for some reason
   // add an error to the state and if fetch fails
   // because resource was not found then redirect to the home page
   [FETCH_PROJECT_ERROR]: (state, action) => {
-    const stateWithError = { ...state, error: action.payload };
+    const stateWithError = { ...state, error: action.payload, isFetching: false };
     return (action.payload.status === 404)
       ? loop(
         stateWithError,
@@ -76,4 +83,4 @@ export default handleActions({
       )
       : stateWithError;
   },
-}, {});
+}, initialState);

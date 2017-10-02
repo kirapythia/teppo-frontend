@@ -1,3 +1,7 @@
+.ProjectList {
+  position: relative;
+}
+
 .ProjectList__header {
   font-weight: bold;
   overflow: auto;

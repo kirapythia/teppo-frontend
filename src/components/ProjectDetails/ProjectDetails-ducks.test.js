@@ -12,7 +12,7 @@ describe('Location change', () => {
     const result = reducer(state, action);
     expect(result).toEqual(
       loop(
-        state,
+        result[0],
         Cmd.run(fetchProject, {
           successActionCreator: actions.fetchProjectSuccess,
           failActionCreator: actions.fetchProjectError,
@@ -20,6 +20,14 @@ describe('Location change', () => {
         })
       )
     );
+  });
+
+  it('should start loading when fetch is started', () => {
+    const params = { projectId: '123' };
+    const action = { type: LOCATION_CHANGED, payload: { route: PROJECT_DETAILS, params } };
+    const state = { isFetching: false };
+    const [newState] = reducer(state, action);
+    expect(newState.isFetching).toEqual(true);
   });
 
   it('should not intiate project fetch when navigated to page without projectId', () => {
@@ -73,6 +81,13 @@ describe('Fetch project success', () => {
     const result = reducer(state, action);
     expect(result.error).toEqual(undefined);
   });
+
+  it('should mark fetching finished', () => {
+    const action = actions.fetchProjectSuccess({ projectId: 1 });
+    const state = { isFetching: true };
+    const result = reducer(state, action);
+    expect(result.isFetching).toEqual(false);
+  });
 });
 
 describe('Fetch project error', () => {
@@ -104,5 +119,12 @@ describe('Fetch project error', () => {
       result[0],
       Cmd.action(push(NOT_FOUND_PAGE))
     ));
+  });
+
+  it('should mark fetching finished', () => {
+    const action = actions.fetchProjectError({ projectId: 1 });
+    const state = { isFetching: true };
+    const result = reducer(state, action);
+    expect(result.isFetching).toEqual(false);
   });
 });
