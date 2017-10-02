@@ -42,6 +42,7 @@
   "project.details.no_plans": "Projektilla ei vielä ole suunnitelmia",
   "project.error.edit.no_id": "Projektia yritettiin päivittää ilman id-tunnistetta",
   "project.message.edit_success": "Projektia ${hansuProjectId} päivitettiin onnistuneesti!",
+  "project.sister_projects.placeholder": "Valitse listalta liittyvät projektit",
   "projectlist.header": "Projektit",
   "validation.message.hansu_project_id_used": "Hankenumero on jo käytössä",
   "validation.message.maxlength": "Arvon tulee olla enintään ${max} merkkiä",
