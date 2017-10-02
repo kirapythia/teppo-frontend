@@ -8,12 +8,14 @@ import { omit } from '../../utils';
 import ShowDetails from './ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
+import LoadingOverlay from '../common/LoadingOverlay';
 import './ProjectDetails.css';
 
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
   project: getCurrentProject(state),
   plans: listPlans(state),
+  isFetching: state.projectDetails.isFetching,
 });
 
 const mapDispatchToProps = () => ({
@@ -29,8 +31,9 @@ const mapDispatchToProps = () => ({
  * @param {object} props.project
  * @param {function} props.removePlan
  */
-const ProjectDetails = ({ error, removePlan, project, plans }) => (
+const ProjectDetails = ({ error, removePlan, project, plans, isFetching }) => (
   <div className="ProjectDetails">
+    <LoadingOverlay isVisible={isFetching} />
     {error && (
       <div>
         <Message type="danger" message={error.message} />

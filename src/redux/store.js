@@ -42,5 +42,5 @@ export default createStore(
   // initial state
   {},
   // apply all the middleware
-  composeEnhancers(install(), routerEnhancer, applyMiddleware(...middleware))
+  composeEnhancers(routerEnhancer, install(), applyMiddleware(...middleware))
 );
