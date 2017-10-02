@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import { HOME } from '../../constants/routes';
 import { createFieldsWithValidations } from '../../forms/form-utils';
+import { getProjectAsSelectOptions } from '../../selectors';
 import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm-ducks';
@@ -16,7 +17,7 @@ import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 const fieldsWithEmptyStringValues = Object.keys(fields)
   .reduce((acc, key) => ({ ...acc, [key]: '' }), {});
 
-  // form field configuration objects with validator functions from field definitions
+// form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);
 
 /**
@@ -45,9 +46,16 @@ const formConfig = {
    * @type {boolean}
    */
   keepDirtyOnReinitialize: false,
-
-  fields: fieldsWithValidations,
 };
+
+/**
+ * Form field configurations. Form validation functions and then add options
+ * to the sisterProjects field
+ * @param {object[]} projects
+ * @return {object[]}
+ */
+const formFieldConfigs = (options = []) => fieldsWithValidations
+  .map(f => (f.name === 'sisterProjects' ? { ...f, options } : f));
 
 /**
  * Gather all the props needed from the application state
@@ -56,6 +64,16 @@ const formConfig = {
  */
 const mapStateToProps = (state, ownProps) => {
   const { project } = ownProps;
+  const selectOptions = getProjectAsSelectOptions(state);
+
+  // props that are needed in every case
+  const commonProps = {
+    formSendError: state.projectForm.error,
+    fields: formFieldConfigs(selectOptions),
+  };
+
+  // props that depend on whether the form is
+  // for editing or for creating a new project
   const actionProps = project
     ? {
       initialValues: { ...ownProps.project },
@@ -68,7 +86,8 @@ const mapStateToProps = (state, ownProps) => {
       asyncBlurFields: ['hansuProjectId'],
     };
 
-  return Object.assign({ formSendError: state.projectForm.error }, actionProps);
+    // merge common and action dependent props
+  return Object.assign(commonProps, actionProps);
 };
 
 /**

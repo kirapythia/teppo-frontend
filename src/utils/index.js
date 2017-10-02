@@ -83,3 +83,15 @@ export const withTimeout = (timeout, ...promises) => Promise.race([
  * @return {boolean}
  */
 export const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
+
+/**
+ * Create array sorter that sorts
+ * @param {string} propName
+ */
+export const propSorter = propName => (a, b) => {
+  const { [propName]: aProp } = a;
+  const { [propName]: bProp } = b;
+  if (aProp === bProp) return 0;
+  if (!(propName in b) || aProp > bProp) return -1;
+  return 1;
+};

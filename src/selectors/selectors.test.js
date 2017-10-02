@@ -119,3 +119,53 @@ describe('listPlans', () => {
   });
 });
 
+describe('getProjectAsSelectOptions', () => {
+  const initState = (projects = []) => ({ router: { params: { projectId: '1' } }, projectList: { projects } });
+
+  it('should return an empty array when there\'s no projects', () => {
+    const state = { router: {}, projectList: {} };
+    const actual = selectors.getProjectAsSelectOptions(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return an object containing value and label properties', () => {
+    const project = { projectId: 2, hansuProjectId: 'H1234', name: 'Project1' };
+    const state = initState([project]);
+    const actual = selectors.getProjectAsSelectOptions(state);
+    expect(actual[0]).toEqual({ label: `${project.hansuProjectId} - ${project.name}`, value: `${project.projectId}` });
+  });
+
+  it('should return as many items as there are projects', () => {
+    const projects = [
+      { projectId: 2 },
+      { projectId: 3 },
+    ];
+    const state = initState(projects);
+    const actual = selectors.getProjectAsSelectOptions(state);
+    expect(actual.length).toEqual(projects.length);
+  });
+
+  it('should filter out the current project', () => {
+    const projects = [
+      { projectId: 1 },
+      { projectId: 2 },
+    ];
+    const state = initState(projects);
+    const actual = selectors.getProjectAsSelectOptions(state);
+    expect(actual.length).toEqual(projects.length - 1);
+  });
+
+  it('should sort the projects by hansuProjectId', () => {
+    const projects = [
+      { projectId: 2, hansuProjectId: 'A123' },
+      { projectId: 3, hansuProjectId: 'C999' },
+      { projectId: 4, hansuProjectId: 'A999' },
+    ];
+    const state = initState(projects);
+    const actual = selectors.getProjectAsSelectOptions(state);
+
+    expect(actual[0].value).toEqual(String(projects[0].projectId));
+    expect(actual[1].value).toEqual(String(projects[2].projectId));
+    expect(actual[2].value).toEqual(String(projects[1].projectId));
+  });
+});
