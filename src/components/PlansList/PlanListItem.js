@@ -13,12 +13,12 @@ import IconButton from '../common/IconButton';
 const PlanListItem = ({ plan = {}, project = {}, removePlan }) => (
   <li className="PlanListItem">
     <div className="PlanListItem__identifiers">
-      <Link href={`/plan/${plan.planId}`}>
+      <Link href={`/project/${project.projectId}/plan/${plan.planId}`}>
         {formIdentifier(plan)}
       </Link>
     </div>
     <div>
-      <Link href={`/project/${project.projectId}/plan/${plan.planId}`}>
+      <Link href={`/project/${project.projectId}/plan/${plan.planId}/edit`}>
         <i className="fa fa-pencil fa-lg" />
       </Link>
       <IconButton className="PlanListItem__RemoveButton fa-times fa-lg" onClick={removePlan} />
