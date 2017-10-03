@@ -49,7 +49,6 @@ export default handleActions({
     // if there's project id in the url and it's different than previous id
     // then fetch project from the server...
     if (projectId && (!project || Number(projectId) !== project.projectId)) {
-
       return loop(
         // remove error from the state
         { ...state, isFetching: true },

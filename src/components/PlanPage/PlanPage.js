@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import t from '../../locale';
 import { pick } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
-import { ShowDetails } from '../ProjectDetails';
+import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
 import './PlanPage.css';
 

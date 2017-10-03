@@ -13,7 +13,9 @@ import IconButton from '../common/IconButton';
 const PlanListItem = ({ plan = {}, project = {}, removePlan }) => (
   <li className="PlanListItem">
     <div className="PlanListItem__identifiers">
-      {formIdentifier(plan)}
+      <Link href={`/plan/${plan.planId}`}>
+        {formIdentifier(plan)}
+      </Link>
     </div>
     <div>
       <Link href={`/project/${project.projectId}/plan/${plan.planId}`}>

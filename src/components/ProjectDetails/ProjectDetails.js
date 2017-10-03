@@ -5,7 +5,7 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { omit } from '../../utils';
-import ShowDetails from './ShowDetails';
+import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
