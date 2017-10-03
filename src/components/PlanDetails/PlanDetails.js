@@ -7,7 +7,8 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
-import { omit } from '../../utils';
+import { pick } from '../../utils';
+import fields from '../../forms/plan';
 
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
@@ -26,14 +27,12 @@ const PlanDetails = ({ error, plan }) => (
     {!error && plan && (
       <div>
         <ShowDetails
-          title={plan.planId}
-          details={omit(['planId'], plan)}
+          details={pick(['mainNo', 'subNo', 'url'], plan)}
+          fields={fields}
+          className="ShowDetails--highlighted"
         />
-
       </div>
-    )
-
-    }
+    )}
   </div>
 );
 

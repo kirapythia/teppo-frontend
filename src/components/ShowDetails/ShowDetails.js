@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import fields from '../../forms/project';
+import { isURL, parseFileNameFromURL } from '../../utils';
 import './ShowDetails.css';
 
 /**
@@ -8,16 +8,26 @@ import './ShowDetails.css';
  * @param {object} props
  * @param {object} props.project
  */
-const ShowDetails = ({ title, details, className }) => (
+const ShowDetails = ({ title, details, className, fields }) => (
   <div className={cx('ShowDetails', className)}>
     {title && <h2>{title}</h2>}
 
-    {Object.keys(details).map(propName => (
-      <div key={propName} className="row">
-        <div className="three columns">{(fields[propName] || {}).label}</div>
-        <div className="nine columns"><b>{details[propName] || '-'}</b></div>
-      </div>
-    ))}
+    {Object.keys(details).map((propName) => {
+      const label = (fields[propName] || {}).label;
+      const value = details[propName] || '-';
+
+      return (
+        <div key={propName} className="row">
+          <div className="three columns">{label}</div>
+          <div className="nine columns">
+            <b>{isURL(value)
+              ? <a href={value} target="_blank">{parseFileNameFromURL(value)}</a>
+              : value}
+            </b>
+          </div>
+        </div>
+      );
+    })}
   </div >
 );
 

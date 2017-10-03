@@ -9,6 +9,7 @@
 .ShowDetails--highlighted {
   background-color: #ddd;
   border-radius: 2px;
+  padding: 2rem;
 }
 
 .ShowDetails--highlighted .row {

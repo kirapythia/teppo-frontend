@@ -5,6 +5,7 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { omit } from '../../utils';
+import fields from '../../forms/project';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
@@ -45,6 +46,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching }) => (
         <ShowDetails
           title={project.name}
           details={omit(['name', 'projectId', 'plans'], project)}
+          fields={fields}
         />
 
         <div className="ProjectDetails__plans-wrapper">
