@@ -48,7 +48,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching }) => (
         />
 
         <div className="ProjectDetails__plans-wrapper">
-          <h3>Projektiin liittyvät suunnitelmat</h3>
+          <h3>{t('header.project.plans')}</h3>
           {plans.length
             ? <PlansList project={project} plans={plans} removePlan={removePlan} />
             : <div className="text-italic">{t('project.details.no_plans')}</div>}
