@@ -4,6 +4,7 @@ export const EDIT_PROJECT = '/project/:projectId/edit';
 export const PROJECT_DETAILS = '/project/:projectId';
 export const PLAN = '/project/:projectId/plan/new';
 export const EDIT_PLAN = '/project/:projectId/plan/:planId';
+export const PLAN_DETAILS = '/plan/:planId';
 export const NOT_FOUND_PAGE = '/404';
 
 /**
@@ -17,5 +18,6 @@ export default {
   [PROJECT_DETAILS]: {},
   [PLAN]: {},
   [EDIT_PLAN]: {},
+  [PLAN_DETAILS]: {},
   [NOT_FOUND_PAGE]: {},
 };

@@ -1,5 +1,5 @@
 import component from './ProjectDetails';
-import ShowDetails from './ShowDetails';
+import ShowDetails from '../ShowDetails';
 import reducer, { NAME, FETCH_PROJECT_SUCCESS, actions } from './ProjectDetails-ducks';
 
 const actionTypes = {
