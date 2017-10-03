@@ -33,6 +33,8 @@
   "plan.primary_id": "Päänumero",
   "plan.secondary_id": "Alanumero",
   "plan.details.title": "Suunnitelman tiedot",
+  "plan.comments.no_comments": "Ei kommentteja",
+  "plan.comments.title": "Suunnitelman kommentit",
   "plan.message.save_success": "Suunnitelma ${mainNo}/${subNo} tallennettiin onnistuneesti!",
   "plan.message.edit_success": "Suunnitelmaa ${mainNo}/${subNo} päivitettiin onnistuneesti!",
   "plan.error.edit.no_id": "Suunnitelman päivitys ilman id:tä ei onnistus",
