@@ -48,7 +48,7 @@ const CreateEditAndSaveForm = ({
         <FormCancelButton href={cancelHref} />
       </div>
       <div className="six columns">
-        <FormSubmitButton disabled={!valid || pristine || submitting} />
+        <FormSubmitButton disabled={!valid || pristine || submitting} isSubmitting={submitting} />
       </div>
     </div>
   </form>

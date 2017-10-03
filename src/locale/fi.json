@@ -12,6 +12,8 @@
   "files.no_files": "Ei lisättyjä tiedostoja",
   "footer.copyright": "Espoon Kaupunki",
   "header.project.plans": "Projektiin liittyvät suunnitelmat",
+  "button.saving": "Tallennetaan",
+  "lang.loading": "Ladataan",
   "link.home_page": "Etusivu",
   "link.back_to_home_page": "Palaa etusivulle",
   "network.error.plan.create": "Suunnitelman luominen epäonnistui",

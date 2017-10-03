@@ -27,15 +27,18 @@ export const actions = {
   ),
 };
 
+const initialState = {
+  isFetching: false,
+};
+
 // ProjectList reducer
 export default handleActions({
-
   [LOCATION_CHANGED]: (state, action) => {
     const currentlocation = action.payload.pathname;
     const { projectList } = state;
     if (!projectList && currentlocation === ROUTES.HOME) {
       return loop(
-        state,
+        { ...state, isFetching: true },
         Cmd.run(fetchProjectList, {
           successActionCreator: actions.fetchProjectListSuccess,
           failActionCreator: actions.fetchProjectListError,
@@ -44,6 +47,8 @@ export default handleActions({
     }
     return state;
   },
-  [FETCH_PROJECT_LIST_SUCCESS]: (state, action) => ({ ...omit(['error'], state), projects: action.payload }),
-  [FETCH_PROJECT_LIST_ERROR]: (state, action) => ({ ...state, error: action.payload }),
-}, {});
+  [FETCH_PROJECT_LIST_SUCCESS]: (state, action) =>
+    ({ ...omit(['error'], state), projects: action.payload, isFetching: false }),
+  [FETCH_PROJECT_LIST_ERROR]: (state, action) =>
+    ({ ...state, error: action.payload, isFetching: false }),
+}, initialState);
