@@ -34,7 +34,7 @@
   color: #222;
 }
 
-.ProjectList li:hover {
+.ProjectList li:hover:not(.ProjectList__placeholder) {
   background-color: #eee;
   color: #1EAEDB;
 }

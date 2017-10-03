@@ -1,3 +1,7 @@
+import ProjectListContainer from './ProjectListContainer';
+import reducer, { actions, NAME } from './ProjectList-ducks';
 import ProjectList from './ProjectList';
 
-export default ProjectList;
+export { actions, reducer, NAME, ProjectList };
+
+export default ProjectListContainer;

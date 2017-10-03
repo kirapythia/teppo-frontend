@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { propSorter } from '../utils';
+import { isOneOf, propSorter } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -55,6 +55,13 @@ export const getCurrentPlan = createSelector(
 export const listPlans = createSelector(
   getPlans,
   plans => Object.getOwnPropertyNames(plans).map(id => plans[id])
+);
+
+export const getCurrentSisterProjects = createSelector(
+  getCurrentProject,
+  getProjects,
+  (currentProject, allProjects = []) => allProjects
+    .filter(({ projectId }) => isOneOf(projectId, currentProject.sisterProjects))
 );
 
 /**
