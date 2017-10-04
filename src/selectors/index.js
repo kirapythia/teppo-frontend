@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { isOneOf, propSorter } from '../utils';
+import { isOneOf, propSorter, mapToList } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -8,9 +8,10 @@ import { isOneOf, propSorter } from '../utils';
  * @module selectors
  */
 
-const getProjectDetails = state => state.project;
-const getPlans = state => state.plans;
-const getProjects = state => state.projectList.projects;
+const getProjectDetails = ({ project }) => project;
+const getProjects = ({ projectList }) => projectList.projects;
+const getPlans = ({ plans }) => plans;
+const getComments = ({ comments }) => comments.comments;
 
 /**
  * Return url's projectId
@@ -54,7 +55,15 @@ export const getCurrentPlan = createSelector(
  */
 export const listPlans = createSelector(
   getPlans,
-  plans => Object.getOwnPropertyNames(plans).map(id => plans[id])
+  mapToList,
+);
+
+/**
+ * Get all comments as a list
+ */
+export const listComments = createSelector(
+  getComments,
+  mapToList,
 );
 
 export const getCurrentSisterProjects = createSelector(

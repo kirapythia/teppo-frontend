@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import { getCurrentPlan } from '../../selectors';
-
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { pick } from '../../utils';
 import fields from '../../forms/plan';
+import PlanComments from '../PlanComments';
+import './PlanDetails.css';
 
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
@@ -17,7 +18,8 @@ const mapStateToProps = state => ({
 
 
 const PlanDetails = ({ error, plan }) => (
-  <div>
+  <div className="PlanDetails">
+    <h2>{t('plan.details.title')}</h2>
     {error && (
       <div>
         <Message type="danger" message={error.message} />
@@ -31,6 +33,7 @@ const PlanDetails = ({ error, plan }) => (
           fields={fields}
           className="ShowDetails--highlighted"
         />
+        <PlanComments />
       </div>
     )}
   </div>

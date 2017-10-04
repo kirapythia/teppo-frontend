@@ -14,7 +14,7 @@ export class ServerResponseError extends Error {
  * Parse response object's json body
  * @param {Response} response
  * @return {Promise}
- * @throws {Error}
+ * @throws {ServerResponseError}
  */
 const parseJSONBody = (response) => {
   if (response.ok) { return response.json(); }

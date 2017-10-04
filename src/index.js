@@ -10,5 +10,6 @@ import App from './components/App';
 
 import './common-styles/index.css';
 import './common-styles/forms.css';
+import './common-styles/buttons.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
