@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import t from '../../locale';
 import Message from '../common/Message';
 import LoadingOverlay from '../common/LoadingOverlay';
-import ProjectList from '../ProjectList';
+import ProjectList from './ProjectList';
 
 const mapStateToProps = state => ({
   projects: state.projectList.projects,

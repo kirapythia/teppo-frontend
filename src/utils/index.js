@@ -82,7 +82,7 @@ export const withTimeout = (timeout, ...promises) => Promise.race([
  * @param {*[]} haystack
  * @return {boolean}
  */
-export const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
+export const isOneOf = (needle, haystack = []) => haystack.indexOf(needle) > -1;
 
 /**
  * Check if string is a url (starts with http(s))

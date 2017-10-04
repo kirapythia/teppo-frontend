@@ -3,7 +3,7 @@ import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
-import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
+import { getCurrentProject, listPlans } from '../../selectors';
 import { omit } from '../../utils';
 import fields from '../../forms/project';
 import ShowDetails from '../ShowDetails';
@@ -17,7 +17,8 @@ import './ProjectDetails.css';
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
   project: getCurrentProject(state),
-  sisterProjects: getCurrentSisterProjects(state),
+  // FIXME: replace with actual implementation when backend is ready
+  sisterProjects: [], // getCurrentSisterProjects(state),
   plans: listPlans(state),
   isFetching: state.projectDetails.isFetching,
 });

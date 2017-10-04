@@ -4,6 +4,7 @@ import * as PlanForm from '../components/PlanForm';
 import * as Notifications from '../components/Notifications';
 import * as ProjectDetails from '../components/ProjectDetails';
 import * as ProjectList from '../components/ProjectList';
+import * as Comments from '../components/PlanComments';
 import projectReducer, * as Project from './project.ducks';
 import plansReducer, * as Plans from './plans.ducks';
 
@@ -18,6 +19,7 @@ export default {
   [Notifications.NAME]: Notifications.reducer,
   [ProjectDetails.NAME]: ProjectDetails.reducer,
   [ProjectList.NAME]: ProjectList.reducer,
+  [Comments.NAME]: Comments.reducer,
   [Project.NAME]: projectReducer,
   [Plans.NAME]: plansReducer,
 };
