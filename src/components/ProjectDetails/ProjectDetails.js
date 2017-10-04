@@ -5,7 +5,8 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
 import { omit } from '../../utils';
-import ShowDetails from './ShowDetails';
+import fields from '../../forms/project';
+import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
@@ -48,6 +49,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
         <ShowDetails
           title={project.name}
           details={omit(['name', 'projectId', 'plans'], project)}
+          fields={fields}
         />
 
         <div>
@@ -56,7 +58,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
         </div>
 
         <div className="ProjectDetails__plans-wrapper">
-          <h3>{t('project.related_plans')}</h3>
+          <h3>{t('header.project.plans')}</h3>
           {plans.length
             ? <PlansList project={project} plans={plans} removePlan={removePlan} />
             : <div className="text-italic">{t('project.details.no_plans')}</div>}

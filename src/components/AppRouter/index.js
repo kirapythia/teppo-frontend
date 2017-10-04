@@ -7,6 +7,7 @@ import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
 import ProjectDetails from '../ProjectDetails';
+import PlanDetails from '../PlanDetails';
 import PlanPage from '../PlanPage';
 import NotFoundPage from '../NotFoundPage';
 
@@ -28,6 +29,9 @@ const AppRouter = () => (
       </Fragment>
       <Fragment forRoute={ROUTES.PROJECT_DETAILS} withConditions={location => /\/project\/\d+\/?$/.test(location.pathname)}>
         <ProjectDetails />
+      </Fragment>
+      <Fragment forRoute={ROUTES.PLAN_DETAILS} withConditions={location => /\/plan\/\d+\/?$/.test(location.pathname)}>
+        <PlanDetails />
       </Fragment>
       <Fragment withConditions={location =>
         isOneOf(location.route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])}

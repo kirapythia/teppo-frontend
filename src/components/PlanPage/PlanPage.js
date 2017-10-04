@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import t from '../../locale';
 import { pick } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
-import { ShowDetails } from '../ProjectDetails';
+import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
+import fields from '../../forms/project';
 import './PlanPage.css';
 
 const mapStateToProps = state => ({
@@ -25,6 +26,7 @@ const PlanPage = ({ plan, project = {} }) => (
     <ShowDetails
       details={pick(['name', 'hansuProjectId'], project)}
       className="ShowDetails--highlighted"
+      fields={fields}
     />
     <PlanForm plan={plan} />
   </div>

@@ -82,7 +82,21 @@ export const withTimeout = (timeout, ...promises) => Promise.race([
  * @param {*[]} haystack
  * @return {boolean}
  */
-export const isOneOf = (needle, haystack = []) => haystack.indexOf(needle) > -1;
+export const isOneOf = (needle, haystack) => haystack.indexOf(needle) > -1;
+
+/**
+ * Check if string is a url (starts with http(s))
+ * @param {string} value
+ * @return {string}
+ */
+export const isURL = value => /^http(s?):\/\//.test(value);
+
+/**
+ * Parse file name from a url
+ * @param {string} url
+ * @return {string} file name
+ */
+export const parseFileNameFromURL = url => url.substring(url.lastIndexOf('/') + 1);
 
 /**
  * Create array sorter that sorts
