@@ -1,4 +1,5 @@
 import t from '../locale';
+import { listToString, stringToNumberList } from './normalizers';
 
 /**
  * Field definitions for the project form. Object key is field name and
@@ -53,6 +54,14 @@ const fields = {
     },
   },
   */
+  sisterProjects: {
+    type: 'multiselect',
+    label: t('project.sister_projects'),
+    placeholder: t('project.sister_projects.placeholder'),
+    normalize: stringToNumberList,
+    format: listToString,
+  },
+
   description: {
     type: 'textarea',
     label: t('project.description'),

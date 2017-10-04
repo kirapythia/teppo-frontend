@@ -29,6 +29,7 @@ const CreateEditAndSaveForm = ({
   formSendError,
   submitAction,
   clearSendError,
+  options,
 }) => (
   <form onSubmit={handleSubmit(submitAction)}>
     { formSendError && <Message message={formSendError.message} onClose={clearSendError} /> }
@@ -39,6 +40,7 @@ const CreateEditAndSaveForm = ({
         key={field.name}
         component={renderField}
         validate={field.validators}
+        options={options}
         {...field}
       />
     ))}

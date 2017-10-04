@@ -101,3 +101,47 @@ describe('withTimeout', () => {
     return timeoutPromise.catch(result => expect(result.message).toBe(t('network.error.timeout')));
   });
 });
+
+describe('propSorter', () => {
+  it('should return -1 if object a\'s prop is greater than prop b\'s', () => {
+    const a = { propName: 2 };
+    const b = { propName: 1 };
+    const sorter = utils.propSorter('propName');
+    expect(sorter(a, b)).toEqual(-1);
+  });
+
+  it('should return 1 if object b\'s prop is greater than prop a\'s', () => {
+    const a = { propName: 1 };
+    const b = { propName: 2 };
+    const sorter = utils.propSorter('propName');
+    expect(sorter(a, b)).toEqual(1);
+  });
+
+  it('should return 0 if props of both objects are equal', () => {
+    const a = { propName: 1 };
+    const b = { propName: 1 };
+    const sorter = utils.propSorter('propName');
+    expect(sorter(a, b)).toEqual(0);
+  });
+
+  it('should return -1 if object b does not have given propName', () => {
+    const a = { myProp: 1 };
+    const b = {};
+    const sorter = utils.propSorter('myProp');
+    expect(sorter(a, b)).toEqual(-1);
+  });
+
+  it('should return 1 if object a does not have given propName', () => {
+    const a = {};
+    const b = { myProp: 1 };
+    const sorter = utils.propSorter('myProp');
+    expect(sorter(a, b)).toEqual(1);
+  });
+
+  it('should return 0 neither of objects has given propName', () => {
+    const a = {};
+    const b = {};
+    const sorter = utils.propSorter('myProp');
+    expect(sorter(a, b)).toEqual(0);
+  });
+});

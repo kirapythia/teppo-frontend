@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { isOneOf, propSorter } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -9,6 +10,7 @@ import { createSelector } from 'reselect';
 
 const getProjectDetails = state => state.project;
 const getPlans = state => state.plans;
+const getProjects = state => state.projectList.projects;
 
 /**
  * Return url's projectId
@@ -53,4 +55,31 @@ export const getCurrentPlan = createSelector(
 export const listPlans = createSelector(
   getPlans,
   plans => Object.getOwnPropertyNames(plans).map(id => plans[id])
+);
+
+export const getCurrentSisterProjects = createSelector(
+  getCurrentProject,
+  getProjects,
+  (currentProject, allProjects = []) => allProjects
+    .filter(({ projectId }) => isOneOf(projectId, currentProject.sisterProjects))
+);
+
+/**
+ * Map project to select options
+ * @param {object} state
+ * @return {object[]}
+ */
+export const getProjectAsSelectOptions = createSelector(
+  getProjects,
+  getCurrentProjectId,
+  (projects = [], currentProjectId) => projects
+    // remove current project from the list
+    .filter(p => p.projectId !== Number(currentProjectId))
+    // sort options by hansuProjectId
+    .sort(propSorter('hansuProjectId'))
+    // reverse array to sort ascending
+    .reverse()
+    // map project to select options
+    .map(({ name, projectId, hansuProjectId }) =>
+      ({ label: `${hansuProjectId} - ${name}`, value: `${projectId}` }))
 );

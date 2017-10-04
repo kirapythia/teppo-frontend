@@ -3,18 +3,21 @@ import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
-import { getCurrentProject, listPlans } from '../../selectors';
+import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
 import { omit } from '../../utils';
 import fields from '../../forms/project';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
+import { ProjectList } from '../ProjectList';
+
 import './ProjectDetails.css';
 
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
   project: getCurrentProject(state),
+  sisterProjects: getCurrentSisterProjects(state),
   plans: listPlans(state),
   isFetching: state.projectDetails.isFetching,
 });
@@ -32,7 +35,7 @@ const mapDispatchToProps = () => ({
  * @param {object} props.project
  * @param {function} props.removePlan
  */
-const ProjectDetails = ({ error, removePlan, project, plans, isFetching }) => (
+const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterProjects }) => (
   <div className="ProjectDetails">
     <LoadingOverlay isVisible={isFetching} />
     {error && (
@@ -48,6 +51,11 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching }) => (
           details={omit(['name', 'projectId', 'plans'], project)}
           fields={fields}
         />
+
+        <div>
+          <h3>{t('project.sister_projects')}</h3>
+          <ProjectList projects={sisterProjects} />
+        </div>
 
         <div className="ProjectDetails__plans-wrapper">
           <h3>{t('header.project.plans')}</h3>

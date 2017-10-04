@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 import cx from 'classnames';
 import FileUpload from '../components/FileUpload';
 
@@ -14,7 +15,7 @@ import createValidators from '../validation';
  * @param {boolean} error
  * @return {HTMLElement}
  */
-const chooseElement = ({ type, input, placeholder, touched, error, form }) => {
+const chooseElement = ({ type, input, placeholder, touched, error, form, options }) => {
   const hasError = touched && error;
   const className = cx({ error: hasError });
 
@@ -22,6 +23,19 @@ const chooseElement = ({ type, input, placeholder, touched, error, form }) => {
   switch (type) {
     case 'textarea':
       return <textarea {...{ ...input, placeholder, className }} />;
+    case 'multiselect':
+      return (
+        <Select
+          {...input}
+          multi
+          simpleValue
+          joinValues
+          onBlur={() => input.onBlur(input.value)}
+          options={options}
+          closeOnSelect={false}
+          placeholder={placeholder}
+        />
+      );
     case 'file':
       return (
         <FileUpload
@@ -54,10 +68,12 @@ export const renderField = ({
   label,
   validation = {},
   meta: { form, touched, error },
+  options,
+  onBlur,
 }) => (
   <fieldset>
     <label htmlFor={`${form}_${input.name}`}>{`${label} ${validation.required ? '*' : ''}`}</label>
-    { chooseElement({ type, input, placeholder, touched, error, form })}
+    { chooseElement({ type, input, placeholder, touched, error, form, onBlur, options })}
     {touched && error && <div className="text-danger">{error}</div>}
   </fieldset>
 );

@@ -97,3 +97,15 @@ export const isURL = value => /^http(s?):\/\//.test(value);
  * @return {string} file name
  */
 export const parseFileNameFromURL = url => url.substring(url.lastIndexOf('/') + 1);
+
+/**
+ * Create array sorter that sorts
+ * @param {string} propName
+ */
+export const propSorter = propName => (a, b) => {
+  const { [propName]: aProp } = a;
+  const { [propName]: bProp } = b;
+  if (aProp === bProp) return 0;
+  if (!(propName in b) || aProp > bProp) return -1;
+  return 1;
+};
