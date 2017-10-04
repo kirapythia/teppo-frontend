@@ -1,9 +1,5 @@
 import { createSelector } from 'reselect';
-<<<<<<< 7d22897333772bfe9460595ab763aa23e72578b3
-import { isOneOf, propSorter } from '../utils';
-=======
-import { mapToList } from '../utils';
->>>>>>> Plan commenting and toggling comment's approval
+import { isOneOf, propSorter, mapToList } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -13,6 +9,7 @@ import { mapToList } from '../utils';
  */
 
 const getProjectDetails = ({ project }) => project;
+const getProjects = ({ projectList }) => projectList.projects;
 const getPlans = ({ plans }) => plans;
 const getComments = ({ comments }) => comments.comments;
 
