@@ -20,3 +20,22 @@ button[disabled], .button[disabled] {
   background-color: #218838;
   border-color: #1e7e34;
 }
+.button-green:focus,
+.button-green:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.button-red {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.button-red:focus,
+.button-red:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
