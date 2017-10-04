@@ -2,14 +2,6 @@ html, body, #root, .full-height {
   height: 100%;
 }
 
-.button {
-  transition: opacity .2s linear;
-}
-
-.button[disabled] {
-  opacity: .6;
-}
-
 .text-italic {
   font-style: italic;
 }

@@ -1,0 +1,22 @@
+
+button, .button {
+  transition: opacity .2s linear;
+  margin: 0;
+}
+
+button[disabled], .button[disabled] {
+  opacity: .6;
+}
+
+.button-green {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.button-green:focus,
+.button-green:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
