@@ -48,8 +48,8 @@ const PlanCommentForm = ({
 
     <Field
       type="textarea"
-      name="body"
-      label={t('comment.body')}
+      name="text"
+      label={t('comment.text')}
       component={renderField}
       validation={{ required: true }}
     />

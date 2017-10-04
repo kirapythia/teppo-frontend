@@ -109,3 +109,9 @@ export const propSorter = propName => (a, b) => {
   if (!(propName in b) || aProp > bProp) return -1;
   return 1;
 };
+
+/* Convert map to a list
+ * @param {object} obj
+ * @return {*[]}
+ */
+export const mapToList = obj => Object.getOwnPropertyNames(obj).map(key => obj[key]);

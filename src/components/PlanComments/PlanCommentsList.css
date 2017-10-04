@@ -1,9 +1,20 @@
 .PlanCommentsListItem {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 1rem;
   border-radius: 2px;
+}
+
+.PlanCommentsListItem:nth-child(odd) {
+  background-color: rgba(30, 174, 219, .2);
+  border-bottom: 4px solid rgba(30, 174, 219, .5);
+}
+
+.PlanCommentsListItem--approved {
+  background-color: rgba(79, 206, 29, 0.2) !important;
+  border: 0 !important;
+}
+
+.PlanCommentsListItem--approved .fa-comment {
+  color: rgba(79, 206, 29, 1);
 }
 
 .PlanCommentsListItem > div:first-child {
@@ -20,7 +31,24 @@
   color: #257491;
 }
 
-.PlanCommentsListItem:nth-child(odd) {
-  background-color: rgba(30, 174, 219, .2);
-  border-bottom: 4px solid rgba(30, 174, 219, .5);
+.PlanCommentsListItem button {
+  width: 100%;
+}
+
+@media (min-width: 550px) {
+  .PlanCommentsListItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .PlanCommentsListItem button {
+    width: auto;
+    margin-top: 1rem;
+  }
+
+  .PlanCommentsListItem__body {
+    flex: 1;
+  }
 }

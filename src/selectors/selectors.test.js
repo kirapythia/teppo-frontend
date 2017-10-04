@@ -169,3 +169,27 @@ describe('getProjectAsSelectOptions', () => {
     expect(actual[2].value).toEqual(String(projects[1].projectId));
   });
 });
+
+describe('listComments', () => {
+  it('should return an empty list if plans is an empty object', () => {
+    const state = { comments: { comments: {} } };
+    const actual = selectors.listComments(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return plan in a list', () => {
+    const comments = { 1: {} };
+    const state = { comments: { comments } };
+    const actual = selectors.listComments(state);
+    expect(actual.length).toEqual(1);
+    expect(actual[0]).toBe(comments['1']);
+  });
+
+  it('should return all plans in a list', () => {
+    const comments = { 1: {}, 2: {} };
+    const state = { comments: { comments } };
+    const actual = selectors.listComments(state);
+    expect(actual.length).toEqual(2);
+  });
+});
+

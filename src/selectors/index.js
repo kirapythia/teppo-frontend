@@ -1,5 +1,9 @@
 import { createSelector } from 'reselect';
+<<<<<<< 7d22897333772bfe9460595ab763aa23e72578b3
 import { isOneOf, propSorter } from '../utils';
+=======
+import { mapToList } from '../utils';
+>>>>>>> Plan commenting and toggling comment's approval
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -8,9 +12,9 @@ import { isOneOf, propSorter } from '../utils';
  * @module selectors
  */
 
-const getProjectDetails = state => state.project;
-const getPlans = state => state.plans;
-const getProjects = state => state.projectList.projects;
+const getProjectDetails = ({ project }) => project;
+const getPlans = ({ plans }) => plans;
+const getComments = ({ comments }) => comments.comments;
 
 /**
  * Return url's projectId
@@ -54,7 +58,15 @@ export const getCurrentPlan = createSelector(
  */
 export const listPlans = createSelector(
   getPlans,
-  plans => Object.getOwnPropertyNames(plans).map(id => plans[id])
+  mapToList,
+);
+
+/**
+ * Get all comments as a list
+ */
+export const listComments = createSelector(
+  getComments,
+  mapToList,
 );
 
 export const getCurrentSisterProjects = createSelector(
