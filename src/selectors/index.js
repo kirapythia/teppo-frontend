@@ -8,10 +8,10 @@ import { isOneOf, propSorter, mapToList } from '../utils';
  * @module selectors
  */
 
-const getProjectDetails = ({ project }) => project;
-const getProjects = ({ projectList }) => projectList.projects;
-const getPlans = ({ plans }) => plans;
-const getComments = ({ comments }) => comments.comments;
+const getProjectDetails = state => state.project;
+const getProjects = state => state.projectList.projects;
+const getPlans = state => state.plans;
+const getComments = state => state.comments.comments;
 
 /**
  * Return url's projectId
@@ -60,16 +60,23 @@ export const listPlans = createSelector(
 
 /**
  * Get all comments as a list
+ * @param {object} state
+ * @return {object[]} a list of comments
  */
 export const listComments = createSelector(
   getComments,
   mapToList,
 );
 
+/**
+ * Get all sister projects of the current project
+ * @param {object} state
+ * @return {object[]} a list of projects
+ */
 export const getCurrentSisterProjects = createSelector(
   getCurrentProject,
   getProjects,
-  (currentProject, allProjects = []) => allProjects
+  (currentProject = {}, allProjects = []) => allProjects
     .filter(({ projectId }) => isOneOf(projectId, currentProject.sisterProjects))
 );
 

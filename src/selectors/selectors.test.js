@@ -119,6 +119,39 @@ describe('listPlans', () => {
   });
 });
 
+describe('getCurrentSisterProjects', () => {
+  it('should return an empty array if there are no projects', () => {
+    const project = { projectId: 1, sisterProjects: [2] };
+    const state = { project, projectList: { projects: [] }, router: { params: { projectId: 1 } } };
+    const actual = selectors.getCurrentSisterProjects(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return an empty array if current project is undefined', () => {
+    const projects = [{ projectId: 2 }, { projectId: 3 }];
+    const state = { projectList: { projects }, router: { params: {} } };
+    const actual = selectors.getCurrentSisterProjects(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return all sister projects of a project', () => {
+    const projects = [{ projectId: 2 }, { projectId: 3 }];
+    const project = { projectId: 1, sisterProjects: [2, 3] };
+    const state = { project, projectList: { projects }, router: { params: { projectId: 1 } } };
+    const actual = selectors.getCurrentSisterProjects(state);
+    expect(actual).toEqual(projects);
+  });
+
+  it('should not return project if not listed in sisterProjects list', () => {
+    const projects = [{ projectId: 2 }, { projectId: 3 }];
+    const project = { projectId: 1, sisterProjects: [2] };
+    const state = { project, projectList: { projects }, router: { params: { projectId: 1 } } };
+    const actual = selectors.getCurrentSisterProjects(state);
+    expect(actual.length).toEqual(1);
+    expect(actual[0]).toBe(projects[0]);
+  });
+});
+
 describe('getProjectAsSelectOptions', () => {
   const initState = (projects = []) => ({ router: { params: { projectId: '1' } }, projectList: { projects } });
 

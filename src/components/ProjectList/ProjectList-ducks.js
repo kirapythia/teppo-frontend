@@ -29,6 +29,7 @@ export const actions = {
 
 const initialState = {
   isFetching: false,
+  projects: [],
 };
 
 // ProjectList reducer
