@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'redux-little-router';
 import { Field, reduxForm } from 'redux-form';
 import t from '../../locale';
 import { renderField } from '../../forms/form-utils';
@@ -28,14 +29,17 @@ const formConfig = {
 /**
  * A form for plan commenting
  * @param {object} props
+ * @param {object} props.plan
  * @param {function} props.addComment
  * @param {function} props.handleSubmit
+ * @param {function} props.clearError
  * @param {Error} props.formSendError
  * @param {boolean} props.valid
  * @param {pristine} props.pristine
  * @param {submitting} props.submitting
  */
 const PlanCommentForm = ({
+  plan,
   addComment,
   handleSubmit,
   clearError,
@@ -44,7 +48,7 @@ const PlanCommentForm = ({
   pristine,
   submitting,
 }) => (
-  <form onSubmit={handleSubmit(addComment)}>
+  <form className="PlanCommentForm" onSubmit={handleSubmit(addComment)}>
     { formSendError && <Message message={formSendError.message} onClose={clearError} /> }
 
     <Field
@@ -55,14 +59,22 @@ const PlanCommentForm = ({
       validation={{ required: true }}
     />
 
-    <div>
-      <FormSubmitButton
-        buttonText={t('button.send')}
-        buttonSubmittingText={t('button.sending')}
-        iconClassName="fa-envelope-o"
-        disabled={!valid || submitting || pristine}
-        isSubmitting={submitting}
-      />
+    <div className="PlanCommentForm__actions row">
+      <div className="six columns">
+        <Link className="button u-full-width" href={`/project/${plan.projectId}`}>
+          <i className="fa fa-angle-left fa-lg" aria-hidden="true" />&nbsp;
+          {t('button.back_to_project')}
+        </Link>
+      </div>
+      <div className="six columns">
+        <FormSubmitButton
+          buttonText={t('button.send')}
+          buttonSubmittingText={t('button.sending')}
+          iconClassName="fa-envelope-o"
+          disabled={!valid || submitting || pristine}
+          isSubmitting={submitting}
+        />
+      </div>
     </div>
   </form>
 );

@@ -54,9 +54,13 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {object} props.plan
  * @param {object} props.comments
  * @param {function} props.addComment
+ * @param {function} props.clearCommentAddError
+ * @param {function} props.clearCommentEditError
  * @param {Error} props.formSendError
+ * @param {Error} props.commentEditError
  */
 const PlanCommentsSection = ({
+  plan,
   comments,
   addComment,
   toggleCommentApproval,
@@ -75,6 +79,7 @@ const PlanCommentsSection = ({
       toggleCommentApproval={toggleCommentApproval}
     />
     <PlanCommentForm
+      plan={plan}
       addComment={addComment}
       formSendError={formSendError}
       clearError={clearCommentAddError}
