@@ -1,7 +1,33 @@
 import { loop, Cmd } from 'redux-loop';
+import { LOCATION_CHANGED } from 'redux-little-router';
 import { reset } from 'redux-form';
 import reducer, { NAME, actions } from './PlanComments.ducks';
 import { saveComment, editComment } from './model';
+import { PLAN_DETAILS } from '../../constants/routes';
+
+describe('Initializing route', () => {
+  it('should erase errors from the state', () => {
+    const state = { commentAddError: new Error(), commentEditError: new Error() };
+    const action = { type: LOCATION_CHANGED, payload: { route: PLAN_DETAILS } };
+    const actual = reducer(state, action);
+    expect(actual.commentAddError).toEqual(undefined);
+    expect(actual.commentEditError).toEqual(undefined);
+  });
+
+  it('should not mutate the state', () => {
+    const state = { commentAddError: new Error() };
+    const action = { type: LOCATION_CHANGED, payload: { route: PLAN_DETAILS } };
+    const actual = reducer(state, action);
+    expect(actual).not.toBe(state);
+  });
+
+  it('should return the state unmodified when location is other than PLAN_DETAILS', () => {
+    const state = {};
+    const action = { type: LOCATION_CHANGED, payload: { route: '/' } };
+    const actual = reducer(state, action);
+    expect(actual).toBe(state);
+  });
+});
 
 describe('Saving a comment', () => {
   it('should call saveComment with given comment from action.payload', () => {

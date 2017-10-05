@@ -29,6 +29,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   addComment: actions.addComment,
   toggleCommentApproval: actions.toggleCommentApproval,
+  clearCommentAddError: actions.clearCommentAddError,
+  clearCommentEditError: actions.clearCommentEditError,
 }, dispatch);
 
 /**
@@ -58,12 +60,16 @@ const PlanCommentsSection = ({
   comments,
   addComment,
   toggleCommentApproval,
+  clearCommentAddError,
+  clearCommentEditError,
   formSendError,
   commentEditError,
 }) => (
   <section className="PlanComments__container">
     <h3>{t('plan.comments.title')}</h3>
-    { commentEditError && <Message message={commentEditError.message} /> }
+    { commentEditError &&
+      <Message message={commentEditError.message} onClose={clearCommentEditError} />
+    }
     <PlanCommentsList
       comments={comments}
       toggleCommentApproval={toggleCommentApproval}
@@ -71,6 +77,7 @@ const PlanCommentsSection = ({
     <PlanCommentForm
       addComment={addComment}
       formSendError={formSendError}
+      clearError={clearCommentAddError}
     />
   </section>
 );

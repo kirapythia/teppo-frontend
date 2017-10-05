@@ -1,8 +1,10 @@
 import { createAction, handleActions } from 'redux-actions';
+import { LOCATION_CHANGED } from 'redux-little-router';
 import { loop, Cmd } from 'redux-loop';
 import { reset } from 'redux-form';
 import { omit } from '../../utils';
 import { editComment, saveComment, updateComment } from './model';
+import { PLAN_DETAILS } from '../../constants/routes';
 
 export const NAME = 'comments';
 
@@ -11,6 +13,8 @@ const ADD_COMMENT_SUCCESS = 'pythia-webclient/PlanComments/ADD_COMMENT_SUCCESS';
 const ADD_COMMENT_ERROR = 'pythia-webclient/PlanComments/ADD_COMMENT_ERROR';
 const TOGGLE_COMMENT_APPROVAL = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL';
 const TOGGLE_COMMENT_APPROVAL_ERROR = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL_ERROR';
+const CLEAR_COMMENT_ADD_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_ADD_ERROR';
+const CLEAR_COMMENT_EDIT_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_EDIT_ERROR';
 
 export const actions = {
   /**
@@ -58,6 +62,22 @@ export const actions = {
   toggleCommentApprovalError: createAction(
     TOGGLE_COMMENT_APPROVAL_ERROR
   ),
+
+  /**
+   * Action to clear error from the state
+   * @returns {object}
+   */
+  clearCommentAddError: createAction(
+    CLEAR_COMMENT_ADD_ERROR,
+  ),
+
+  /**
+   * Action to clear error from the state
+   * @returns {object}
+   */
+  clearCommentEditError: createAction(
+    CLEAR_COMMENT_EDIT_ERROR,
+  ),
 };
 
 /**
@@ -74,6 +94,13 @@ const initialState = {
 };
 
 export default handleActions({
+  // initialize component when route changes
+  [LOCATION_CHANGED]: (state, action) => {
+    const { route } = action.payload;
+    return route === PLAN_DETAILS
+      ? omit(['commentAddError', 'commentEditError'], state)
+      : state;
+  },
   // handle add comment action
   [ADD_COMMENT]: (state, action) => loop(
     omit(['commentAddError'], state),
@@ -105,10 +132,15 @@ export default handleActions({
       })
     );
   },
-
+  // Handle comment approval toggle error action. Revert comment's
+  // approved status to what it was before send.
   [TOGGLE_COMMENT_APPROVAL_ERROR]: (state, action) => {
     const [comment, error] = action.payload;
     const updated = { ...state.comments[comment.commentId], approved: comment.approved };
     return { ...state, commentEditError: error, comments: updateComment(state.comments, updated) };
   },
+  // Handle clear comment form error action. Remove commentAddError from the state.
+  [CLEAR_COMMENT_ADD_ERROR]: state => omit(['commentAddError'], state),
+  // Handle clear form error action. Remove error from the state.
+  [CLEAR_COMMENT_EDIT_ERROR]: state => omit(['commentEditError'], state),
 }, initialState);

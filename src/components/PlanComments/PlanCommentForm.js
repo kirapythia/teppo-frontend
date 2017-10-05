@@ -38,13 +38,14 @@ const formConfig = {
 const PlanCommentForm = ({
   addComment,
   handleSubmit,
+  clearError,
   formSendError,
   valid,
   pristine,
   submitting,
 }) => (
   <form onSubmit={handleSubmit(addComment)}>
-    { formSendError && <Message message={formSendError.message} /> }
+    { formSendError && <Message message={formSendError.message} onClose={clearError} /> }
 
     <Field
       type="textarea"

@@ -6,7 +6,7 @@ const formIconClassName = isApproved => cx('fa', 'fa-2x', isApproved ? 'fa-comme
 
 const chooseActionButton = (comment, callback) => (comment.approved
   ? <button className="button button-red" onClick={() => callback(comment, false)}>
-    <i className="fa fa-undo" />&nbsp;{t('button.undo_approve')}
+    <i className="fa fa-undo" />
   </button>
   : <button className="button button-green" onClick={() => callback(comment, true)}>
     <i className="fa fa-check" />&nbsp;{t('button.approve')}
