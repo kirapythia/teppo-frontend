@@ -1,4 +1,4 @@
-import validators from './validators';
+import * as validators from './validators';
 
 describe('type validations', () => {
   describe('string', () => {
@@ -202,3 +202,26 @@ describe('required', () => {
     expect(validators.required()(undefined)).not.toEqual(undefined);
   });
 });
+
+describe('regex', () => {
+  it('should pass if value matches the regex', () => {
+    const regex = /\d+/;
+    const value = '1';
+    const actual = validators.regex(regex)(value);
+    expect(actual).toEqual(undefined);
+  });
+
+  it('should pass if value is undefined', () => {
+    const regex = /\d+/;
+    const actual = validators.regex(regex)();
+    expect(actual).toEqual(undefined);
+  });
+
+  it('should not pass if value does not matche the regex', () => {
+    const regex = /\d+/;
+    const value = 'abc';
+    const actual = validators.regex(regex)(value);
+    expect(actual).not.toEqual(undefined);
+  });
+});
+

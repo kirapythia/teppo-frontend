@@ -21,6 +21,7 @@ const fields = {
     validation: {
       required: true,
       type: 'number',
+      minLength: 4,
     },
   },
 
@@ -30,6 +31,8 @@ const fields = {
     validation: {
       required: true,
       type: 'number',
+      minLength: 3,
+      maxLength: 4,
     },
   },
 

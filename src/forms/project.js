@@ -31,6 +31,7 @@ const fields = {
     validation: {
       required: true,
       type: 'number',
+      minLength: 4,
     },
   },
 
@@ -40,20 +41,10 @@ const fields = {
     validation: {
       type: 'string',
       required: true,
+      regex: /^[a-zåäö0-9_-\s]+$/i,
     },
   },
 
-  /*
-  alternativeNames: {
-    type: 'text',
-    label: t('project.alternative_names'),
-    normalize: stringToList,
-    format: value => (value || []).join(', '),
-    validation: {
-      type: 'array',
-    },
-  },
-  */
   sisterProjects: {
     type: 'multiselect',
     label: t('project.sister_projects'),

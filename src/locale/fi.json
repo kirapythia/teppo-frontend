@@ -63,6 +63,7 @@
   "validation.message.hansu_project_id_used": "Hankenumero on jo käytössä",
   "validation.message.maxlength": "Arvon tulee olla enintään ${max} merkkiä",
   "validation.message.minlength": "Arvon tulee olla vähintään ${min} merkkiä",
+  "validation.message.regex": "Kentän muoto on virheellinen",
   "validation.message.required": "Kenttä on pakollinen",
   "validation.message.type.alphanum": "Arvo saa sisältää ainoastaan kirjaimia ja numeroita",
   "validation.message.type.array": "Arvon tulee olla lista",

@@ -110,8 +110,22 @@ export const propSorter = propName => (a, b) => {
   return 1;
 };
 
-/* Convert map to a list
+/** Convert map to a list
  * @param {object} obj
  * @return {*[]}
  */
 export const mapToList = obj => Object.getOwnPropertyNames(obj).map(key => obj[key]);
+
+/**
+ * Check if given value is a number (but not a NaN)
+ * @param {*} value
+ * @return {boolean}
+ */
+export const isNumber = value => !isNaN(Number(value));
+
+/**
+ * Check if given value is a string
+ * @param {*} value
+ * @return {boolean}
+ */
+export const isString = value => typeof value === 'string';
