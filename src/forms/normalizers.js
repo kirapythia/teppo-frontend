@@ -22,3 +22,10 @@ export const listToString = value => (value ? value.join(',') : '');
  * @return {number[]}
  */
 export const stringToNumberList = value => stringToList(value).map(Number);
+
+/**
+ * Strip tags from html input
+ * @param {string} value
+ * @return {string}
+ */
+export const stripTags = (value = '') => value.replace(/(<([^>]+)>)/ig, '');

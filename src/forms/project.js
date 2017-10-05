@@ -1,5 +1,5 @@
 import t from '../locale';
-import { listToString, stringToNumberList } from './normalizers';
+import { listToString, stringToNumberList, stripTags } from './normalizers';
 
 /**
  * Field definitions for the project form. Object key is field name and
@@ -56,6 +56,7 @@ const fields = {
   description: {
     type: 'textarea',
     label: t('project.description'),
+    normalize: stripTags,
   },
 };
 
