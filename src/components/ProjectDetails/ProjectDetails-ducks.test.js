@@ -54,7 +54,7 @@ describe('Location change', () => {
     const projectId = '123';
     const params = { projectId };
     const action = { type: LOCATION_CHANGED, payload: { route: PROJECT_DETAILS, params } };
-    const state = { project: { projectId: +projectId } };
+    const state = { currentProjectId: projectId };
     const result = reducer(state, action);
     expect(result).toEqual(state);
   });

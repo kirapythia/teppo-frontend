@@ -43,15 +43,15 @@ export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const { params = {} } = action.payload;
     const { projectId } = params;
-    const { project } = state;
+    const { currentProjectId } = state;
 
     // if navigated to the project details page
     // if there's project id in the url and it's different than previous id
     // then fetch project from the server...
-    if (projectId && (!project || Number(projectId) !== project.projectId)) {
+    if (projectId && (!currentProjectId || projectId !== currentProjectId)) {
       return loop(
         // remove error from the state
-        { ...state, isFetching: true },
+        { ...state, isFetching: true, currentProjectId: projectId },
         // Middleware will call fetchProject and if it succeeds
         // then fetchProjectSuccess action will be dispatched
         // otherwise fetchProjectError action will be dispatched
