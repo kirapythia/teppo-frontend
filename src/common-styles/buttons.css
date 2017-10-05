@@ -2,6 +2,8 @@
 button, .button {
   transition: opacity .2s linear;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 button[disabled], .button[disabled] {
