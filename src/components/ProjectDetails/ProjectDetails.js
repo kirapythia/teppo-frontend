@@ -59,9 +59,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
 
         <div className="ProjectDetails__plans-wrapper">
           <h3>{t('header.project.plans')}</h3>
-          {plans.length
-            ? <PlansList project={project} plans={plans} removePlan={removePlan} />
-            : <div className="text-italic">{t('project.details.no_plans')}</div>}
+          <PlansList project={project} plans={plans} removePlan={removePlan} />
         </div>
 
         <div className="row ProjectDetails__actions-wrapper">

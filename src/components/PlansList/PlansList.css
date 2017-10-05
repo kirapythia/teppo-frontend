@@ -4,15 +4,19 @@
 
 .PlanListItem {
   display: flex;
-}
-
-.PlanListItem {
-  padding-bottom: 6px;
-  border-bottom: 1px solid #ccc;
+  padding: .4rem .5rem;
+  border-radius: 4px;
+  margin-bottom: 0;
 }
 
 .PlanListItem__identifiers {
   flex: 1;
+}
+.PlanListItem__identifiers a {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  color: #222;
 }
 
 .PlanListItem .IconButton {
@@ -21,4 +25,13 @@
 
 .PlanListItem__RemoveButton {
   color: #DB0202;
+}
+
+.PlanListItem:hover {
+  background-color: #eee;
+  color: #1EAEDB;
+}
+
+.PlanListItem:hover a {
+  color: #1EAEDB;
 }

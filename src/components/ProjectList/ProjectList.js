@@ -9,7 +9,7 @@ import './ProjectList.css';
  * @param {object[]} props.projects
  */
 const ProjectList = ({ projects = [] }) => (
-  <div>
+  <section className="ProjectList">
     {projects.length ? (
       <div className="ProjectList__header">
         <div className="two columns">Tunniste</div>
@@ -18,7 +18,7 @@ const ProjectList = ({ projects = [] }) => (
     ) : null}
     <ul className="ProjectList clear-list-styles">
       {projects.map(({ projectId, hansuProjectId, name }) => (
-        <li key={projectId}>
+        <li className="ProjectListItem" key={projectId}>
           <Link href={`/project/${projectId}`}>
             <div className="two columns ProjectList__hansuId">{hansuProjectId}</div>
             <div className="nine columns">{name}</div>
@@ -26,9 +26,9 @@ const ProjectList = ({ projects = [] }) => (
           </Link>
         </li>
       ))}
-      {!projects.length && <li className="text-italic ProjectList__placeholder">{t('projectlist.no_projects')}</li>}
+      {!projects.length && <li className="text-italic">{t('projectlist.no_projects')}</li>}
     </ul>
-  </div>
+  </section>
 );
 
 export default ProjectList;
