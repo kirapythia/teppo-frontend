@@ -1,10 +1,8 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
-import { actions as PlanActions } from '../../redux/plans/plans.ducks';
 import { getCurrentProject, getCurrentSisterProjects, listLatestVersionsOfPlans } from '../../selectors';
 import { formProjectDetailFields } from './model';
 import ShowDetails from '../ShowDetails';
@@ -23,19 +21,16 @@ const mapStateToProps = state => ({
   isFetching: state.projectDetails.isFetching,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  removePlan: PlanActions.removePlan,
-}, dispatch);
-
 /**
  * Show project details with plans list etc.
  * @param {object} props
- * @param {number} props.projectId
  * @param {Error} props.error
  * @param {object} props.project
- * @param {function} props.removePlan
+ * @param {object[]} props.plans
+ * @param {boolean} props.isFetching
+ * @param {object[]} props.sisterProjects
  */
-const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterProjects }) => (
+const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) => (
   <div className="ProjectDetails">
     <LoadingOverlay isVisible={isFetching} />
     {error && (
@@ -58,7 +53,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
 
         <div className="ProjectDetails__plans-wrapper">
           <h3>{t('header.project.plans')}</h3>
-          <PlansList project={project} plans={plans} removePlan={removePlan} />
+          <PlansList project={project} plans={plans} />
         </div>
 
         <div className="row ProjectDetails__actions-wrapper">
@@ -78,4 +73,4 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
   </div>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails);
+export default connect(mapStateToProps)(ProjectDetails);

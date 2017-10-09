@@ -9,9 +9,8 @@ import './PlansList.css';
  * @param {object} props
  * @param {object} props.project
  * @param {object[]} props.plans
- * @param {function} props.removePlan
  */
-const PlansList = ({ project, plans, removePlan }) => (
+const PlansList = ({ project, plans }) => (
   <div>
     {!!plans.length && <div className="PlansList__header">
       <div className="three columns">{t('common.id')}</div>
@@ -24,7 +23,6 @@ const PlansList = ({ project, plans, removePlan }) => (
             key={plan.planId}
             plan={plan}
             project={project}
-            removePlan={removePlan}
           />))
         : <li className="PlansList__placeholder text-italic">{t('project.details.no_plans')}</li>
       }

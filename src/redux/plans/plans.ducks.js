@@ -3,9 +3,7 @@ import { Cmd, loop } from 'redux-loop';
 import { listToMapBy, omit } from '../../utils';
 import { removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
-// FIXME: This breaks the module pattern,
-// but importing from the index results into a circular dependency!
-import { FETCH_PROJECT_SUCCESS } from '../../components/ProjectDetails/ProjectDetails-ducks';
+import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -66,7 +64,7 @@ export default handleActions({
     ({ ...state, [action.payload.planId]: action.payload }),
 
   // handle project fetch success
-  [FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.latestPlans),
+  [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.latestPlans),
 
   // Handle approve plan action. Update plan object in the server.
   [actionTypes.APPROVE_PLAN]: (state, action) => loop(
