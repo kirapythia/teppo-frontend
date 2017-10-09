@@ -1,6 +1,6 @@
 import { createAction, combineActions, handleActions } from 'redux-actions';
 import { Cmd, loop } from 'redux-loop';
-import { omit } from '../../utils';
+import { listToMapBy, omit } from '../../utils';
 import { removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 // FIXME: This breaks the module pattern,
@@ -54,7 +54,7 @@ export const actions = {
  * @param {object[]} plans
  * @param {object}
  */
-const byId = plans => plans.reduce((acc, plan) => ({ ...acc, [plan.planId]: plan }), {});
+const byId = listToMapBy('planId');
 
 // ProjectForm reducer
 export default handleActions({
@@ -66,7 +66,7 @@ export default handleActions({
     ({ ...state, [action.payload.planId]: action.payload }),
 
   // handle project fetch success
-  [FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.plans),
+  [FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.latestPlans),
 
   // Handle approve plan action. Update plan object in the server.
   [actionTypes.APPROVE_PLAN]: (state, action) => loop(

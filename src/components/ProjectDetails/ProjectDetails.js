@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { actions as PlanActions } from '../../redux/plans/plans.ducks';
-import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
+import { getCurrentProject, getCurrentSisterProjects, listLatestVersionsOfPlans } from '../../selectors';
 import { formProjectDetailFields } from './model';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   error: state.projectDetails.error,
   project: getCurrentProject(state),
   sisterProjects: getCurrentSisterProjects(state),
-  plans: listPlans(state),
+  plans: listLatestVersionsOfPlans(state),
   isFetching: state.projectDetails.isFetching,
 });
 

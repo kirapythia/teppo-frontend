@@ -1,4 +1,5 @@
 import * as selectors from './index';
+import { listToMapBy } from '../utils';
 
 describe('getCurrentProjectId', () => {
   it('should return undefined if router params is not defined', () => {
@@ -226,3 +227,43 @@ describe('listComments', () => {
   });
 });
 
+describe('listLatestVersionsOfPlans', () => {
+  it('should return an array', () => {
+    const state = { plans: {} };
+    const actual = selectors.listLatestVersionsOfPlans(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return an empty array if plans map is empty', () => {
+    const state = { plans: {} };
+    const actual = selectors.listLatestVersionsOfPlans(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return a plan', () => {
+    const plan = { planId: 1 };
+    const state = { plans: { 1: plan } };
+    const actual = selectors.listLatestVersionsOfPlans(state);
+    expect(actual).toEqual([plan]);
+  });
+
+  it('should return the latest plan when multiple plans exist with the same main and sub number', () => {
+    const oldPlan = { planId: 1, mainNo: 1, subNo: 2, version: 1 };
+    const newPlan = { planId: 2, mainNo: 1, subNo: 2, version: 2 };
+    const state = { plans: { 1: oldPlan, 2: newPlan } };
+    const actual = selectors.listLatestVersionsOfPlans(state);
+    expect(actual).toEqual([newPlan]);
+  });
+
+  it('should return the latest version from each of the plans', () => {
+    const plans = [
+      { planId: 1, mainNo: 1, subNo: 2, version: 1 },
+      { planId: 2, mainNo: 1, subNo: 2, version: 2 },
+      { planId: 3, mainNo: 2, subNo: 2, version: 0 },
+      { planId: 4, mainNo: 2, subNo: 2, version: 2 },
+    ];
+    const state = { plans: listToMapBy('planId', plans) };
+    const actual = selectors.listLatestVersionsOfPlans(state);
+    expect(actual).toEqual([plans[1], plans[3]]);
+  });
+});

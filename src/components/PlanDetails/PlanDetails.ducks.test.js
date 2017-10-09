@@ -108,20 +108,20 @@ describe('Removing a plan', () => {
 
   describe('Remove plan success action handler', () => {
     it('should mark isRemoving to false', () => {
-      const action = actions.removePlanSuccess();
+      const action = actions.removePlanSuccess({});
       const [actual] = reducer({ isRemoving: true }, action);
       expect(actual.isRemoving).toEqual(false);
     });
 
     it('should not discard other state members', () => {
-      const action = actions.removePlanSuccess();
+      const action = actions.removePlanSuccess({});
       const state = { isRemoving: true, a: 1 };
       const [actual] = reducer(state, action);
       expect(actual.a).toEqual(state.a);
     });
 
     it('should not mutate the original state', () => {
-      const action = actions.removePlanSuccess();
+      const action = actions.removePlanSuccess({});
       const state = { isRemoving: false };
       const [actual] = reducer(state, action);
       expect(actual).not.toBe(state);

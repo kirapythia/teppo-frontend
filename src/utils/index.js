@@ -1,3 +1,4 @@
+import R from 'ramda';
 import t from '../locale';
 import { ServerResponseError } from './ajax';
 
@@ -117,6 +118,15 @@ export const propSorter = propName => (a, b) => {
 export const mapToList = obj => Object.getOwnPropertyNames(obj).map(key => obj[key]);
 
 /**
+ * Convert list to map using obj[prop] as key
+ * @param {string} prop
+ * @param {object[]} list
+ * @return {object}
+ */
+export const listToMapBy = R.curry((prop, list) =>
+  list.reduce((acc, obj) => ({ ...acc, [obj[prop]]: obj }), {}));
+
+/**
  * Check if given value is a number (but not a NaN)
  * @param {*} value
  * @return {boolean}
@@ -136,6 +146,13 @@ export const isString = value => typeof value === 'string';
  * @param {string}
  */
 export const versionToCharacter = number => String.fromCharCode(65 + Number(number));
+
+/**
+ * Get given props from an object and concatenate them into a string
+ * @param {string[]} props
+ * @param {string} props
+ */
+export const concatProps = props => R.pipe(R.props(props), R.map(String), R.reduce(R.concat, ''));
 
 /**
  * Format date to a human readable form
