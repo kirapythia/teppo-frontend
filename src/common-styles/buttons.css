@@ -16,8 +16,8 @@ button[disabled], .button[disabled] {
   border-color: #28a745;
 }
 
-.button-green:focus,
-.button-green:hover {
+.button-green:not(:disabled):focus,
+.button-green:not(:disabled):hover {
   color: #fff;
   background-color: #218838;
   border-color: #1e7e34;
@@ -25,8 +25,6 @@ button[disabled], .button[disabled] {
 .button-green:focus,
 .button-green:hover {
   color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34;
 }
 
 .button-red {
@@ -35,9 +33,14 @@ button[disabled], .button[disabled] {
   border-color: #dc3545;
 }
 
-.button-red:focus,
-.button-red:hover {
+.button-red:not(:disabled):focus,
+.button-red:not(:disabled):hover {
   color: #fff;
   background-color: #c82333;
   border-color: #bd2130;
+}
+
+.button-red:focus,
+.button-red:hover {
+  color: #fff;
 }

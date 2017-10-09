@@ -1,7 +1,5 @@
 import component from './PlanDetails';
-// import ShowDetails from '../ShowDetails';
-import reducer, { NAME, actions } from './PlanDetails-ducks';
+import reducer, { NAME, actions, actionTypes } from './PlanDetails.ducks';
 
-
-export { reducer, NAME, actions };
+export { reducer, NAME, actions, actionTypes };
 export default component;

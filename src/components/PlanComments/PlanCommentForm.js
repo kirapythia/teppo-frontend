@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'redux-little-router';
 import { Field, reduxForm } from 'redux-form';
 import t from '../../locale';
 import { renderField } from '../../forms/form-utils';
 import { NAME } from './PlanComments.ducks';
 import Message from '../common/Message';
 import FormSubmitButton from '../CreateEditAndSaveForm/FormSubmitButton';
+import BackToProjectButton from '../common/BackToProjectButton';
 
 const formConfig = {
   /**
@@ -61,10 +61,7 @@ const PlanCommentForm = ({
 
     <div className="PlanCommentForm__actions row">
       <div className="six columns">
-        <Link className="button u-full-width" href={`/project/${plan.projectId}`}>
-          <i className="fa fa-angle-left fa-lg" aria-hidden="true" />&nbsp;
-          {t('button.back_to_project')}
-        </Link>
+        <BackToProjectButton plan={plan} />
       </div>
       <div className="six columns">
         <FormSubmitButton
