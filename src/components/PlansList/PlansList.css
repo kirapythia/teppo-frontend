@@ -2,36 +2,43 @@
   margin-bottom: 0;
 }
 
-.PlanListItem {
+.PlansList__header {
+  display: flex;
+  font-weight: bold;
+}
+
+.PlansList__identifier {
+  margin-right: 1rem;
+}
+
+.PlansList__version {
+  flex: 1;
+}
+
+.PlansListItem {
   display: flex;
   padding: .4rem .5rem;
   border-radius: 4px;
   margin-bottom: 0;
 }
 
-.PlanListItem__identifiers {
-  flex: 1;
-}
-.PlanListItem__identifiers a {
-  display: block;
+.PlansListItem__identifier a {
   cursor: pointer;
-  text-decoration: none;
-  color: #222;
 }
 
-.PlanListItem .IconButton {
+.PlansListItem .IconButton {
   margin-left: 6px;
 }
 
-.PlanListItem__RemoveButton {
+.PlansListItem__RemoveButton {
   color: #DB0202;
 }
 
-.PlanListItem:hover {
+.PlansListItem:hover {
   background-color: #eee;
   color: #1EAEDB;
 }
 
-.PlanListItem:hover a {
+.PlansListItem:hover a {
   color: #1EAEDB;
 }

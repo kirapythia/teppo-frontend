@@ -1,5 +1,6 @@
+import R from 'ramda';
 import { createSelector } from 'reselect';
-import { isOneOf, propSorter, mapToList } from '../utils';
+import { isOneOf, propSorter, mapToList, concatProps } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -98,4 +99,16 @@ export const getProjectAsSelectOptions = createSelector(
     // map project to select options
     .map(({ name, projectId, hansuProjectId }) =>
       ({ label: `${hansuProjectId} - ${name}`, value: `${projectId}` }))
+);
+
+const formPlanIdentifier = concatProps(['projectId', 'mainNo', 'subNo']);
+const getLatest = R.pipe(R.sortBy(R.prop('version')), R.reverse, R.take(1));
+
+export const listLatestVersionsOfPlans = createSelector(
+  listPlans,
+  R.pipe(
+    R.groupWith((a, b) => R.equals(formPlanIdentifier(a), formPlanIdentifier(b))),
+    R.map(getLatest),
+    R.flatten,
+  )
 );

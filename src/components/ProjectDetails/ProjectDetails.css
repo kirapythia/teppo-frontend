@@ -1,5 +1,6 @@
 .ProjectDetails {
   height: 100%;
+  position: relative;
 }
 
 .ProjectDetails h3 {

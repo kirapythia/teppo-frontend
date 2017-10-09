@@ -18,6 +18,8 @@
   "button.approve_plan": "Hyväksy suunnitelma",
   "button.discard_plan": "Hylkää suunnitelma",
   "comment.text": "Kommentti",
+  "common.id": "Tunniste",
+  "common.version": "Versio",
   "dropzone.placeholder": "Paina Valitse tiedosto -painiketta tai raahaa haluamasi tiedostot tähän ikkunaan.",
   "files.no_files": "Ei lisättyjä tiedostoja",
   "footer.copyright": "Espoon Kaupunki",

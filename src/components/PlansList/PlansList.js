@@ -12,18 +12,24 @@ import './PlansList.css';
  * @param {function} props.removePlan
  */
 const PlansList = ({ project, plans, removePlan }) => (
-  <ul className="PlansList clear-list-styles">
-    {plans.length
-      ? sortPlans(plans).map(plan => (
-        <PlanListItem
-          key={plan.planId}
-          plan={plan}
-          project={project}
-          removePlan={removePlan}
-        />))
-      : <li className="PlansList__placeholder text-italic">{t('project.details.no_plans')}</li>
-    }
-  </ul>
+  <div>
+    {!!plans.length && <div className="PlansList__header">
+      <div className="three columns">{t('common.id')}</div>
+      <div className="nine columns">{t('common.version')}</div>
+    </div>}
+    <ul className="PlansList clear-list-styles">
+      {plans.length
+        ? sortPlans(plans).map(plan => (
+          <PlanListItem
+            key={plan.planId}
+            plan={plan}
+            project={project}
+            removePlan={removePlan}
+          />))
+        : <li className="PlansList__placeholder text-italic">{t('project.details.no_plans')}</li>
+      }
+    </ul>
+  </div>
 );
 
 export default PlansList;
