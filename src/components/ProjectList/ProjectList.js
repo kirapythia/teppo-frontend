@@ -12,8 +12,8 @@ const ProjectList = ({ projects = [] }) => (
   <section className="ProjectList">
     {projects.length ? (
       <div className="ProjectList__header">
-        <div className="two columns">Tunniste</div>
-        <div className="ten columns">Projektin nimi</div>
+        <div className="two columns">{t('common.id')}</div>
+        <div className="ten columns">{t('project.name')}</div>
       </div>
     ) : null}
     <ul className="ProjectList clear-list-styles">
