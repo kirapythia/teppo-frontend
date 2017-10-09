@@ -154,9 +154,24 @@ export const versionToCharacter = number => String.fromCharCode(65 + Number(numb
  */
 export const concatProps = props => R.pipe(R.props(props), R.map(String), R.reduce(R.concat, ''));
 
+const dateOptions = {
+  weekday: 'short',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+};
+
+const timeOptions = {
+  hour: '2-digit',
+  minute: '2-digit',
+};
+
 /**
  * Format date to a human readable form
- * @param {number} date
+ * @param {string} str
  * @return {string}
  */
-export const serverDateToString = () => new Date(1999, 1, 1, 12, 12);
+export const serverDateToString = (str) => {
+  const date = new Date(str);
+  return `${date.toLocaleDateString('fi-FI', dateOptions)} ${date.toLocaleTimeString('fi-FI', timeOptions)}`;
+};

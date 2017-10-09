@@ -14,13 +14,6 @@ import BackToProjectButton from '../common/BackToProjectButton';
 import SpinnerButton from '../common/SpinnerButton';
 import './PlanDetails.css';
 
-/**
- * Format detail values for the ShowDetails component
- * @private
- * @type {function}
- * @param {object} plan
- * @return {object}
- */
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
   plan: getCurrentPlan(state),

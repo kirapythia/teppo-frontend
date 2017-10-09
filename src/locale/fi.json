@@ -43,6 +43,8 @@
   "notfoundpage.message": "Haettua sivua tai resurssia ei löytynyt",
   "notfoundpage.title": "Ups, jotain meni pieleen!",
   "plan.approved": "Suunnitelma hyväksytty",
+  "plan.created": "Suunnitelma luotu",
+  "plan.updated": "Suunnitelmaa päivitetty",
   "plan.file": "Suunnitelmatiedosto",
   "plan.version": "Versio",
   "plan.primary_id": "Päänumero",
