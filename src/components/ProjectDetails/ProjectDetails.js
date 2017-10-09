@@ -1,8 +1,10 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
+import { actions as PlanActions } from '../../redux/plans/plans.ducks';
 import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
 import { formProjectDetailFields } from './model';
 import ShowDetails from '../ShowDetails';
@@ -21,10 +23,9 @@ const mapStateToProps = state => ({
   isFetching: state.projectDetails.isFetching,
 });
 
-const mapDispatchToProps = () => ({
-  // FIXME: replace when implemented!
-  removePlan: () => undefined,
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+  removePlan: PlanActions.removePlan,
+}, dispatch);
 
 /**
  * Show project details with plans list etc.

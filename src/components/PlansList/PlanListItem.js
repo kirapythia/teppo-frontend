@@ -21,7 +21,7 @@ const PlanListItem = ({ plan = {}, project = {}, removePlan }) => (
       <Link href={`/project/${project.projectId}/plan/${plan.planId}/edit`}>
         <i className="fa fa-pencil fa-lg" />
       </Link>
-      <IconButton className="PlanListItem__RemoveButton fa-times fa-lg" onClick={removePlan} />
+      <IconButton className="PlanListItem__RemoveButton fa-times fa-lg" onClick={() => removePlan(plan)} />
     </div>
   </li>
 );

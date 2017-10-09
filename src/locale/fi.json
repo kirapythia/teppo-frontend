@@ -15,6 +15,8 @@
   "button.sending": "Lähetetään",
   "button.undo_approve": "Peru hyväksyminen",
   "button.file_upload": "Valitse tiedosto",
+  "button.approve_plan": "Hyväksy suunnitelma",
+  "button.discard_plan": "Hylkää suunnitelma",
   "comment.text": "Kommentti",
   "dropzone.placeholder": "Paina Valitse tiedosto -painiketta tai raahaa haluamasi tiedostot tähän ikkunaan.",
   "files.no_files": "Ei lisättyjä tiedostoja",
