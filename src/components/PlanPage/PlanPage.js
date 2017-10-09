@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import t from '../../locale';
-import { pick } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
-import fields from '../../forms/project';
 import './PlanPage.css';
 
 const mapStateToProps = state => ({
   project: getCurrentProject(state),
   plan: getCurrentPlan(state),
 });
+
+const formProjectDetailFields = project => ([
+  { label: t('project.name'), value: project.name },
+  { label: t('project.hansuProjectId'), value: project.hansuProjectId },
+]);
 
 /**
  * Page for creating a new plan
@@ -24,9 +26,8 @@ const PlanPage = ({ plan, project = {} }) => (
   <div className="PlanPage">
     <h2>{ plan ? t('button.edit_plan') : t('button.add_plan') }</h2>
     <ShowDetails
-      details={pick(['name', 'hansuProjectId'], project)}
+      fields={formProjectDetailFields(project)}
       className="ShowDetails--highlighted"
-      fields={fields}
     />
     <PlanForm plan={plan} />
   </div>

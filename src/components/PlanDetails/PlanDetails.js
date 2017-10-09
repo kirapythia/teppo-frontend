@@ -6,8 +6,7 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
-import { pick } from '../../utils';
-import fields from '../../forms/plan';
+import { formPlanDetailFields } from './model';
 import PlanComments from '../PlanComments';
 import './PlanDetails.css';
 
@@ -29,9 +28,7 @@ const PlanDetails = ({ error, plan }) => (
     {!error && plan && (
       <div>
         <ShowDetails
-          details={pick(['mainNo', 'subNo', 'url'], plan)}
-          fields={fields}
-          className="ShowDetails--highlighted"
+          fields={formPlanDetailFields(plan)}
         />
         <PlanComments />
       </div>

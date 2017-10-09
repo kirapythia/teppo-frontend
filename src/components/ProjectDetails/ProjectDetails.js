@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, getCurrentSisterProjects, listPlans } from '../../selectors';
-import { omit } from '../../utils';
-import fields from '../../forms/project';
+import { formProjectDetailFields } from './model';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
@@ -48,8 +47,7 @@ const ProjectDetails = ({ error, removePlan, project, plans, isFetching, sisterP
       <div className="ProjectDetails__content-wrapper">
         <ShowDetails
           title={project.name}
-          details={omit(['name', 'projectId', 'plans'], project)}
-          fields={fields}
+          fields={formProjectDetailFields(project)}
         />
 
         <div>

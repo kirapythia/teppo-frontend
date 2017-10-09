@@ -129,3 +129,17 @@ export const isNumber = value => !isNaN(Number(value));
  * @return {boolean}
  */
 export const isString = value => typeof value === 'string';
+
+/**
+ * Map number to corresponding version character (0 => A, 1 => B...)
+ * @param {number} number
+ * @param {string}
+ */
+export const versionToCharacter = number => String.fromCharCode(65 + Number(number));
+
+/**
+ * Format date to a human readable form
+ * @param {number} date
+ * @return {string}
+ */
+export const serverDateToString = () => new Date(1999, 1, 1, 12, 12);
