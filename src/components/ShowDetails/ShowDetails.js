@@ -31,9 +31,9 @@ const ShowDetails = ({ title, fields = [], className }) => (
     {title && <h2>{title}</h2>}
 
     {fields.map(({ label, value }) => (
-      <div key={label} className="row">
-        <div className="three columns">{label}</div>
-        <div className="nine columns">
+      <div key={label} className="ShowDetails__row">
+        <div className="ShowDetails__label">{label}</div>
+        <div className="ShowDetails__value">
           <b>{formatValue(value) || '-'}</b>
         </div>
       </div>
