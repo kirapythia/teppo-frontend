@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import fields from '../../forms/plan';
 import { getCurrentProject } from '../../selectors';
-import { NAME, actions } from './PlanForm-ducks';
+import { NAME, actions } from './PlanForm.ducks';
 
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 

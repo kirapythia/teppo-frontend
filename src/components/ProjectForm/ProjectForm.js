@@ -7,7 +7,7 @@ import { createFieldsWithValidations } from '../../forms/form-utils';
 import { getProjectAsSelectOptions } from '../../selectors';
 import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
-import { NAME, actions } from './ProjectForm-ducks';
+import { NAME, actions } from './ProjectForm.ducks';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 /**

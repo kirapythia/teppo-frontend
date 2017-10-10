@@ -1,6 +1,6 @@
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
-import reducer, { actions } from './ProjectForm-ducks';
+import reducer, { actions } from './ProjectForm.ducks';
 import { saveProject } from './model';
 import * as ROUTES from '../../constants/routes';
 import { tpl } from '../../locale';

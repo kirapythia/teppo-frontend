@@ -1,7 +1,7 @@
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { tpl } from '../../locale';
-import reducer, { actions } from './PlanForm-ducks';
+import reducer, { actions } from './PlanForm.ducks';
 import { savePlan } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import * as ROUTES from '../../constants/routes';

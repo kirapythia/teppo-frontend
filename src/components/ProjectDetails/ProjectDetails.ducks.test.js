@@ -1,7 +1,7 @@
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { loop, Cmd } from 'redux-loop';
 import { NOT_FOUND_PAGE, PROJECT_DETAILS } from '../../constants/routes';
-import reducer, { actions } from './ProjectDetails-ducks';
+import reducer, { actions } from './ProjectDetails.ducks';
 import { fetchProject } from './model';
 
 describe('Location change', () => {

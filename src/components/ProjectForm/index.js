@@ -1,5 +1,5 @@
 import ProjectForm from './ProjectForm';
-import reducer, { NAME, PROJECT_SUCCESS } from './ProjectForm-ducks';
+import reducer, { NAME, PROJECT_SUCCESS } from './ProjectForm.ducks';
 
 const actionTypes = {
   PROJECT_SUCCESS,

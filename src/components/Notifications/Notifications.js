@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import cx from 'classnames';
-import { actions } from './Notifications-ducks';
+import { actions } from './Notifications.ducks';
 import CloseIconButton from '../common/CloseIconButton';
 
 import './Notifications.css';

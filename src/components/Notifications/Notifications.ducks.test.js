@@ -1,5 +1,5 @@
 import { loop, Cmd } from 'redux-loop';
-import reducer, { actions } from './Notifications-ducks';
+import reducer, { actions } from './Notifications.ducks';
 import constants from './constants';
 import { wait } from '../../utils';
 
