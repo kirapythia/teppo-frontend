@@ -1,5 +1,6 @@
 import { Cmd, loop } from 'redux-loop';
-import { removePlan, updatePlan } from './model';
+import { createPlan, removePlan, updatePlan } from './model';
+import { pick } from '../../utils';
 import reducer, { actions, actionTypes } from './plans.ducks';
 import * as PlanForm from '../../components/PlanForm';
 import * as ProjectDetails from '../../components/ProjectDetails';
@@ -115,23 +116,23 @@ describe('Approving a plan', () => {
 
   describe('approve plan success action', () => {
     it('should have a type', () => {
-      expect(actions.approvePlanSuccess().type).toEqual(actionTypes.APPROVE_PLAN_SUCCESS);
+      expect(actions.updatePlanSuccess().type).toEqual(actionTypes.UPDATE_PLAN_SUCCESS);
     });
 
     it('should pass plan as payload', () => {
       const plan = {};
-      expect(actions.approvePlanSuccess(plan).payload).toBe(plan);
+      expect(actions.updatePlanSuccess(plan).payload).toBe(plan);
     });
   });
 
   describe('approve plan success action', () => {
     it('should have a type', () => {
-      expect(actions.approvePlanError().type).toEqual(actionTypes.APPROVE_PLAN_ERROR);
+      expect(actions.updatePlanError().type).toEqual(actionTypes.UPDATE_PLAN_ERROR);
     });
 
     it('should pass error as payload', () => {
       const error = new Error();
-      expect(actions.approvePlanError(error).payload).toBe(error);
+      expect(actions.updatePlanError(error).payload).toBe(error);
     });
   });
 
@@ -142,15 +143,15 @@ describe('Approving a plan', () => {
     });
 
     it('should update the plan object', () => {
-      const plan = {};
+      const plan = { approved: false };
       const action = actions.approvePlan(plan);
       const actual = reducer(undefined, action);
       expect(actual).toEqual(loop(
         actual[0],
         Cmd.run(updatePlan, {
-          successActionCreator: actions.approvePlanSuccess,
-          failActionCreator: actions.approvePlanError,
-          args: [plan],
+          successActionCreator: actions.updatePlanSuccess,
+          failActionCreator: actions.updatePlanError,
+          args: [{ ...plan, approved: true }],
         })
       ));
     });
@@ -236,3 +237,33 @@ describe('Removing a plan', () => {
   });
 });
 
+describe('Creating a new version of a plan', () => {
+  describe('create new version action', () => {
+    it('should have a type', () => {
+      expect(actions.createNewPlanVersion().type).toEqual(actionTypes.CREATE_NEW_PLAN_VERSION);
+    });
+
+    it('should have a plan as payload', () => {
+      const plan = {};
+      expect(actions.removePlan(plan).payload).toBe(plan);
+    });
+  });
+
+  describe('handling a create new version action', () => {
+    it('should call create plan action with selected props', () => {
+      const plan = { mainNo: '8001', subNo: '2001', version: 2, projectId: '1' };
+      const action = actions.createNewPlanVersion(plan);
+      const actual = reducer(undefined, action);
+      const expectedArgs = pick(['mainNo', 'subNo', 'projectId'], plan);
+
+      expect(actual).toEqual(loop(
+        actual[0],
+        Cmd.run(createPlan, {
+          successActionCreator: actions.createNewPlanVersionSuccess,
+          failActionCreator: actions.updatePlanError,
+          args: [expectedArgs],
+        })
+      ));
+    });
+  });
+});

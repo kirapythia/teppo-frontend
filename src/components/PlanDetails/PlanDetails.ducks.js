@@ -1,31 +1,50 @@
 import { Cmd, loop } from 'redux-loop';
+import { pathEq, pick } from 'ramda';
 import { push } from 'redux-little-router';
-import { handleActions } from 'redux-actions';
+import { combineActions, handleActions } from 'redux-actions';
+import { tpl } from '../../locale';
 import { actionTypes } from '../../redux/plans';
+import { actions as Notifications } from '../Notifications';
 
 export const NAME = 'planDetails';
 
 const initialState = {
-  isApproving: false,
+  isFetching: false,
 };
 
 export default handleActions({
-  // Handle approve plan action
-  [actionTypes.APPROVE_PLAN]: state => ({ ...state, isApproving: true }),
+  // Handle actions that initiate a fetch request
+  [combineActions(
+    actionTypes.APPROVE_PLAN,
+    actionTypes.REMOVE_PLAN,
+    actionTypes.CREATE_NEW_PLAN_VERSION,
+  )]: state => ({ ...state, isFetching: true }),
+
   // handle approve plan success action
-  [actionTypes.APPROVE_PLAN_SUCCESS]: state =>
-    ({ ...state, isApproving: false }),
-  // handle approve plan error action
-  [actionTypes.APPROVE_PLAN_ERROR]: (state, action) =>
-    ({ ...state, isApproving: false, error: action.payload }),
-  // Handle remove plan action
-  [actionTypes.REMOVE_PLAN]: state => ({ ...state, isRemoving: true }),
+  [actionTypes.UPDATE_PLAN_SUCCESS]: (state, action) => {
+    const message = tpl('plan.message.update_success', pick(['mainNo', 'subNo'], action.payload));
+    // display a success notification
+    const actions = [Cmd.action(Notifications.addSuccessNotification(message))]
+      // if action has origin meta field and it equals create new version actiontype then
+      // navigate to next page otherwise just display the notification
+      .concat(pathEq(['meta', 'origin'], actionTypes.CREATE_NEW_PLAN_VERSION)(action)
+        ? Cmd.action(push(`/project/${action.payload.projectId}/plan/${action.payload.planId}`))
+        : []);
+
+    return loop(({ ...state, isFetching: false }), Cmd.batch(actions));
+  },
+
   // handle approve plan success action
   [actionTypes.REMOVE_PLAN_SUCCESS]: (state, action) => loop(
-    { ...state, isRemoving: false },
+    { ...state, isFetching: false },
+    // navigate to project page
     Cmd.action(push(`/project/${action.payload.projectId}`)),
   ),
-  // handle approve plan error action
-  [actionTypes.REMOVE_PLAN_ERROR]: (state, action) =>
-    ({ ...state, isRemoving: false, error: action.payload }),
+
+  // handle errors
+  [combineActions(
+    actionTypes.UPDATE_PLAN_ERROR,
+    actionTypes.REMOVE_PLAN_ERROR,
+  )]: (state, action) =>
+    ({ ...state, isFetching: false, error: action.payload }),
 }, initialState);

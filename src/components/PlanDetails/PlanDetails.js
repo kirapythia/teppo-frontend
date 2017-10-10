@@ -11,30 +11,50 @@ import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
 import PlanComments from '../PlanComments';
 import BackToProjectButton from '../common/BackToProjectButton';
-import SpinnerButton from '../common/SpinnerButton';
+import Button from '../common/Button';
+import LoadingOverlay from '../common/LoadingOverlay';
 import './PlanDetails.css';
 
 const mapStateToProps = state => ({
   error: state.projectDetails.error,
   plan: getCurrentPlan(state),
-  isApproving: state.planDetails.isApproving,
-  isRemoving: state.planDetails.isRemoving,
+  isFetching: state.planDetails.isFetching,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   approvePlan: actions.approvePlan,
   removePlan: actions.removePlan,
+  createNewPlanVersion: actions.createNewPlanVersion,
 }, dispatch);
+
+const mergeProps = (stateProps, actionCreators) => ({
+  ...stateProps,
+  ...actionCreators,
+  approvePlan: () => actionCreators.approvePlan(stateProps.plan),
+  removePlan: () => actionCreators.removePlan(stateProps.plan),
+  createNewPlanVersion: () => actionCreators.createNewPlanVersion(stateProps.plan),
+});
 
 /**
  * Plan details page component
  * @param {object} props
- * @param {Error} props.plan
- * @param {object} props.error
+ * @param {Error} props.plan Current plan
+ * @param {object} props.error Error from remove or approve plan actions
+ * @param {function} props.approvePlan Approve plan action
+ * @param {function} props.removePlan Remove plan action
+ * @param {boolean} props.isFetching Is an ajax request being processed
  */
-const PlanDetails = ({ plan, error, approvePlan, removePlan, isApproving, isRemoving }) => (
+const PlanDetails = ({
+  plan,
+  error,
+  approvePlan,
+  removePlan,
+  isFetching,
+  createNewPlanVersion,
+}) => (
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
+    {isFetching && <LoadingOverlay isVisible={isFetching} />}
     {error && (
       <div>
         <Message type="danger" message={error.message} />
@@ -48,8 +68,11 @@ const PlanDetails = ({ plan, error, approvePlan, removePlan, isApproving, isRemo
         />
         {plan.approved && (
           <div>
-            <div>
-              {/* new plan version button*/}
+            <div className="text-right">
+              <button className="button" onClick={createNewPlanVersion}>
+                <i className="fa fa-plus" />&nbsp;
+                {t('button.new_plan_version')}
+              </button>
             </div>
             <PlanComments />
           </div>
@@ -58,28 +81,21 @@ const PlanDetails = ({ plan, error, approvePlan, removePlan, isApproving, isRemo
           <div className="PlanDetails__actions">
             <div className="row">
               <div className="six columns">
-                <SpinnerButton
-                  isSubmitting={isRemoving}
-                  className="button button-red u-full-width"
-                  texts={[t('button.discard_plan')]}
-                  defaultIconClass="fa fa-times"
-                  buttonProps={{
-                    onClick: () => removePlan(plan),
-                    disabled: !plan.version || isApproving,
-                  }}
+                <Button
+                  className="button-red u-full-width"
+                  icon="fa-times"
+                  text={t('button.discard_plan')}
+                  onClick={removePlan}
+                  disabled={!plan.version || isFetching}
                 />
               </div>
               <div className="six columns">
-                <SpinnerButton
-                  isSubmitting={isApproving}
-                  className="button button-green u-full-width"
-                  texts={[t('button.approve_plan')]}
-                  defaultIconClass="fa fa-check"
-                  buttonProps={{
-                    type: 'button',
-                    onClick: () => approvePlan(plan),
-                    disabled: isApproving || isRemoving,
-                  }}
+                <Button
+                  className="button-green u-full-width"
+                  icon="fa-check"
+                  text={t('button.approve_plan')}
+                  onClick={approvePlan}
+                  disabled={isFetching}
                 />
               </div>
             </div>
@@ -93,4 +109,4 @@ const PlanDetails = ({ plan, error, approvePlan, removePlan, isApproving, isRemo
   </div>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlanDetails);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(PlanDetails);

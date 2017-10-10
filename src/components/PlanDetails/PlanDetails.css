@@ -1,7 +1,8 @@
+.PlanDetails .ShowDetails,
 .PlanDetails__actions button {
   margin-bottom: 2rem;
 }
 
-.PlanDetails .ShowDetails {
-  margin-bottom: 2rem;
+.PlanDetails .PlanComments__container {
+  margin-top: 2rem;
 }
