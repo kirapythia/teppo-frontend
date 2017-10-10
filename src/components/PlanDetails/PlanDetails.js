@@ -54,7 +54,9 @@ const PlanDetails = ({
 }) => (
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
+
     {isFetching && <LoadingOverlay isVisible={isFetching} />}
+
     {error && (
       <div>
         <Message type="danger" message={error.message} />
@@ -63,16 +65,15 @@ const PlanDetails = ({
     )}
     {!error && plan && (
       <div>
-        <ShowDetails
-          fields={formPlanDetailFields(plan)}
-        />
+        <ShowDetails fields={formPlanDetailFields(plan)} />
         {plan.approved && (
           <div>
             <div className="text-right">
-              <button className="button" onClick={createNewPlanVersion}>
-                <i className="fa fa-plus" />&nbsp;
-                {t('button.new_plan_version')}
-              </button>
+              <Button
+                icon="fa-plus"
+                text={t('button.new_plan_version')}
+                onClick={createNewPlanVersion}
+              />
             </div>
             <PlanComments />
           </div>

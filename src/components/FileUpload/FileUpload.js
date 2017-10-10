@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { change as changeFormAction } from 'redux-form';
 import t from '../../locale';
+import Button from '../common/Button';
 import FileList from './FilesList';
 
 import './FileUpload.css';
@@ -35,9 +36,10 @@ const FileUpload = ({ form, name, value, placeholder, onChange, change }) => (
     >
       <div className="FileUpload__text-container">{placeholder}</div>
       <div>
-        <button type="button" className="button button-primary u-full-width">
-          {t('button.file_upload')}
-        </button>
+        <Button
+          className="button-primary u-full-width"
+          text={t('button.file_upload')}
+        />
       </div>
     </Dropzone>
   </div>

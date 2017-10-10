@@ -1,16 +1,22 @@
 import React from 'react';
 import cx from 'classnames';
 import t from '../../locale';
+import Button from '../common/Button';
 
 const formIconClassName = isApproved => cx('fa', 'fa-2x', isApproved ? 'fa-comment' : 'fa-comment-o');
 
 const chooseActionButton = (comment, callback) => (comment.approved
-  ? <button className="button button-red" onClick={() => callback(comment, false)}>
-    <i className="fa fa-undo" />
-  </button>
-  : <button className="button button-green" onClick={() => callback(comment, true)}>
-    <i className="fa fa-check" />&nbsp;{t('button.approve')}
-  </button>
+  ? <Button
+    className="button-red"
+    onClick={() => callback(comment, false)}
+    icon="fa-undo"
+  />
+  : <Button
+    className="button-green"
+    icon="fa-check"
+    text={t('button.approve')}
+    onClick={() => callback(comment, true)}
+  />
 );
 
 /**
