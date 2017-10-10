@@ -81,20 +81,12 @@ describe('Updating a comment', () => {
       });
   });
 
-  it('should reject promise with the corresponding comment', () => {
-    fetchMock.put(EDIT_URL_MATCHER, 400);
-    const plan = { planId: 2, projectId: 1 };
-    const comment = { commentId: 3 };
-    return editComment(plan, comment)
-      .catch(([c]) => expect(c).toBe(comment));
-  });
-
   it('should reject promise with an error when request fails', () => {
     fetchMock.put(EDIT_URL_MATCHER, 400);
     const plan = { planId: 2, projectId: 1 };
     const comment = { commentId: 3 };
     return editComment(plan, comment)
-      .catch(([, err]) => expect(err instanceof ServerResponseError).toEqual(true));
+      .catch(err => expect(err instanceof ServerResponseError).toEqual(true));
   });
 
   it('should reject promise with an error containing response status', () => {
@@ -102,7 +94,7 @@ describe('Updating a comment', () => {
     const plan = { planId: 2, projectId: 1 };
     const comment = { commentId: 3 };
     fetchMock.put(EDIT_URL_MATCHER, expected);
-    return editComment(plan, comment).catch(([, err]) => expect(err.status).toEqual(expected));
+    return editComment(plan, comment).catch(err => expect(err.status).toEqual(expected));
   });
 
   it('should reject with an error containing a message', () => {
@@ -110,7 +102,7 @@ describe('Updating a comment', () => {
     const plan = { planId: 2, projectId: 1 };
     const comment = { commentId: 3 };
     fetchMock.put(EDIT_URL_MATCHER, 404);
-    return editComment(plan, comment).catch(([, err]) => expect(err.message).toEqual(expected));
+    return editComment(plan, comment).catch(err => expect(err.message).toEqual(expected));
   });
 });
 

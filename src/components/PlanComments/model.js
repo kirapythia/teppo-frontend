@@ -24,10 +24,7 @@ export const editComment = (plan, comment) =>
   withTimeout(
     2 * 60 * 1000,
     putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}/comments/${comment.commentId}`, comment)
-      .catch(error => Promise.reject([
-        comment,
-        new ServerResponseError(t('network.error.comment.edit'), error.status)
-      ]))
+      .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.edit'), error.status)))
   );
 
   /**

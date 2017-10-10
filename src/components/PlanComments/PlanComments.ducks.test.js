@@ -1,4 +1,4 @@
-import { loop, Cmd } from 'redux-loop';
+import { loop, Cmd, getCmd } from 'redux-loop';
 import { LOCATION_CHANGED } from 'redux-little-router';
 import { reset } from 'redux-form';
 import reducer, { NAME, actions } from './PlanComments.ducks';
@@ -139,18 +139,25 @@ describe('Save comment failure', () => {
 
 describe('Toggling comment\'s approval', () => {
   it('should update comment', () => {
+    const action = actions.toggleCommentApproval({}, {}, true);
+    const result = reducer({}, action);
+    const cmd = getCmd(result);
+    expect(cmd.func).toBe(editComment);
+  });
+
+  it('should run toggleCommentApprovalError if comment edit fails', () => {
     const plan = {};
+    const error = new Error();
     const comment = { commentId: 1 };
     const action = actions.toggleCommentApproval(plan, comment, true);
     const result = reducer({}, action);
+    const cmd = getCmd(result);
 
-    expect(result).toEqual(loop(
-      result[0],
-      Cmd.run(editComment, {
-        failActionCreator: actions.toggleCommentApprovalError,
-        args: [plan, comment],
-      })
-    ));
+    expect(cmd.func).toBe(editComment);
+
+    expect(cmd.simulate({ success: false, result: error })).toEqual(
+      actions.toggleCommentApprovalError(error, comment)
+    );
   });
 
   it('should remove error from the state', () => {
@@ -206,7 +213,7 @@ describe('Comment approval toggle failure', () => {
   it('should add error to the state', () => {
     const state = { comments: {} };
     const error = new Error();
-    const action = actions.toggleCommentApprovalError([{}, error]);
+    const action = actions.toggleCommentApprovalError(error, {});
     const result = reducer(state, action);
     expect(result.commentEditError).toBe(error);
   });
@@ -214,7 +221,7 @@ describe('Comment approval toggle failure', () => {
   it('should revert the given comment\'s approved flag to false', () => {
     const comment = { commentId: 1, approved: true };
     const state = { comments: { 1: comment } };
-    const action = actions.toggleCommentApprovalError([comment, new Error()]);
+    const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);
     expect(result.comments['1'].approved).toEqual(true);
   });
@@ -222,7 +229,7 @@ describe('Comment approval toggle failure', () => {
   it('should revert the given comment\'s approved flag to true', () => {
     const comment = { commentId: 1, approved: false };
     const state = { comments: { 1: comment } };
-    const action = actions.toggleCommentApprovalError([comment, new Error()]);
+    const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);
     expect(result.comments['1'].approved).toEqual(false);
   });
@@ -230,21 +237,21 @@ describe('Comment approval toggle failure', () => {
   it('should not mutate the comments map', () => {
     const comment = { commentId: 1 };
     const state = { comments: {} };
-    const action = actions.toggleCommentApprovalError([comment, new Error()]);
+    const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);
     expect(result.comments).not.toBe(state.comments);
   });
 
   it('should not discard other members of the state', () => {
     const state = { a: 1, comments: {} };
-    const action = actions.toggleCommentApprovalError([{}, new Error()]);
+    const action = actions.toggleCommentApprovalError({}, new Error());
     const result = reducer(state, action);
     expect(result.a).toEqual(state.a);
   });
 
   it('should not mutate the state object', () => {
     const state = { comments: {} };
-    const action = actions.toggleCommentApprovalError([{}, new Error()]);
+    const action = actions.toggleCommentApprovalError({}, new Error());
     const result = reducer(state, action);
     expect(result).not.toBe(state);
   });

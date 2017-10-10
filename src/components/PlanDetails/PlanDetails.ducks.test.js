@@ -60,7 +60,7 @@ describe('Approving a plan', () => {
       const actual = reducer(undefined, action);
       expect(actual).toEqual(loop(
         actual[0],
-        Cmd.batch([
+        Cmd.list([
           Cmd.action(Notifications.addSuccessNotification(
             tpl('plan.message.update_success', { mainNo: plan.mainNo, subNo: plan.subNo })
           )),
@@ -206,7 +206,7 @@ describe('Creating a new plan version', () => {
       const actual = reducer(undefined, action);
       expect(actual).toEqual(loop(
         actual[0],
-        Cmd.batch([
+        Cmd.list([
           Cmd.action(Notifications.addSuccessNotification(
             tpl('plan.message.update_success', { mainNo: plan.mainNo, subNo: plan.subNo })
           )),

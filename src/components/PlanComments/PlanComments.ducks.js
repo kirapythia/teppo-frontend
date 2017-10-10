@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import { identity } from 'ramda';
 import { LOCATION_CHANGED } from 'redux-little-router';
 import { loop, Cmd } from 'redux-loop';
 import { reset } from 'redux-form';
@@ -60,7 +61,9 @@ export const actions = {
    * @returns {object}
    */
   toggleCommentApprovalError: createAction(
-    TOGGLE_COMMENT_APPROVAL_ERROR
+    TOGGLE_COMMENT_APPROVAL_ERROR,
+    identity,
+    (error, comment) => ({ comment }),
   ),
 
   /**
@@ -127,7 +130,7 @@ export default handleActions({
     return loop(
       { ...stateWithoutError, comments: updateComment(comments, updated) },
       Cmd.run(editComment, {
-        failActionCreator: actions.toggleCommentApprovalError,
+        failActionCreator: error => actions.toggleCommentApprovalError(error, comment),
         args: [plan, comment],
       })
     );
@@ -135,9 +138,13 @@ export default handleActions({
   // Handle comment approval toggle error action. Revert comment's
   // approved status to what it was before send.
   [TOGGLE_COMMENT_APPROVAL_ERROR]: (state, action) => {
-    const [comment, error] = action.payload;
-    const updated = { ...state.comments[comment.commentId], approved: comment.approved };
-    return { ...state, commentEditError: error, comments: updateComment(state.comments, updated) };
+    const { comment: { commentId, approved } } = action.meta;
+    const updated = { ...state.comments[commentId], approved };
+    return {
+      ...state,
+      commentEditError: action.payload,
+      comments: updateComment(state.comments, updated),
+    };
   },
   // Handle clear comment form error action. Remove commentAddError from the state.
   [CLEAR_COMMENT_ADD_ERROR]: state => omit(['commentAddError'], state),

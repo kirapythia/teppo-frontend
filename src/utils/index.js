@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import t from '../locale';
 import { ServerResponseError } from './ajax';
 
@@ -131,7 +131,7 @@ export const listToMapBy = R.curry((prop, list) =>
  * @param {*} value
  * @return {boolean}
  */
-export const isNumber = value => !isNaN(Number(value));
+export const isNumber = value => !Number.isNaN(Number(value));
 
 /**
  * Check if given value is a string
@@ -149,10 +149,10 @@ export const versionToCharacter = number => String.fromCharCode(65 + Number(numb
 
 /**
  * Get given props from an object and concatenate them into a string
- * @param {string[]} props
- * @param {string} props
+ * @param {string[]} propNames
+ * @return {string}
  */
-export const concatProps = props => R.pipe(R.props(props), R.map(String), R.reduce(R.concat, ''));
+export const concatProps = propNames => R.pipe(R.props(propNames), R.map(String), R.reduce(R.concat, ''));
 
 const dateOptions = {
   weekday: 'short',

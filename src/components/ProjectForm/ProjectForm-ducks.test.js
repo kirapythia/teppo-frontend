@@ -43,7 +43,7 @@ describe('saveProject success action', () => {
     const result = reducer(state, actions.projectSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
-      Cmd.batch([
+      Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
           tpl('project.message.edit_success', payload)
         )),

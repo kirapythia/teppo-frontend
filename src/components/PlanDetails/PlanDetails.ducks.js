@@ -31,7 +31,7 @@ export default handleActions({
         ? Cmd.action(push(`/project/${action.payload.projectId}/plan/${action.payload.planId}`))
         : []);
 
-    return loop(({ ...state, isFetching: false }), Cmd.batch(actions));
+    return loop(({ ...state, isFetching: false }), Cmd.list(actions));
   },
 
   // handle approve plan success action

@@ -122,7 +122,7 @@ export default handleActions({
     // state will not be changed
     state,
     // batch will run multiple actions in parallel
-    Cmd.batch([
+    Cmd.list([
       // dispatch addSuccessNotification action to display
       // a success notification
       Cmd.action(NotificationActions.addSuccessNotification(
@@ -138,7 +138,7 @@ export default handleActions({
     // state will not be changed
     state,
     // batch will run multiple actions in parallel
-    Cmd.batch([
+    Cmd.list([
       // dispatch addSuccessNotification action to display
       // a success notification
       Cmd.action(NotificationActions.addSuccessNotification(

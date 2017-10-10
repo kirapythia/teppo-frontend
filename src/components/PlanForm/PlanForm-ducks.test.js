@@ -44,7 +44,7 @@ describe('savePlan success action', () => {
     const result = reducer(state, actions.planSaveSuccessAction(payload));
     expect(result).toEqual(loop(
       state,
-      Cmd.batch([
+      Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
           tpl('plan.message.save_success', payload)
         )),

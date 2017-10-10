@@ -111,7 +111,7 @@ export default handleActions({
   [PROJECT_SUCCESS]: (state, action) => loop(
     // return state unmodified
     state,
-    Cmd.batch([
+    Cmd.list([
       // display a success notification
       Cmd.action(NotificationActions.addSuccessNotification(
         tpl('project.message.edit_success', action.payload)

@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isOneOf, propSorter, mapToList, concatProps } from '../utils';
 
@@ -102,7 +102,7 @@ export const getProjectAsSelectOptions = createSelector(
 );
 
 const formPlanIdentifier = concatProps(['projectId', 'mainNo', 'subNo']);
-const getLatest = R.pipe(R.sortBy(R.prop('version')), R.reverse, R.take(1));
+const getLatest = R.pipe(R.sortBy(R.prop('version')), R.reverse, R.head);
 
 export const listLatestVersionsOfPlans = createSelector(
   listPlans,
