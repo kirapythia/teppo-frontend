@@ -1,14 +1,18 @@
 import { wait, withTimeout } from '../../utils';
-import { postJSON } from '../../utils/ajax';
+import { postJSON, putJSON } from '../../utils/ajax';
+
+const REQUEST_TIMEOUT = 2 * 60 * 1000;
 
 /**
- * FIXME: Not actually implemented yet
  * Update plan object.
  * @async
  * @param {object} plan
  * @returns {Promise}
  */
-export const updatePlan = plan => wait(500, plan);
+export const updatePlan = plan => withTimeout(
+  REQUEST_TIMEOUT,
+  putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}`, plan)
+);
 
 /**
  * FIXME: Not actually implemented yet
@@ -26,7 +30,7 @@ export const removePlan = plan => wait(500, plan);
  * @returns {Promise}
  */
 export const createPlan = values => withTimeout(
-  2 * 60 * 1000,
+  REQUEST_TIMEOUT,
   postJSON(`/pythia/v1/projects/${values.projectId}/plans/`, values)
 );
 
