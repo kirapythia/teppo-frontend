@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { without } from 'ramda';
 import Dropzone from 'react-dropzone';
 import { change as changeFormAction } from 'redux-form';
 import t from '../../locale';
@@ -20,19 +21,23 @@ const mapDispatchToProps = dispatch => bindActionCreators({
  * @param {string} props.placeholder
  * @param {function} props.onChange
  */
-const FileUpload = ({ form, name, value, placeholder, onChange, change }) => (
+const FileUpload = ({ form, name, value, placeholder, onChange, change, multiple }) => (
   <div className="FileUpload__wrapper">
     <FileList
-      fileName={value instanceof File ? value.name : value}
-      removeFile={() => change(form, name, null)}
+      files={value}
+      removeFile={(file) => {
+        const remaining = without([file], value);
+        change(form, name, remaining);
+      }}
     />
+
     <Dropzone
       name={name}
       value={value}
       className="FileUpload"
-      multiple={false}
       activeClassName="FileUpload--active"
-      onDrop={files => onChange(files[0])}
+      onDrop={onChange}
+      multiple={multiple}
     >
       <div className="FileUpload__text-container">{placeholder}</div>
       <div>

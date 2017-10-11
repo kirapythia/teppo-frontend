@@ -53,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
   const { projectId, mainNo } = getCurrentProject(state) || {};
   const { plan } = ownProps;
   const actionProps = plan
-    ? { initialValues: { ...plan, projectId } }
+    ? { initialValues: { ...plan, projectId, files: [plan.url] } }
     : { initialValues: { mainNo, projectId } };
 
   return Object.assign({

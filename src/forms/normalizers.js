@@ -29,3 +29,11 @@ export const stringToNumberList = value => stringToList(value).map(Number);
  * @return {string}
  */
 export const stripTags = (value = '') => value.replace(/(<([^>]+)>)/ig, '');
+
+/**
+ * Append normalizer. Appends new values to the previous values
+ * @param {*|*[]} value
+ * @param {*[]} prev
+ * @return {*[]}
+ */
+export const append = (value, prev = []) => prev.concat(value);

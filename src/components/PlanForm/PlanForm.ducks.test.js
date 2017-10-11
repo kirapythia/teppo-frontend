@@ -2,7 +2,7 @@ import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { tpl } from '../../locale';
 import reducer, { actions } from './PlanForm.ducks';
-import { savePlan } from './model';
+import { savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import * as ROUTES from '../../constants/routes';
 
@@ -20,7 +20,7 @@ describe('savePlan action', () => {
     const result = reducer(state, actions.savePlan(payload));
     expect(result).toEqual(loop(
       state,
-      Cmd.run(savePlan, {
+      Cmd.run(savePlans, {
         successActionCreator: actions.planSaveSuccessAction,
         failActionCreator: actions.planFailAction,
         args: [payload],
@@ -30,6 +30,16 @@ describe('savePlan action', () => {
 });
 
 describe('savePlan success action', () => {
+  it('should wrap payload in an array', () => {
+    const action = actions.planSaveSuccessAction({});
+    expect(action.payload instanceof Array).toBe(true);
+  });
+
+  it('should return an array', () => {
+    const action = actions.planSaveSuccessAction([{}]);
+    expect(action.payload.length).toBe(1);
+  });
+
   it('should return state unmodified', () => {
     const state = { router: { params: { projectId: 123 } } };
     const payload = {};
@@ -40,13 +50,14 @@ describe('savePlan success action', () => {
   it('should navigate to project details page', () => {
     const projectId = 123;
     const state = {};
-    const payload = { projectId, subNo: 1, mainNo: 1 };
-    const result = reducer(state, actions.planSaveSuccessAction(payload));
+    const values = { projectId, subNo: 1, mainNo: 1 };
+    const action = actions.planSaveSuccessAction(values);
+    const result = reducer(state, action);
     expect(result).toEqual(loop(
       state,
       Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
-          tpl('plan.message.save_success', payload)
+          tpl('plan.message.save_success', action.payload)
         )),
         Cmd.action(push(`/project/${projectId}`)),
       ])

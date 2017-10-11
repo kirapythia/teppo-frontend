@@ -15,5 +15,5 @@ export const formPlanDetailFields = plan => ([
   { label: t('plan.approved'), value: plan.approved },
   { label: t('plan.created'), value: `${serverDateToString(plan.createdAt)} (${plan.createdBy})` },
   { label: t('plan.updated'), value: `${serverDateToString(plan.updatedAt)} (${plan.updatedBy})` },
-  { label: t('plan.file'), value: plan.url },
+  { label: t('plan.files'), value: plan.url },
 ]);
