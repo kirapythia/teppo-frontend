@@ -1,6 +1,6 @@
 {
   "app.name": "Pythia Client",
-  "button.add_plan": "Uusi suunnitelma",
+  "button.add_plans": "Lisää suunnitelmia",
   "button.approve": "Hyväksy",
   "button.approve.title": "Hyväksy kommentti",
   "button.edit_plan": "Muokkaa suunnitelmaa",

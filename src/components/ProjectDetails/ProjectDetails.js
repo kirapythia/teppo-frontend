@@ -64,7 +64,7 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
           </div>
           <div className="six columns">
             <Link className="button button-primary u-full-width" href={`/project/${project.projectId}/plan/new`}>
-              <i className="fa fa-fw fa-file-o fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plan')}
+              <i className="fa fa-fw fa-plus fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plans')}
             </Link>
           </div>
         </div>
