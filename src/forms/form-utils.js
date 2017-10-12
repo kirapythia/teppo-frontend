@@ -17,14 +17,14 @@ import createValidators from '../validation';
  * @return {HTMLElement}
  */
 const chooseElement = (props) => {
-  const { type, input, placeholder } = props;
+  const { type, input, placeholder, disabled } = props;
   const hasError = props.touched && props.error;
   const className = cx({ error: hasError });
 
   // choose element by type. Add cases for radios and checkboxes if needed
   switch (type) {
     case 'textarea':
-      return <textarea {...{ ...input, placeholder, className }} />;
+      return <textarea {...{ ...input, placeholder, className, disabled }} />;
     case 'multiselect':
       return (
         <Select
@@ -32,6 +32,7 @@ const chooseElement = (props) => {
           multi
           simpleValue
           joinValues
+          disabled={disabled}
           onBlur={() => input.onBlur(input.value)}
           options={props.options}
           closeOnSelect={false}
@@ -42,13 +43,14 @@ const chooseElement = (props) => {
       return (
         <FileUpload
           {...input}
+          disabled={disabled}
           form={props.meta.form}
           placeholder={placeholder}
           multiple={!!props.multiple}
         />
       );
     default:
-      return <input {...{ ...input, type, placeholder, className }} />;
+      return <input {...{ ...input, type, placeholder, className, disabled }} />;
   }
 };
 

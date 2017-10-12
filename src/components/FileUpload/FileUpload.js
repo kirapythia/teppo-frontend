@@ -21,32 +21,35 @@ const mapDispatchToProps = dispatch => bindActionCreators({
  * @param {string} props.placeholder
  * @param {function} props.onChange
  */
-const FileUpload = ({ form, name, value, placeholder, onChange, change, multiple }) => (
+const FileUpload = ({ form, name, value, placeholder, onChange, change, multiple, disabled }) => (
   <div className="FileUpload__wrapper">
     <FileList
       files={value}
+      disabled={disabled}
       removeFile={(file) => {
         const remaining = without([file], value);
         change(form, name, remaining);
       }}
     />
-
-    <Dropzone
-      name={name}
-      value={value}
-      className="FileUpload"
-      activeClassName="FileUpload--active"
-      onDrop={onChange}
-      multiple={multiple}
-    >
-      <div className="FileUpload__text-container">{placeholder}</div>
-      <div>
-        <Button
-          className="button-primary u-full-width"
-          text={t('button.file_upload')}
-        />
-      </div>
-    </Dropzone>
+    {!disabled && (
+      <Dropzone
+        name={name}
+        value={value}
+        className="FileUpload"
+        activeClassName="FileUpload--active"
+        onDrop={onChange}
+        multiple={multiple}
+        disabled={disabled}
+      >
+        <div className="FileUpload__text-container">{placeholder}</div>
+        <div>
+          <Button
+            className="button-primary u-full-width"
+            text={t('button.file_upload')}
+          />
+        </div>
+      </Dropzone>
+    )}
   </div>
 );
 
