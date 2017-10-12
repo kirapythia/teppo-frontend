@@ -101,14 +101,32 @@ export const getProjectAsSelectOptions = createSelector(
       ({ label: `${hansuProjectId} - ${name}`, value: `${projectId}` }))
 );
 
+/**
+ * Form a identifier by concatenating projectId, mainNo and subNo
+ * @private
+ * @param {object} plan
+ * @return {function} A function that returns a string when applied on a plan object
+ */
 const formPlanIdentifier = concatProps(['projectId', 'mainNo', 'subNo']);
+
+/**
+ * Sort plans descending by version number and take the first entry
+ * @private
+ * @param {object[]} plans
+ * @return {function} A function that returns a plan object when applied on a list of plans
+ */
 const getLatest = R.pipe(R.sortBy(R.prop('version')), R.reverse, R.head);
 
+/**
+ * Get latest versions of project's plans
+ * @param {object} state
+ * @return {object[]} An array of plans
+ */
 export const listLatestVersionsOfPlans = createSelector(
   listPlans,
   R.pipe(
-    R.groupWith((a, b) => R.equals(formPlanIdentifier(a), formPlanIdentifier(b))),
-    R.map(getLatest),
-    R.flatten,
+    R.groupBy(formPlanIdentifier),
+    R.mapObjIndexed(getLatest),
+    R.values,
   )
 );
