@@ -1,5 +1,5 @@
 import t from '../../locale';
-import { serverDateToString, versionToCharacter } from '../../utils';
+import { serverDateToString, versionToCharacter, zeroPad } from '../../utils';
 
 /**
  * Format detail values for the ShowDetails component
@@ -10,7 +10,7 @@ import { serverDateToString, versionToCharacter } from '../../utils';
  */
 export const formPlanDetailFields = plan => ([
   { label: t('plan.primary_id'), value: plan.mainNo },
-  { label: t('plan.secondary_id'), value: plan.subNo },
+  { label: t('plan.secondary_id'), value: zeroPad(plan.subNo, 3) },
   { label: t('plan.version'), value: versionToCharacter(plan.version) },
   { label: t('plan.approved'), value: plan.approved },
   { label: t('plan.created'), value: `${serverDateToString(plan.createdAt)} (${plan.createdBy})` },

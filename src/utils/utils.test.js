@@ -145,3 +145,26 @@ describe('propSorter', () => {
     expect(sorter(a, b)).toEqual(0);
   });
 });
+
+describe('zeroPad', () => {
+  it('should return a string', () => {
+    expect(utils.zeroPad('212', 3)).toEqual('212');
+  });
+
+  it('should zeroPad value to the given length', () => {
+    expect(utils.zeroPad('1', 1)).toEqual('1');
+    expect(utils.zeroPad('1', 2)).toEqual('01');
+    expect(utils.zeroPad('1', 3)).toEqual('001');
+  });
+
+  it('should zeroPad value if it is a number', () => {
+    expect(utils.zeroPad(1, 1)).toEqual('1');
+    expect(utils.zeroPad(1, 2)).toEqual('01');
+    expect(utils.zeroPad(1, 3)).toEqual('001');
+  });
+
+  it('should return given string unmodified if minLength is less than 1', () => {
+    expect(utils.zeroPad('212', 0)).toEqual('212');
+    expect(utils.zeroPad('212', -1)).toEqual('212');
+  });
+});
