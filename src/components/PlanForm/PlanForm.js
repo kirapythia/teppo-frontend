@@ -3,14 +3,14 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { createFieldsWithValidations } from '../../forms/form-utils';
-import fields from '../../forms/plan';
+import formFields from '../../forms/plan';
 import { getCurrentProject } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
 
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions
-const fieldsWithValidations = createFieldsWithValidations(fields);
+const fieldsWithValidations = createFieldsWithValidations(formFields);
 
 /**
  * Redux-form configuration object
@@ -37,11 +37,6 @@ const formConfig = {
    * @type {boolean}
    */
   keepDirtyOnReinitialize: true,
-  /**
-   * Field definitions with validation functions
-   * @type {object[]}
-   */
-  fields: fieldsWithValidations,
 };
 
 /**
@@ -52,14 +47,19 @@ const formConfig = {
 const mapStateToProps = (state, ownProps) => {
   const { projectId, mainNo } = getCurrentProject(state) || {};
   const { plan } = ownProps;
+  const fields = fieldsWithValidations.map(f =>
+    ({ ...f, disabled: Boolean(plan && plan.approved) })
+  );
   const actionProps = plan
-    ? { initialValues: { ...plan, projectId } }
+    ? { initialValues: { ...plan, projectId, files: [plan.url] } }
     : { initialValues: { mainNo, projectId } };
 
-  return Object.assign({
+  return {
+    fields,
     formSendError: state.planForm.error,
     cancelHref: `/project/${projectId}`,
-  }, actionProps);
+    ...actionProps,
+  };
 };
 
 /**

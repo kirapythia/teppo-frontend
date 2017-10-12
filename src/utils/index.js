@@ -175,3 +175,12 @@ export const serverDateToString = (str) => {
   const date = new Date(str);
   return `${date.toLocaleDateString('fi-FI', dateOptions)} ${date.toLocaleTimeString('fi-FI', timeOptions)}`;
 };
+
+/**
+ * Pad number with zeros
+ * @param {number|string} value
+ * @param {number} minLength
+ * @return {string}
+ */
+export const zeroPad = (value, minLength) =>
+  `${R.repeat('0', Math.max(0, minLength - String(value).length)).join('')}${value}`;

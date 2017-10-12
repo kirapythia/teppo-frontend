@@ -1,7 +1,7 @@
 import { identity } from 'ramda';
 import { createAction, combineActions, handleActions } from 'redux-actions';
 import { Cmd, loop } from 'redux-loop';
-import { listToMapBy, pick, omit } from '../../utils';
+import { mapToList, listToMapBy, pick, omit } from '../../utils';
 import { createPlan, removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
@@ -107,8 +107,7 @@ export default handleActions({
     PlanForm.PLAN_EDIT_SUCCESS,
     PlanForm.PLAN_SAVE_SUCCESS,
     actionTypes.UPDATE_PLAN_SUCCESS,
-  )]: (state, action) =>
-    ({ ...state, [action.payload.planId]: action.payload }),
+  )]: (state, action) => byId(mapToList(state).concat(action.payload)),
 
   // handle project fetch success
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.latestPlans),

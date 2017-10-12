@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
-import { editPlan, savePlan } from './model';
+import { editPlan, savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
 import { identity, isOneOf, omit } from '../../utils';
@@ -46,7 +46,7 @@ export const actions = {
    */
   planSaveSuccessAction: createAction(
     PLAN_SAVE_SUCCESS,
-    identity
+    value => [].concat(value),
   ),
   /**
    * Action triggered if the createProject action succeeds
@@ -94,7 +94,7 @@ export default handleActions({
     // Middleware will call savePlan and if it succeeds
     // then planSuccessAction action will be dispatched
     // otherwise planFailAction action will be dispatched
-    Cmd.run(savePlan, {
+    Cmd.run(savePlans, {
       successActionCreator: actions.planSaveSuccessAction,
       failActionCreator: actions.planFailAction,
       // these args are passed to the savePlan function
@@ -123,14 +123,15 @@ export default handleActions({
     state,
     // batch will run multiple actions in parallel
     Cmd.list([
-      // dispatch addSuccessNotification action to display
-      // a success notification
+      // dispatch addSuccessNotification action to display a success notification
       Cmd.action(NotificationActions.addSuccessNotification(
-        tpl('plan.message.save_success', action.payload)
+        action.payload.length > 1
+          ? tpl('plan.message.save_success_multiple', { count: action.payload.length })
+          : tpl('plan.message.save_success', action.payload[0])
       )),
       // dispatch (react-little-router's) push action to navigate
       // to project details page
-      Cmd.action(push(`/project/${action.payload.projectId}`)),
+      Cmd.action(push(`/project/${action.payload[0].projectId}`)),
     ])
   ),
   // handle savePlan success action

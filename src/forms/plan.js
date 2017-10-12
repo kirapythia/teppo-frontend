@@ -1,4 +1,5 @@
 import t from '../locale';
+import { append } from './normalizers';
 
 /**
  * Field definitions for the plan form. Object key is field name and
@@ -36,10 +37,12 @@ const fields = {
     },
   },
 
-  url: {
+  files: {
     type: 'file',
-    label: t('plan.file'),
+    multiple: true,
+    label: t('plan.files'),
     placeholder: t('dropzone.placeholder'),
+    normalize: append,
   },
 };
 

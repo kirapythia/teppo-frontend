@@ -24,7 +24,7 @@ const formProjectDetailFields = project => ([
  */
 const PlanPage = ({ plan, project = {} }) => (
   <div className="PlanPage">
-    <h2>{ plan ? t('button.edit_plan') : t('button.add_plan') }</h2>
+    <h2>{ plan ? t('button.edit_plan') : t('plan.add.header') }</h2>
     <ShowDetails
       fields={formProjectDetailFields(project)}
       className="ShowDetails--highlighted"
