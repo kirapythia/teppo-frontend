@@ -50,6 +50,23 @@ describe('savePlan success action', () => {
   it('should navigate to project details page', () => {
     const projectId = 123;
     const state = {};
+    const values = [{ projectId, subNo: 1, mainNo: 1 }, { projectId, subNo: 2, mainNo: 1 }];
+    const action = actions.planSaveSuccessAction(values);
+    const result = reducer(state, action);
+    expect(result).toEqual(loop(
+      state,
+      Cmd.list([
+        Cmd.action(NotificationActions.addSuccessNotification(
+          tpl('plan.message.save_success_multiple', { count: action.payload.length })
+        )),
+        Cmd.action(push(`/project/${projectId}`)),
+      ])
+    ));
+  });
+
+  it('should navigate to project details page and display a success notification with a single plan as payload', () => {
+    const projectId = 123;
+    const state = {};
     const values = { projectId, subNo: 1, mainNo: 1 };
     const action = actions.planSaveSuccessAction(values);
     const result = reducer(state, action);
@@ -57,7 +74,7 @@ describe('savePlan success action', () => {
       state,
       Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
-          tpl('plan.message.save_success', action.payload)
+          tpl('plan.message.save_success', action.payload[0])
         )),
         Cmd.action(push(`/project/${projectId}`)),
       ])

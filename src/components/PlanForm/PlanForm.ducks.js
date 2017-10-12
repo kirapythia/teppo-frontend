@@ -127,7 +127,7 @@ export default handleActions({
       Cmd.action(NotificationActions.addSuccessNotification(
         action.payload.length > 1
           ? tpl('plan.message.save_success_multiple', { count: action.payload.length })
-          : tpl('plan.message.save_success', action.payload)
+          : tpl('plan.message.save_success', action.payload[0])
       )),
       // dispatch (react-little-router's) push action to navigate
       // to project details page
