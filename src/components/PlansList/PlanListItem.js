@@ -13,7 +13,7 @@ const PlanListItem = ({ plan = {}, project = {} }) => (
   <li className="PlansListItem">
     <div className="one column">
       {plan.approved
-        ? <i className="text-success fa fa-check fa-lg" />
+        ? <i className="text-success fa fa-check" />
         : <span>&nbsp;</span>
       }
     </div>
