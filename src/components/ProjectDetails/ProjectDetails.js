@@ -10,6 +10,7 @@ import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
 import { ProjectList } from '../ProjectList';
+import BackToLocationButton from '../common/BackToLocationButton';
 
 import './ProjectDetails.css';
 
@@ -56,16 +57,27 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
           <PlansList project={project} plans={plans} />
         </div>
 
-        <div className="row ProjectDetails__actions-wrapper">
-          <div className="six columns">
-            <Link className="button u-full-width" href={`/project/${project.projectId}/edit`}>
-              <i className="fa fa-fw fa-pencil fa-lg" aria-hidden="true" />&nbsp;{t('button.edit_project')}
-            </Link>
+        <div className=" ProjectDetails__actions-wrapper">
+          <div className="row">
+            <div className="six columns">
+              <Link className="button u-full-width" href={`/project/${project.projectId}/edit`}>
+                <i className="fa fa-fw fa-pencil fa-lg" aria-hidden="true" />&nbsp;{t('button.edit_project')}
+              </Link>
+            </div>
+            <div className="six columns">
+              <Link className="button button-primary u-full-width" href={`/project/${project.projectId}/plan/new`}>
+                <i className="fa fa-fw fa-plus fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plans')}
+              </Link>
+            </div>
           </div>
-          <div className="six columns">
-            <Link className="button button-primary u-full-width" href={`/project/${project.projectId}/plan/new`}>
-              <i className="fa fa-fw fa-plus fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plans')}
-            </Link>
+          <div className="row">
+            <div className="twelve columns">
+              <BackToLocationButton
+                text={t('button.back_to_project_list')}
+                href="/"
+                className="u-full-width"
+              />
+            </div>
           </div>
         </div>
       </div>

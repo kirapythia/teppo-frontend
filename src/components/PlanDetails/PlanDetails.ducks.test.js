@@ -200,7 +200,7 @@ describe('Creating a new plan version', () => {
       expect(actual.isFetching).toEqual(false);
     });
 
-    it('should display a success notification and navigate to new page', () => {
+    it('should display a success notification and navigate to edit plan page', () => {
       const plan = { projectId: '4', planId: '5', mainNo: '123', subNo: '435' };
       const action = actions.createNewPlanVersionSuccess(plan);
       const actual = reducer(undefined, action);
@@ -210,7 +210,7 @@ describe('Creating a new plan version', () => {
           Cmd.action(Notifications.addSuccessNotification(
             tpl('plan.message.update_success', { mainNo: plan.mainNo, subNo: plan.subNo })
           )),
-          Cmd.action(push(`/project/${plan.projectId}/plan/${plan.planId}`)),
+          Cmd.action(push(`/project/${plan.projectId}/plan/${plan.planId}/edit`)),
         ])
       ));
     });

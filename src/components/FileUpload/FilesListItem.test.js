@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import FilesListItem from './FilesListItem';
-import t from '../../locale';
 
 it('should render an ul element', () => {
   const component = shallow(<FilesListItem />);

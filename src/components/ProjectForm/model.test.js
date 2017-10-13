@@ -4,8 +4,6 @@ import {
   saveProject,
   editProject,
   validateHansuProjectId,
-  PROJECT_URL,
-  FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL,
 } from './model';
 
 describe('Saving a project', () => {

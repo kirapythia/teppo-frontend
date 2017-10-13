@@ -145,7 +145,7 @@ export const isString = value => typeof value === 'string';
  * @param {number} number
  * @param {string}
  */
-export const versionToCharacter = number => String.fromCharCode(65 + Number(number));
+export const versionToCharacter = (number = 0) => String.fromCharCode(65 + Number(number));
 
 /**
  * Get given props from an object and concatenate them into a string

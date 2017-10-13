@@ -28,7 +28,7 @@ export default handleActions({
       // if action has origin meta field and it equals create new version actiontype then
       // navigate to next page otherwise just display the notification
       .concat(pathEq(['meta', 'origin'], actionTypes.CREATE_NEW_PLAN_VERSION)(action)
-        ? Cmd.action(push(`/project/${action.payload.projectId}/plan/${action.payload.planId}`))
+        ? Cmd.action(push(`/project/${action.payload.projectId}/plan/${action.payload.planId}/edit`))
         : []);
 
     return loop(({ ...state, isFetching: false }), Cmd.list(actions));

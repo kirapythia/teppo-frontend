@@ -101,7 +101,7 @@ describe('Saving plans', () => {
       try {
         await model.savePlans(plan);
       } catch (e) {
-        expect(e.message).toBe(t('network.error.plan.create'))
+        expect(e.message).toBe(t('network.error.plan.create'));
       }
     });
 

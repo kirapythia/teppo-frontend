@@ -1,11 +1,12 @@
 import { createAction, handleActions } from 'redux-actions';
-import { identity } from 'ramda';
+import * as R from 'ramda';
 import { LOCATION_CHANGED } from 'redux-little-router';
 import { loop, Cmd } from 'redux-loop';
 import { reset } from 'redux-form';
-import { omit } from '../../utils';
+import { listToMapBy, omit } from '../../utils';
 import { editComment, saveComment, updateComment } from './model';
 import { PLAN_DETAILS } from '../../constants/routes';
+import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
 export const NAME = 'comments';
 
@@ -62,7 +63,7 @@ export const actions = {
    */
   toggleCommentApprovalError: createAction(
     TOGGLE_COMMENT_APPROVAL_ERROR,
-    identity,
+    R.identity,
     (error, comment) => ({ comment }),
   ),
 
@@ -89,12 +90,16 @@ export const actions = {
  * @type {object}
  */
 const initialState = {
-  comments: {
-    1: { commentId: 1, author: 'Seija Suunnittelija', text: 'Tämä on testikommentti' },
-    2: { commentId: 2, author: 'Seija Suunnittelija', text: 'Tässä dokumentissa on paljon virheitä!', approved: false },
-    3: { commentId: 3, author: 'Seija Suunnittelija', text: 'Tämä on kommentti ilman titleä!', approved: true },
-  },
+  comments: {},
 };
+
+const byId = listToMapBy('text_id');
+
+const listAllComments = R.pipe(
+  R.prop('latestPlans'),
+  R.pluck('commentValues'),
+  R.flatten,
+);
 
 export default handleActions({
   // initialize component when route changes
@@ -104,6 +109,8 @@ export default handleActions({
       ? omit(['commentAddError', 'commentEditError'], state)
       : state;
   },
+  [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) =>
+    ({ ...state, comments: byId(listAllComments(action.payload)) }),
   // handle add comment action
   [ADD_COMMENT]: (state, action) => loop(
     omit(['commentAddError'], state),
@@ -131,15 +138,15 @@ export default handleActions({
       { ...stateWithoutError, comments: updateComment(comments, updated) },
       Cmd.run(editComment, {
         failActionCreator: error => actions.toggleCommentApprovalError(error, comment),
-        args: [plan, comment],
+        args: [plan, updated],
       })
     );
   },
   // Handle comment approval toggle error action. Revert comment's
   // approved status to what it was before send.
   [TOGGLE_COMMENT_APPROVAL_ERROR]: (state, action) => {
-    const { comment: { commentId, approved } } = action.meta;
-    const updated = { ...state.comments[commentId], approved };
+    const { comment: { text_id, approved } } = action.meta;
+    const updated = { ...state.comments[text_id], approved };
     return {
       ...state,
       commentEditError: action.payload,

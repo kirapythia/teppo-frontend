@@ -10,9 +10,14 @@ import { isOneOf, propSorter, mapToList, concatProps } from '../utils';
  */
 
 const getProjectDetails = state => state.project;
-const getProjects = state => state.projectList.projects;
 const getPlans = state => state.plans;
-const getComments = state => state.comments.comments;
+
+/**
+ * Get all projects as a list
+ * @param {object} state
+ * @return {object[]}
+ */
+export const getProjects = state => state.projectList.projects;
 
 /**
  * Return url's projectId
@@ -59,15 +64,6 @@ export const listPlans = createSelector(
   mapToList,
 );
 
-/**
- * Get all comments as a list
- * @param {object} state
- * @return {object[]} a list of comments
- */
-export const listComments = createSelector(
-  getComments,
-  mapToList,
-);
 
 /**
  * Get all sister projects of the current project

@@ -14,6 +14,11 @@ textarea {
   width: 100%;
 }
 
+input[disabled],
+textarea[disabled] {
+  background: #efefef;
+}
+
 textarea {
   resize: vertical;
 }

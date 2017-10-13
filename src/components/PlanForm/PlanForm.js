@@ -39,6 +39,16 @@ const formConfig = {
   keepDirtyOnReinitialize: true,
 };
 
+const formDynamicFieldProps = plan => fieldsWithValidations
+  .map(field => ({
+    ...field,
+    disabled: field.disabled !== undefined
+      ? field.disabled
+      : Boolean(plan && plan.approved) })
+  )
+  // show version only when editing
+  .filter(field => field.name !== 'version' || plan);
+
 /**
  * Gather all the props needed from the application state
  * @param {object} state
@@ -47,11 +57,9 @@ const formConfig = {
 const mapStateToProps = (state, ownProps) => {
   const { projectId, mainNo } = getCurrentProject(state) || {};
   const { plan } = ownProps;
-  const fields = fieldsWithValidations.map(f =>
-    ({ ...f, disabled: Boolean(plan && plan.approved) })
-  );
+  const fields = formDynamicFieldProps(plan);
   const actionProps = plan
-    ? { initialValues: { ...plan, projectId, files: [plan.url] } }
+    ? { initialValues: { ...plan, projectId, files: plan.url ? [plan.url] : [] } }
     : { initialValues: { mainNo, projectId } };
 
   return {
