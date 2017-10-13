@@ -60,6 +60,8 @@
   "plan.comments.title": "Suunnitelman kommentit",
   "plan.message.save_success": "Suunnitelma ${mainNo}/${subNo} tallennettiin onnistuneesti!",
   "plan.message.save_success_multiple": "${count} suunnitelmaa tallennettiin onnistuneesti",
+  "plan.message.save_error": "Suunnitelman ${filename} tallentaminen epäonnistui!",
+  "plan.message.save_error_multiple": "${count} suunnitelman tallentaminen epäonnistui!",
   "plan.message.edit_success": "Suunnitelmaa ${mainNo}/${subNo} päivitettiin onnistuneesti!",
   "plan.message.update_success": "Suunnitelmaa ${mainNo}/${subNo} päivitettiin onnistuneesti!",
   "plan.error.edit.no_id": "Suunnitelman päivitys ilman id:tä ei onnistus",

@@ -118,22 +118,35 @@ export default handleActions({
     })
   ),
   // handle savePlan success action
-  [PLAN_SAVE_SUCCESS]: (state, action) => loop(
-    // state will not be changed
-    state,
-    // batch will run multiple actions in parallel
-    Cmd.list([
+  [PLAN_SAVE_SUCCESS]: (state, action) => {
+    const [succeeded, failed] = action.payload;
+    const effects = [
       // dispatch addSuccessNotification action to display a success notification
-      Cmd.action(NotificationActions.addSuccessNotification(
-        action.payload.length > 1
-          ? tpl('plan.message.save_success_multiple', { count: action.payload.length })
-          : tpl('plan.message.save_success', action.payload[0])
-      )),
+      NotificationActions.addSuccessNotification(
+        succeeded.length > 1
+          ? tpl('plan.message.save_success_multiple', { count: succeeded.length })
+          : tpl('plan.message.save_success', { ...succeeded[0] })
+      ),
       // dispatch (react-little-router's) push action to navigate
       // to project details page
-      Cmd.action(push(`/project/${action.payload[0].projectId}`)),
-    ])
-  ),
+      push(`/project/${succeeded[0].projectId}`),
+    ];
+
+    if (failed.length) {
+      effects.push(NotificationActions.addErrorNotification(
+        action.payload.length > 1
+          ? tpl('plan.message.save_error_multiple', { count: failed })
+          : tpl('plan.message.save_error', { filename: failed[0] })
+      ));
+    }
+
+    return loop(
+      // state will not be changed
+      state,
+      // batch will run multiple actions in parallel
+      Cmd.list(effects.map(effect => Cmd.action(effect)))
+    );
+  },
   // handle savePlan success action
   [PLAN_EDIT_SUCCESS]: (state, action) => loop(
     // state will not be changed

@@ -10,11 +10,11 @@ describe('Saving plans', () => {
       return model.savePlans({ projectId: 1 });
     });
 
-    it('should resolve promise with server response', () => {
+    it('should resolve promise with server response wrapped in an array of succeeded', () => {
       const plan = {};
       fetch.mockResponseOnce('{}', { ok: true, status: 200 });
       return model.savePlans({ projectId: 1 })
-        .then(result => expect(result).toEqual(plan));
+        .then(result => expect(result[0][0]).toEqual(plan));
     });
 
     it('should reject if values does not include projectId', () => model.savePlans({})
@@ -40,7 +40,7 @@ describe('Saving plans', () => {
       expect(result instanceof Error).toBe(false);
     });
 
-    it('should resolve with a plan object with file url', async () => {
+    it('should resolve with a plan object with file url in the succeeded basket', async () => {
       const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
       const url = 'http://www.file.com/file';
 
@@ -48,7 +48,18 @@ describe('Saving plans', () => {
       fetch.mockResponseOnce(url, { ok: true, status: 200 });
 
       const result = await model.savePlans(plan);
-      expect(result[0]).toEqual({ ...R.omit('files', plan), url });
+      expect(result[0][0]).toEqual({ ...R.omit('files', plan), url });
+    });
+
+    it('should reject with a plan object with file url in the succeeded basket', async () => {
+      const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
+      const url = 'http://www.file.com/file';
+
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+      fetch.mockResponseOnce(url, { ok: true, status: 200 });
+
+      const result = await model.savePlans(plan);
+      expect(result[0][0]).toEqual({ ...R.omit('files', plan), url });
     });
 
     it('should parse plan properties from filename', async () => {
@@ -114,7 +125,20 @@ describe('Saving plans', () => {
       try {
         await model.savePlans(plan);
       } catch (e) {
-        expect(e.message).toBe(tpl('network.error.file.upload', { fileName: 'fileName' }));
+        expect(e.message).toBe(t('network.error.plan.create'));
+      }
+    });
+
+    it('should not call file upload if save plan files', async () => {
+      const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
+
+      fetch.resetMocks();
+      const mock = fetch.mockResponseOnce('{}', { ok: false, status: 400 });
+
+      try {
+        await model.savePlans(plan);
+      } catch (e) {
+        expect(mock).toHaveBeenCalledTimes(1);
       }
     });
   });
@@ -128,6 +152,29 @@ describe('Saving plans', () => {
       const mockFn = fetch.mockResponse(JSON.stringify(plan), { ok: true, status: 200 });
       await model.savePlans(plan);
       expect(mockFn).toHaveBeenCalledTimes(files.length * 2);
+    });
+
+    it('should resolve if there is at least one successfull upload', async () => {
+      const files = [{}, {}];
+      const plan = { projectId: 1, planId: 2, files };
+
+      fetch.resetMocks();
+
+      // first plan save and file upload succeeds
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+
+
+      // third plan save fails
+      fetch.mockResponseOnce('{}', { ok: false, status: 500 });
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+
+      try {
+        const result = await model.savePlans(plan);
+        expect(result.length).toBe(2);
+      } catch (e) {
+        throw new Error('Not supposed to be here!');
+      }
     });
   });
 });

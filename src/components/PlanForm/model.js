@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import t, { tpl } from '../../locale';
 import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
 import { omit, withTimeout } from '../../utils';
@@ -48,6 +49,7 @@ const uploadFile = async (plan, file) => {
   // form form data body for the request
   const data = new FormData();
   data.append('mfile', file);
+  // data.append('plan', new Blob([JSON.stringify(plan)], { type: 'application/json' }));
   // wait for the response
   const response = await withTimeout(
     REQUEST_TIMEOUT,
@@ -112,14 +114,39 @@ const savePlanWithFile = async (planValues, file) => {
  * @param {File} file File to be uploaded
  * @return {object[]} All the saved plans
  */
-const saveFilesAsPlans = async (values) => {
+const saveFilesAsPlans = values => new Promise((resolve, reject) => {
   const { files } = values;
+  const succeeded = [];
+  const rejected = [];
+  /**
+   * Resolve the promise when all file upload/plan save promises are resolved or rejected
+   * and at least one of the promises succeeded. If all requests failed then reject the promise
+   */
+  const resolveWhenAllDone = () => {
+    if (rejected.length === files.length) {
+      reject(new Error(t('network.error.plan.create')));
+    } else if (succeeded.length + rejected.length === files.length) {
+      resolve([succeeded, rejected]);
+    }
+  };
   // omit files property from other plan values because files are uploaded separately
   const planValues = omit(['files'], values);
-  const promises = files.map(file => savePlanWithFile(planValues, file));
-  // save plan along with the file
-  return Promise.all(promises);
-};
+
+  // loop all files and save a plan object for each one and upload file to s3
+  // put each resolve or reject value to a corresponding basket and resolve
+  // promise when all requests are done
+  files.forEach((file) => {
+    savePlanWithFile(planValues, file)
+      .then((result) => {
+        succeeded.push(result);
+        resolveWhenAllDone(resolve);
+      })
+      .catch(() => {
+        rejected.push(file.name);
+        resolveWhenAllDone(resolve);
+      });
+  });
+});
 
 /**
  * Save plan(s) to the server
@@ -127,11 +154,14 @@ const saveFilesAsPlans = async (values) => {
  * @param {object} values
  * @return {object|object[]} Plan(s) received from the server as response(s)
  */
-export const savePlans = async values => (
-  values.files && values.files.length
-    ? saveFilesAsPlans(values)
-    : savePlan(values)
-);
+export const savePlans = async (values) => {
+  if (values.files && values.files.length) {
+    return saveFilesAsPlans(values);
+  }
+
+  const plan = await savePlan(values);
+  return [[plan], []];
+};
 
 /**
  * Send edit request to the server
