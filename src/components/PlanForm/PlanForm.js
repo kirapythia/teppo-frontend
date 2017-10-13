@@ -51,7 +51,7 @@ const mapStateToProps = (state, ownProps) => {
     ({ ...f, disabled: Boolean(plan && plan.approved) })
   );
   const actionProps = plan
-    ? { initialValues: { ...plan, projectId, files: [plan.url] } }
+    ? { initialValues: { ...plan, projectId, files: plan.url ? [plan.url] : [] } }
     : { initialValues: { mainNo, projectId } };
 
   return {
