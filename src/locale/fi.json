@@ -6,6 +6,7 @@
   "button.edit_plan": "Muokkaa suunnitelmaa",
   "button.add_project": "Uusi projekti",
   "button.back_to_project": "Takaisin projektin tietoihin",
+  "button.back_to_project_list": "Takaisin projektilistalle",
   "button.new_plan_version": "Uusi versio",
   "button.edit_project": "Muokkaa projektia",
   "button.cancel": "Peruuta",
