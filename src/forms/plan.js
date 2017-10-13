@@ -1,5 +1,6 @@
 import t from '../locale';
 import { append } from './normalizers';
+import { versionToCharacter } from '../utils';
 
 /**
  * Field definitions for the plan form. Object key is field name and
@@ -35,6 +36,13 @@ const fields = {
       minLength: 3,
       maxLength: 4,
     },
+  },
+
+  version: {
+    type: 'text',
+    label: t('common.version'),
+    disabled: true,
+    format: versionToCharacter,
   },
 
   files: {
