@@ -21,6 +21,7 @@
   "button.discard_plan": "Hylkää suunnitelma",
   "comment.text": "Kommentti",
   "common.id": "Tunniste",
+  "common.file": "Tiedosto",
   "common.version": "Versio",
   "dropzone.placeholder": "Paina Valitse tiedosto -painiketta tai raahaa haluamasi tiedostot tähän ikkunaan.",
   "files.no_files": "Ei lisättyjä tiedostoja",

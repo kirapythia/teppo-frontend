@@ -5,6 +5,7 @@
 .PlansList__header {
   display: flex;
   font-weight: bold;
+  flex-wrap: wrap;
 }
 
 .PlansList__identifier {
@@ -17,6 +18,7 @@
 
 .PlansListItem {
   display: flex;
+  flex-wrap: wrap;
   padding: .4rem .5rem;
   border-radius: 4px;
   margin-bottom: 0;
@@ -41,4 +43,10 @@
 
 .PlansListItem:hover a {
   color: #1EAEDB;
+}
+
+@media (max-width: 550px) {
+  .PlansListItem {
+    border-bottom: 1px solid skyblue;
+  }
 }

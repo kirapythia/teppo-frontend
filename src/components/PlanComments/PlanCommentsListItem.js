@@ -10,6 +10,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
     className="button-red"
     onClick={() => callback(comment, false)}
     icon="fa-undo"
+    title={t('button.revert_comment_approve')}
   />
   : <Button
     className="button-green"

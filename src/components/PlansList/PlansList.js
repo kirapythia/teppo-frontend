@@ -13,8 +13,11 @@ import './PlansList.css';
 const PlansList = ({ project, plans }) => (
   <div>
     {!!plans.length && <div className="PlansList__header">
+      <div className="one column">&nbsp;</div>
       <div className="three columns">{t('common.id')}</div>
-      <div className="nine columns">{t('common.version')}</div>
+      <div className="five columns">{t('common.file')}</div>
+      <div className="two columns">{t('common.version')}</div>
+      <div className="one columns">&nbsp;</div>
     </div>}
     <ul className="PlansList clear-list-styles">
       {plans.length
