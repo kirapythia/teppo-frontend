@@ -56,9 +56,9 @@ describe('getSortedComments', () => {
     const state = { comments: { comments }, router: { params: { planId: 1 } } };
     const actual = selectors.getSortedComments(state);
 
-    expect(actual[0]).toEqual(comments['2']);
+    expect(actual[0]).toEqual(comments['1']);
     expect(actual[1]).toEqual(comments['3']);
-    expect(actual[2]).toEqual(comments['1']);
+    expect(actual[2]).toEqual(comments['2']);
   });
 
   it('should not throw if comments is undefined', () => {

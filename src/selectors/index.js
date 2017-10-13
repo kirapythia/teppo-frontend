@@ -111,7 +111,7 @@ const formPlanIdentifier = concatProps(['projectId', 'mainNo', 'subNo']);
  * @param {object[]} plans
  * @return {function} A function that returns a plan object when applied on a list of plans
  */
-const getLatest = R.pipe(R.sortBy(R.prop('version')), R.reverse, R.head);
+const getNthVersion = takeNth => R.pipe(R.sortBy(R.prop('version')), R.reverse, takeNth);
 
 /**
  * Get latest versions of project's plans
@@ -122,7 +122,16 @@ export const listLatestVersionsOfPlans = createSelector(
   listPlans,
   R.pipe(
     R.groupBy(formPlanIdentifier),
-    R.mapObjIndexed(getLatest),
+    R.mapObjIndexed(getNthVersion(R.head)),
     R.values,
   )
+);
+
+export const getSecondLatestVersionOfPlan = createSelector(
+  getCurrentPlan,
+  listPlans,
+  (plan, plans) => R.pipe(
+    R.filter(R.eqBy(formPlanIdentifier, plan)),
+    getNthVersion(R.nth(1))
+  )(plans)
 );

@@ -39,7 +39,6 @@
   .PlanCommentsListItem {
     display: flex;
     flex-direction: row;
-    align-items: center;
     flex-wrap: wrap;
   }
 
@@ -50,5 +49,6 @@
 
   .PlanCommentsListItem__body {
     flex: 1;
+    margin-right: .6rem;
   }
 }

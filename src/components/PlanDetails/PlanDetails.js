@@ -9,7 +9,7 @@ import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
-import PlanComments from '../PlanComments';
+import PlanCommentsSection from '../PlanComments';
 import BackToProjectButton from '../common/BackToProjectButton';
 import Button from '../common/Button';
 import LoadingOverlay from '../common/LoadingOverlay';
@@ -67,17 +67,17 @@ const PlanDetails = ({
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
         {plan.approved && (
-          <div>
-            <div className="text-right">
-              <Button
-                icon="fa-plus"
-                text={t('button.new_plan_version')}
-                onClick={createNewPlanVersion}
-              />
-            </div>
-            <PlanComments />
+          <div className="text-right">
+            <Button
+              icon="fa-plus"
+              text={t('button.new_plan_version')}
+              onClick={createNewPlanVersion}
+            />
           </div>
         )}
+
+        <PlanCommentsSection />
+
         {!plan.approved && (
           <div className="PlanDetails__actions">
             <div className="row">
