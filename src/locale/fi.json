@@ -10,6 +10,7 @@
   "button.new_plan_version": "Uusi versio",
   "button.edit_project": "Muokkaa projektia",
   "button.cancel": "Peruuta",
+  "button.revert_comment_approve": "Peruuta kommentin hyväksyntä",
   "button.save": "Tallenna",
   "button.saving": "Tallennetaan",
   "button.save_project": "Tallenna projekti",
