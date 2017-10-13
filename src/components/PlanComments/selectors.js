@@ -1,5 +1,38 @@
+import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { listComments } from '../../selectors';
+import { getCurrentPlanId } from '../../selectors';
+import { mapToList } from '../../utils';
+
+const getComments = state => state.comments.comments;
+
+/**
+ * Get all comments as a list
+ * @param {object} state
+ * @return {object[]} a list of comments
+ */
+export const listComments = createSelector(
+  getComments,
+  mapToList,
+);
+
+/**
+ * Get all comments from current plan
+ * @param {object} state
+ * @return {object[]} A list of comment objects
+ */
+export const getCommentsForCurrentPlan = createSelector(
+  listComments,
+  getCurrentPlanId,
+  (comments, planId) => comments.filter(R.propEq('planId', +planId))
+);
+
+/**
+ * Convert value to a date time number
+ * @private
+ * @param {string} dateString
+ * @return {number}
+ */
+const toDatetime = dateString => new Date(dateString).getTime();
 
 /**
  * Get all comments of the current plan as a list
@@ -8,6 +41,9 @@ import { listComments } from '../../selectors';
  * @return {object[]} comments
  */
 export const getSortedComments = createSelector(
-  listComments,
-  comments => comments.sort((a, b) => Number(!!b.approved) - Number(!!a.approved))
+  getCommentsForCurrentPlan,
+  R.sortWith([
+    R.descend(R.prop('approved')),
+    R.ascend(R.pipe(R.prop('createdAt'), toDatetime)),
+  ]),
 );

@@ -19,11 +19,6 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
-
-  initialValues: {
-    // FIXME: Remove when actually implemented
-    author: 'Seija Suunnittelija',
-  },
 };
 
 /**
@@ -53,7 +48,7 @@ const PlanCommentForm = ({
 
     <Field
       type="textarea"
-      name="text"
+      name="ptext"
       label={t('comment.text')}
       component={renderField}
       validation={{ required: true }}

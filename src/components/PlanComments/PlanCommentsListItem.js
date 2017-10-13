@@ -31,7 +31,7 @@ const PlanCommentsListItem = ({ comment, onApproveClick }) => (
       <div className="PlanCommentsListItem__author">
         <a href="mailto:seija.suunnittelija@espoo.fi">Seija Suunnittelija</a>
       </div>
-      {comment.text}
+      {comment.ptext}
     </div>
     <div>
       {chooseActionButton(comment, onApproveClick)}
