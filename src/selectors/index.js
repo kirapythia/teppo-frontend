@@ -10,8 +10,14 @@ import { isOneOf, propSorter, mapToList, concatProps } from '../utils';
  */
 
 const getProjectDetails = state => state.project;
-const getProjects = state => state.projectList.projects;
 const getPlans = state => state.plans;
+
+/**
+ * Get all projects as a list
+ * @param {object} state
+ * @return {object[]}
+ */
+export const getProjects = state => state.projectList.projects;
 
 /**
  * Return url's projectId

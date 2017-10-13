@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import t from '../../locale';
+import { getSortedProjects } from './selectors';
 import Message from '../common/Message';
 import LoadingOverlay from '../common/LoadingOverlay';
 import ProjectList from './ProjectList';
 
 const mapStateToProps = state => ({
-  projects: state.projectList.projects,
+  projects: getSortedProjects(state),
   error: state.projectList.error,
   isFetching: state.projectList.isFetching,
 });
