@@ -13,7 +13,7 @@ const PlanCommentsList = ({ comments = [], toggleCommentApproval }) => (
   <ul className="PlanCommentsList clear-list-styles">
     {!!comments.length && comments.map(comment => (
       <PlanCommentsListItem
-        key={comment.text_id}
+        key={comment.textId}
         comment={comment}
         onApproveClick={toggleCommentApproval}
       />

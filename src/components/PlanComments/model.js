@@ -23,7 +23,7 @@ export const saveComment = (plan, comment) =>
 export const editComment = (plan, comment) =>
   withTimeout(
     2 * 60 * 1000,
-    putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}/comments/${comment.text_id}`, comment)
+    putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}/comments/${comment.textId}`, comment)
       .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.edit'), error.status)))
   );
 
@@ -33,4 +33,4 @@ export const editComment = (plan, comment) =>
    * @param {object} comment comment object
    */
 export const updateComment = (comments, comment) =>
-  ({ ...comments, [comment.text_id]: comment });
+  ({ ...comments, [comment.textId]: comment });

@@ -93,7 +93,7 @@ const initialState = {
   comments: {},
 };
 
-const byId = listToMapBy('text_id');
+const byId = listToMapBy('textId');
 
 const listAllComments = R.pipe(
   R.prop('latestPlans'),
@@ -145,8 +145,8 @@ export default handleActions({
   // Handle comment approval toggle error action. Revert comment's
   // approved status to what it was before send.
   [TOGGLE_COMMENT_APPROVAL_ERROR]: (state, action) => {
-    const { comment: { text_id, approved } } = action.meta;
-    const updated = { ...state.comments[text_id], approved };
+    const { comment: { textId, approved } } = action.meta;
+    const updated = { ...state.comments[textId], approved };
     return {
       ...state,
       commentEditError: action.payload,

@@ -48,9 +48,9 @@ describe('getSortedComments', () => {
 
   it('should sort secondarily on createAt property', () => {
     const comments = {
-      1: { text_id: 1, planId: 1, approved: true, createdAt: '2017-10-12T13:35:14.591Z' },
-      2: { text_id: 2, planId: 1, approved: true, createdAt: '2017-08-10T13:35:14.591Z' },
-      3: { text_id: 3, planId: 1, approved: true, createdAt: '2017-09-11T12:35:14.591Z' },
+      1: { textId: 1, planId: 1, approved: true, createdAt: '2017-10-12T13:35:14.591Z' },
+      2: { textId: 2, planId: 1, approved: true, createdAt: '2017-08-10T13:35:14.591Z' },
+      3: { textId: 3, planId: 1, approved: true, createdAt: '2017-09-11T12:35:14.591Z' },
     };
 
     const state = { comments: { comments }, router: { params: { planId: 1 } } };
