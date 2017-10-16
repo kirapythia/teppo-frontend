@@ -10,13 +10,6 @@ import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm.ducks';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
-/**
- * All fields from fields configuration initialized with an empty string as value
- * @type {object}
- */
-const fieldsWithEmptyStringValues = Object.keys(fields)
-  .reduce((acc, key) => ({ ...acc, [key]: '' }), {});
-
 // form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);
 
@@ -80,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
       cancelHref: `/project/${project.projectId}`,
     }
     : {
-      initialValues: fieldsWithEmptyStringValues,
+      initialValues: { sisterProjects: [] },
       cancelHref: HOME,
       asyncValidate: validateHansuProjectId,
       asyncBlurFields: ['hansuProjectId'],
