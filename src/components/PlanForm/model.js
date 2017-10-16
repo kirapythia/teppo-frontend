@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import t, { tpl } from '../../locale';
 import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
-import { omit, withTimeout } from '../../utils';
+import { withTimeout, formPlanIdentifier } from '../../utils';
 import { parsePlanProps } from '../../utils/PlanFilenameParser';
 
 /**
@@ -130,7 +130,7 @@ const saveFilesAsPlans = values => new Promise((resolve, reject) => {
     }
   };
   // omit files property from other plan values because files are uploaded separately
-  const planValues = omit(['files'], values);
+  const planValues = R.omit(['files'], values);
 
   // loop all files and save a plan object for each one and upload file to s3
   // put each resolve or reject value to a corresponding basket and resolve
@@ -207,4 +207,65 @@ export const editPlan = async (values) => {
   } catch (e) {
     throw new ServerResponseError(t('network.error.plan.edit'), e.status);
   }
+};
+
+/**
+ * Check if a list contains double values
+ * @private
+ * @param {string[]} list
+ * @return {boolean}
+ */
+const containsDoubles = list => R.uniq(list).length < list.length;
+/**
+ * Check if two lists contains one or more same values
+ * @private
+ * @param {string[]} listA
+ * @param {string[]} listB
+ * @return {boolean}
+ */
+const listsContainSameValues = (listA, listB) => !!R.intersection(listA, listB).length;
+
+/**
+ * Form a list of identifiers from the file list
+ * @private
+ * @param {object} project
+ * @param {object[]} files
+ * @return {string[]}
+ */
+const formPlanIdentifiersFromFiles = (projectId, files) => R.pipe(
+  R.pluck('name'),
+  R.map(parsePlanProps),
+  R.map(R.assoc('projectId', projectId)),
+  R.map(formPlanIdentifier),
+)(files);
+
+/**
+ * Assert that form values will not create plans with same projectId, mainNo and subNo combination
+ * for they are considered to be new versions of the existing plan
+ * @param {object} values Values from the plan form
+ * @param {object} project The project to which the plans are being added
+ * @return {string|undefined} Returns an error message or undefined if validation passes
+ */
+export const validatePlans = allPlans => (values) => {
+  const { files = [] } = values;
+
+  // if project already has plan with same identifier combination
+  if (allPlans.find(R.eqBy(formPlanIdentifier, values))) {
+    return { subNo: t('validation.message.collides_existing_plan_values') };
+  }
+
+  const existing = allPlans.map(formPlanIdentifier);
+  const newPlans = formPlanIdentifiersFromFiles(values.projectId, files);
+
+  // if project already has a plan with the same identifier combination
+  if (listsContainSameValues(existing, newPlans)) {
+    return { files: t('validation.message.double_plan_values') };
+  }
+
+  // if files list has multiple plans with the same identifier combination
+  if (containsDoubles(newPlans)) {
+    return { files: t('validation.message.double_plan_values') };
+  }
+
+  return undefined;
 };

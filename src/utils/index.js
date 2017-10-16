@@ -154,6 +154,28 @@ export const versionToCharacter = (number = 0) => String.fromCharCode(65 + Numbe
  */
 export const concatProps = propNames => R.pipe(R.props(propNames), R.map(String), R.reduce(R.concat, ''));
 
+/**
+ * Pad number with zeros
+ * @param {number|string} value
+ * @param {number} minLength
+ * @return {string}
+ */
+export const zeroPad = (value, minLength) =>
+  `${R.repeat('0', Math.max(0, minLength - String(value).length)).join('')}${value}`;
+
+/**
+ * Form a identifier by concatenating projectId, mainNo and subNo
+ * @private
+ * @param {object} plan
+ * @return {function} A function that returns a string when applied on a plan object
+ */
+export const formPlanIdentifier = R.pipe(
+  // subNo has to be zero padded because when fetched from the server the type is number
+  // but from the form it is zero padded string
+  R.mapObjIndexed((value, key) => (key === 'subNo' ? zeroPad(value, 3) : value)),
+  concatProps(['projectId', 'mainNo', 'subNo'])
+);
+
 const dateOptions = {
   weekday: 'short',
   day: 'numeric',
@@ -175,12 +197,3 @@ export const serverDateToString = (str) => {
   const date = new Date(str);
   return `${date.toLocaleDateString('fi-FI', dateOptions)} ${date.toLocaleTimeString('fi-FI', timeOptions)}`;
 };
-
-/**
- * Pad number with zeros
- * @param {number|string} value
- * @param {number} minLength
- * @return {string}
- */
-export const zeroPad = (value, minLength) =>
-  `${R.repeat('0', Math.max(0, minLength - String(value).length)).join('')}${value}`;

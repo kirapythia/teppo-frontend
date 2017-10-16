@@ -178,3 +178,42 @@ describe('Saving plans', () => {
     });
   });
 });
+
+describe('Validating plans', () => {
+  it('should pass if the project has no plans', () => {
+    expect(model.validatePlans([])({})).toEqual();
+  });
+
+  it('should pass if there are no files and no plan form values', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = {};
+    expect(model.validatePlans(plans)(values)).toEqual();
+  });
+
+  it('should pass if project has no plans with the same identifier combination', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = { projectId: 1, mainNo: 3, subNo: 4 };
+    expect(model.validatePlans(plans)(values)).toEqual();
+  });
+
+  it('should not pass if project already has a plan with the same main and sub number combination', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = { projectId: 1, mainNo: 2, subNo: 3 };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.subNo).toEqual(t('validation.message.collides_existing_plan_values'));
+  });
+
+  it('should not pass if a file name is parsed to existing plan identifier values', () => {
+    const plans = [{ projectId: 1, mainNo: 2001, subNo: 123 }];
+    const values = { projectId: 1, files: [{ name: '2001_123.dwg' }] };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.double_plan_values'));
+  });
+
+  it('should not pass if files list have values that are parsed to doubles', () => {
+    const plans = [];
+    const values = { projectId: 1, files: [{ name: '2001_123.dwg' }, { name: '123_2001.dwg' }] };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.double_plan_values'));
+  });
+});
