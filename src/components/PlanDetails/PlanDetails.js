@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import { getCurrentPlan } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
+import { formPlanUrl } from '../../utils/ajax';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
 import PlanComments from '../PlanComments';
 import BackToProjectButton from '../common/BackToProjectButton';
+import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
 import LoadingOverlay from '../common/LoadingOverlay';
 import './PlanDetails.css';
@@ -68,7 +70,12 @@ const PlanDetails = ({
         <ShowDetails fields={formPlanDetailFields(plan)} />
         {plan.approved && (
           <div>
-            <div className="text-right">
+            <div className="PlanDetails__plan-actions">
+              <LinkButton
+                icon="fa-pencil"
+                text={t('button.edit_plan')}
+                href={`${formPlanUrl(plan.projectId, plan.planId)}/edit`}
+              />
               <Button
                 icon="fa-plus"
                 text={t('button.new_plan_version')}

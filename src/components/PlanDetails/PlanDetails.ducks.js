@@ -5,6 +5,7 @@ import { combineActions, handleActions } from 'redux-actions';
 import { tpl } from '../../locale';
 import { actionTypes } from '../../redux/plans';
 import { actions as Notifications } from '../Notifications';
+import { formPlanUrl, formProjectUrl } from '../../utils/ajax';
 
 export const NAME = 'planDetails';
 
@@ -28,7 +29,7 @@ export default handleActions({
       // if action has origin meta field and it equals create new version actiontype then
       // navigate to next page otherwise just display the notification
       .concat(pathEq(['meta', 'origin'], actionTypes.CREATE_NEW_PLAN_VERSION)(action)
-        ? Cmd.action(push(`/project/${action.payload.projectId}/plan/${action.payload.planId}/edit`))
+        ? Cmd.action(push(formPlanUrl(action.payload.projectId, action.payload.planId, 'edit')))
         : []);
 
     return loop(({ ...state, isFetching: false }), Cmd.list(actions));
@@ -38,7 +39,7 @@ export default handleActions({
   [actionTypes.REMOVE_PLAN_SUCCESS]: (state, action) => loop(
     { ...state, isFetching: false },
     // navigate to project page
-    Cmd.action(push(`/project/${action.payload.projectId}`)),
+    Cmd.action(push(formProjectUrl(action.payload.projectId))),
   ),
 
   // handle errors

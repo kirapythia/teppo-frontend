@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'redux-little-router';
 import t from '../../locale';
+import LinkButton from '../common/LinkButton';
 
 /**
  * Cancel button / link for a form
@@ -8,10 +8,12 @@ import t from '../../locale';
  * @param {string} props.href Link href
  */
 const FormCancelButton = ({ href }) => (
-  <Link className="button u-full-width" href={href}>
-    <i className="fa fa-times fa-lg" aria-hidden="true" />&nbsp;
-    {t('button.cancel')}
-  </Link>
+  <LinkButton
+    className="u-full-width"
+    href={href}
+    icon="fa-times"
+    text={t('button.cancel')}
+  />
 );
 
 export default FormCancelButton;

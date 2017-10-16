@@ -5,6 +5,7 @@ import { saveProject } from './model';
 import * as ROUTES from '../../constants/routes';
 import { tpl } from '../../locale';
 import { actions as NotificationActions } from '../Notifications';
+import { formProjectUrl } from '../../utils/ajax';
 
 describe('saveProject action', () => {
   it('should set error to null', () => {
@@ -47,7 +48,7 @@ describe('saveProject success action', () => {
         Cmd.action(NotificationActions.addSuccessNotification(
           tpl('project.message.edit_success', payload)
         )),
-        Cmd.action(push(`/project/${payload.projectId}`)),
+        Cmd.action(push(formProjectUrl(payload.projectId))),
       ])
     ));
   });

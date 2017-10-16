@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 import { formIdentifier } from './model';
+import { formPlanUrl } from '../../utils/ajax';
 import { parseFileNameFromURL, versionToCharacter } from '../../utils';
 
 /**
@@ -18,7 +19,7 @@ const PlanListItem = ({ plan = {}, project = {} }) => (
       }
     </div>
     <div className="three columns PlansListItem__identifier">
-      <Link href={`/project/${project.projectId}/plan/${plan.planId}`}>
+      <Link href={formPlanUrl(project.projectId, plan.planId)}>
         {formIdentifier(plan)}
       </Link>
     </div>
@@ -29,7 +30,7 @@ const PlanListItem = ({ plan = {}, project = {} }) => (
     </div>
     <div className="one columns">{versionToCharacter(plan.version)}</div>
     <div className="two columns text-right">
-      <Link href={`/project/${project.projectId}/plan/${plan.planId}/edit`}>
+      <Link href={formPlanUrl(project.projectId, plan.planId, 'edit')}>
         <i className="fa fa-pencil fa-lg" />
       </Link>
     </div>

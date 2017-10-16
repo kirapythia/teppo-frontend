@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { reduxForm } from 'redux-form';
-
 import { HOME } from '../../constants/routes';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import { getProjectAsSelectOptions } from '../../selectors';
@@ -9,6 +8,7 @@ import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm.ducks';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
+import { formProjectUrl } from '../../utils/ajax';
 
 // form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);
@@ -70,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
   const actionProps = project
     ? {
       initialValues: { ...ownProps.project },
-      cancelHref: `/project/${project.projectId}`,
+      cancelHref: formProjectUrl(project.projectId),
     }
     : {
       initialValues: { sisterProjects: [] },

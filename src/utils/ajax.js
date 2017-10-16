@@ -88,3 +88,29 @@ export const postJSON = (url, body) => requestAndParseJSON(post, url, body);
  * @return {object} parsed JSON
  */
 export const putJSON = (url, body) => requestAndParseJSON(put, url, body);
+
+/**
+ * Append slug to a base url
+ * @private
+ * @param {string} url
+ * @param {string} slug
+ * @return {string}
+ */
+const appendSlug = (url, slug) => `${url}${slug ? `/${slug}` : ''}`;
+
+/**
+ * Form url for a project
+ * @param {number|string} projectId
+ * @param {string} [slug]
+ * @return {string}
+ */
+export const formProjectUrl = (projectId = '', slug = '') => appendSlug(`/project/${projectId}`, slug);
+
+/**
+ * Form url for a plan
+ * @param {number|string} projectId
+ * @param {number|string} planId
+ * @param {string} [slug]
+ * @return {string}
+ */
+export const formPlanUrl = (projectId, planId = '', slug = '') => appendSlug(`${formProjectUrl(projectId)}/plan/${planId}`, slug);

@@ -6,6 +6,7 @@ import { editPlan, savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
 import * as ROUTES from '../../constants/routes';
+import { formProjectUrl } from '../../utils/ajax';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -125,7 +126,7 @@ export default handleActions({
       ),
       // dispatch (react-little-router's) push action to navigate
       // to project details page
-      push(`/project/${succeeded[0].projectId}`),
+      push(formProjectUrl(succeeded[0].projectId)),
     ];
 
     if (failed.length) {
@@ -156,7 +157,7 @@ export default handleActions({
       )),
       // dispatch (react-little-router's) push action to navigate
       // to project details page
-      Cmd.action(push(`/project/${action.payload.projectId}`)),
+      Cmd.action(push(formProjectUrl(action.payload.projectId))),
     ])
   ),
   // handle savePlan fail action

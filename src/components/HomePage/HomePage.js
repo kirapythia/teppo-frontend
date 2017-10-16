@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'redux-little-router';
 import t from '../../locale';
 import { PROJECT } from '../../constants/routes';
+import LinkButton from '../common/LinkButton';
 import ProjectListContainer from '../ProjectList';
 
 /**
@@ -10,10 +10,12 @@ import ProjectListContainer from '../ProjectList';
 const HomePage = () => (
   <div>
     <ProjectListContainer />
-    <Link className="button button-primary" href={PROJECT}>
-      <i className="fa fa-file-o" />&nbsp;
-      {t('button.add_project')}
-    </Link>
+    <LinkButton
+      className="button-primary"
+      href={PROJECT}
+      icon="fa-file-o"
+      text={t('button.add_project')}
+    />
   </div>
 );
 

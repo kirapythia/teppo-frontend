@@ -6,6 +6,7 @@ import * as ROUTES from '../../constants/routes';
 import { saveProject, editProject } from './model';
 import { tpl } from '../../locale';
 import { actions as NotificationActions } from '../Notifications';
+import { formProjectUrl } from '../../utils/ajax';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -114,7 +115,7 @@ export default handleActions({
       )),
       // (middleware will) run (react-little-router's) push action to navigate
       // to the project details page
-      Cmd.action(push(`/project/${action.payload.projectId}`)),
+      Cmd.action(push(formProjectUrl(action.payload.projectId))),
     ])
   ),
   // handle saveProject fail action

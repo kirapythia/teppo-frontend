@@ -5,6 +5,7 @@ import reducer, { actions } from './PlanForm.ducks';
 import { savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import * as ROUTES from '../../constants/routes';
+import { formProjectUrl } from '../../utils/ajax';
 
 describe('savePlan action', () => {
   it('should set error to null', () => {
@@ -59,7 +60,7 @@ describe('savePlan success action', () => {
         Cmd.action(NotificationActions.addSuccessNotification(
           tpl('plan.message.save_success_multiple', { count: values.length })
         )),
-        Cmd.action(push(`/project/${projectId}`)),
+        Cmd.action(push(formProjectUrl(projectId))),
       ])
     ));
   });
@@ -76,7 +77,7 @@ describe('savePlan success action', () => {
         Cmd.action(NotificationActions.addSuccessNotification(
           tpl('plan.message.save_success', { subNo: 1, mainNo: 1 })
         )),
-        Cmd.action(push(`/project/${projectId}`)),
+        Cmd.action(push(formProjectUrl(projectId))),
       ])
     ));
   });
