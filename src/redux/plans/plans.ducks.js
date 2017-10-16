@@ -1,7 +1,7 @@
-import { identity } from 'ramda';
+import * as R from 'ramda';
 import { createAction, combineActions, handleActions } from 'redux-actions';
 import { Cmd, loop } from 'redux-loop';
-import { mapToList, listToMapBy, pick, omit } from '../../utils';
+import { mapToList, listToMapBy } from '../../utils';
 import { createPlan, removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
@@ -56,7 +56,7 @@ export const actions = {
 
   createNewPlanVersionSuccess: createAction(
     actionTypes.UPDATE_PLAN_SUCCESS,
-    identity,
+    R.identity,
     () => ({ origin: actionTypes.CREATE_NEW_PLAN_VERSION }),
   ),
 };
@@ -97,7 +97,7 @@ export default handleActions({
     Cmd.run(createPlan, {
       successActionCreator: actions.createNewPlanVersionSuccess,
       failActionCreator: actions.updatePlanError,
-      args: [pick(['projectId', 'mainNo', 'subNo'], action.payload)],
+      args: [R.pick(['projectId', 'mainNo', 'subNo'], action.payload)],
     })
   ),
 
@@ -115,5 +115,5 @@ export default handleActions({
 
   // Handle approve plan success action. Remove corresponding plan from the plans list
   [actionTypes.REMOVE_PLAN_SUCCESS]: (state, action) =>
-    omit([String(action.payload.planId)], state),
+    R.omit([String(action.payload.planId)], state),
 }, {});

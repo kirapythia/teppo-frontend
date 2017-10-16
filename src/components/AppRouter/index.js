@@ -1,8 +1,7 @@
 import React from 'react';
 import { Fragment } from 'redux-little-router';
-
+import * as R from 'ramda';
 import * as ROUTES from '../../constants/routes';
-import { isOneOf } from '../../utils';
 import Layout from '../Layout';
 import HomePage from '../HomePage';
 import ProjectPage from '../ProjectPage';
@@ -23,7 +22,7 @@ const AppRouter = () => (
         <HomePage />
       </Fragment>
       <Fragment withConditions={location =>
-        isOneOf(location.route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])}
+        R.contains(location.route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])}
       >
         <ProjectPage />
       </Fragment>
@@ -34,7 +33,7 @@ const AppRouter = () => (
         <PlanDetails />
       </Fragment>
       <Fragment withConditions={location =>
-        isOneOf(location.route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])}
+        R.contains(location.route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])}
       >
         <PlanPage />
       </Fragment>

@@ -1,9 +1,9 @@
+import * as R from 'ramda';
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import * as ROUTES from '../../constants/routes';
 import { saveProject, editProject } from './model';
-import { identity, isOneOf, omit } from '../../utils';
 import { tpl } from '../../locale';
 import { actions as NotificationActions } from '../Notifications';
 
@@ -27,7 +27,6 @@ export const actions = {
    */
   saveProject: createAction(
     CREATE_PROJECT,
-    identity
   ),
   /**
    * Action triggered if the saveProject action succeeds
@@ -36,7 +35,6 @@ export const actions = {
    */
   projectSuccessAction: createAction(
     PROJECT_SUCCESS,
-    identity
   ),
   /**
    * Action triggered if the createAction project fails
@@ -45,7 +43,6 @@ export const actions = {
    */
   projectFailAction: createAction(
     PROJECT_FAIL,
-    identity
   ),
   /**
    * Send the newly created project to the server
@@ -54,7 +51,6 @@ export const actions = {
    */
   editProject: createAction(
     EDIT_PROJECT,
-    identity
   ),
   /**
    * Action triggered when form send error is closed
@@ -70,8 +66,8 @@ export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const { route } = action.payload;
     // clear error when entering the form
-    if (state.error && isOneOf(route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])) {
-      return omit(['error'], state);
+    if (state.error && R.contains(route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])) {
+      return R.omit(['error'], state);
     }
     return state;
   },
@@ -80,7 +76,7 @@ export default handleActions({
   // interpreted by redux-loop middleware
   [CREATE_PROJECT]: (state, action) => loop(
     // remove error from the state
-    omit(['error'], state),
+    R.omit(['error'], state),
     // Middleware will call saveProject and if it succeeds
     // then saveProjectSuccessAction action will be dispatched
     // otherwise saveProjectFailAction action will be dispatched
@@ -96,7 +92,7 @@ export default handleActions({
   // interpreted by redux-loop middleware
   [EDIT_PROJECT]: (state, action) => loop(
     // remove error from the state
-    omit(['error'], state),
+    R.omit(['error'], state),
     // Middleware will call saveProject and if it succeeds
     // then saveProjectSuccessAction action will be dispatched
     // otherwise saveProjectFailAction action will be dispatched
@@ -126,5 +122,5 @@ export default handleActions({
   [PROJECT_FAIL]: (state, action) => ({ ...state, error: action.payload }),
   // handle clear send error action
   // just remove error from the state
-  [CLEAR_SEND_ERROR]: state => omit(['error'], state),
+  [CLEAR_SEND_ERROR]: state => R.omit(['error'], state),
 }, {});

@@ -1,10 +1,10 @@
+import * as R from 'ramda';
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { editPlan, savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
-import { identity, isOneOf, omit } from '../../utils';
 import * as ROUTES from '../../constants/routes';
 
 /**
@@ -28,7 +28,6 @@ export const actions = {
    */
   savePlan: createAction(
     SAVE_PLAN,
-    identity
   ),
   /**
    * Send a edited plan to the server
@@ -37,7 +36,6 @@ export const actions = {
    */
   editPlan: createAction(
     EDIT_PLAN,
-    identity
   ),
   /**
    * Action triggered if the createProject action succeeds
@@ -55,7 +53,6 @@ export const actions = {
    */
   planEditSuccessAction: createAction(
     PLAN_EDIT_SUCCESS,
-    identity
   ),
   /**
    * Action triggered if the createAction project fails
@@ -64,7 +61,6 @@ export const actions = {
    */
   planFailAction: createAction(
     PLAN_FAIL,
-    identity
   ),
   /**
    * Action triggered when form send error is closed
@@ -80,8 +76,8 @@ export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const { route } = action.payload;
     // clear error when entering the form
-    if (state.error && isOneOf(route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])) {
-      return omit(['error'], state);
+    if (state.error && R.contains(route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])) {
+      return R.omit(['error'], state);
     }
     return state;
   },
@@ -90,7 +86,7 @@ export default handleActions({
   // interpreted by redux-loop middleware
   [SAVE_PLAN]: (state, action) => loop(
     // remove error from the state
-    omit(['error'], state),
+    R.omit(['error'], state),
     // Middleware will call savePlan and if it succeeds
     // then planSuccessAction action will be dispatched
     // otherwise planFailAction action will be dispatched
@@ -106,7 +102,7 @@ export default handleActions({
   // interpreted by redux-loop middleware
   [EDIT_PLAN]: (state, action) => loop(
     // remove error from the state
-    omit(['error'], state),
+    R.omit(['error'], state),
     // Middleware will call savePlan and if it succeeds
     // then planSuccessAction action will be dispatched
     // otherwise planFailAction action will be dispatched
@@ -168,5 +164,5 @@ export default handleActions({
   [PLAN_FAIL]: (state, action) => ({ ...state, error: action.payload }),
   // handle clear send error action
   // just remove error from the state
-  [CLEAR_SEND_ERROR]: state => omit(['error'], state),
+  [CLEAR_SEND_ERROR]: state => R.omit(['error'], state),
 }, {});

@@ -1,9 +1,9 @@
+import * as R from 'ramda';
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { LOCATION_CHANGED } from 'redux-little-router';
 
 import { fetchProjectList } from './model';
-import { isOneOf, omit } from '../../utils';
 import { HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS } from '../../constants/routes';
 
 /**
@@ -37,7 +37,7 @@ export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const currentlocation = action.payload.route;
 
-    if (isOneOf(currentlocation, [HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
+    if (R.contains(currentlocation, [HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
       return loop(
         { ...state, isFetching: true },
         Cmd.run(fetchProjectList, {
@@ -49,7 +49,7 @@ export default handleActions({
     return state;
   },
   [FETCH_PROJECT_LIST_SUCCESS]: (state, action) =>
-    ({ ...omit(['error'], state), projects: action.payload, isFetching: false }),
+    ({ ...R.omit(['error'], state), projects: action.payload, isFetching: false }),
   [FETCH_PROJECT_LIST_ERROR]: (state, action) =>
     ({ ...state, error: action.payload, isFetching: false }),
 }, initialState);

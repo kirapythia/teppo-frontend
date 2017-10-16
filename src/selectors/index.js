@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { isOneOf, propSorter, mapToList, formPlanIdentifier } from '../utils';
+import { propSorter, mapToList, formPlanIdentifier } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -74,7 +74,9 @@ export const getCurrentSisterProjects = createSelector(
   getCurrentProject,
   getProjects,
   (currentProject = {}, allProjects = []) => allProjects
-    .filter(({ projectId }) => isOneOf(projectId, currentProject.sisterProjects))
+    .filter(({ projectId }) =>
+      R.contains(projectId, R.defaultTo([], currentProject.sisterProjects))
+    )
 );
 
 /**

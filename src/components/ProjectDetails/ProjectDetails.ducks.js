@@ -1,8 +1,8 @@
+import * as R from 'ramda';
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { fetchProject } from './model';
-import { identity, omit } from '../../utils';
 import * as ROUTES from '../../constants/routes';
 
 /**
@@ -19,12 +19,10 @@ export const actions = {
   // successfully fetched from the server
   fetchProjectSuccess: createAction(
     FETCH_PROJECT_SUCCESS,
-    identity
   ),
   // action that's dispatched when project fetch fails
   fetchProjectError: createAction(
     FETCH_PROJECT_ERROR,
-    identity
   ),
 };
 
@@ -69,7 +67,7 @@ export default handleActions({
 
   // action that is dispatched after project was successfully fetched from the server
   // add fetched project and remove error from state
-  [FETCH_PROJECT_SUCCESS]: state => ({ ...omit(['error'], state), isFetching: false }),
+  [FETCH_PROJECT_SUCCESS]: state => ({ ...R.omit(['error'], state), isFetching: false }),
   // action that is dispatched after project fetching fails for some reason
   // add an error to the state and if fetch fails
   // because resource was not found then redirect to the home page
