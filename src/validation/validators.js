@@ -48,7 +48,18 @@ export const minLength = min => value => (value && value.length < min ? tpl('val
  * @return {function}
  */
 export const required = () => value => (value ? undefined : t('validation.message.required'));
-
+/**
+ * Validation for maximum value
+ * @param {number|string} maxValue
+ * @return {function}
+ */
+export const max = maxValue => value => ((value || +value === 0) && +value > maxValue ? tpl('validation.message.max', { max: maxValue }) : undefined);
+/**
+ * Validation for minimum value
+ * @param {number|string} minValue
+ * @return {function}
+ */
+export const min = minValue => value => ((value || +value === 0) && +value < minValue ? tpl('validation.message.min', { min: minValue }) : undefined);
 /**
  * Validator for testing against a regex. Will produce an error
  * if value doesn't match the given regex.

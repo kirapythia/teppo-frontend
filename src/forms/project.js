@@ -32,6 +32,8 @@ const fields = {
       required: true,
       type: 'number',
       minLength: 4,
+      min: 2000,
+      max: 32767,
     },
   },
 
