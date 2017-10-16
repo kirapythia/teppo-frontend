@@ -16,6 +16,10 @@
   flex: 1;
 }
 
+.FilesList {
+  margin-bottom: 0;
+}
+
 .FilesList li {
   display: flex;
 }
