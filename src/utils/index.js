@@ -35,7 +35,7 @@ export const isURL = value => /^http(s?):\/\//.test(value);
  * @param {string} url
  * @return {string} file name
  */
-export const parseFileNameFromURL = url => url.substring(url.lastIndexOf('/') + 1);
+export const parseFileNameFromURL = (url = '') => url.substring(url.lastIndexOf('/') + 1);
 
 /**
  * Create array sorter that sorts

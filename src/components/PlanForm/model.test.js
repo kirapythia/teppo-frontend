@@ -217,3 +217,39 @@ describe('Validating plans', () => {
     expect(errors.files).toEqual(t('validation.message.double_plan_values'));
   });
 });
+
+describe('Validating that created plan has equal identifiers', () => {
+  it('should pass if all identifiers are equal to plan\'s', () => {
+    const plan = { projectId: 1, mainNo: 2, subNo: 3 };
+    const values = { projectId: 1, mainNo: 2, subNo: 3 };
+    expect(model.validateSameIdentifiers(plan)(values)).toEqual();
+  });
+
+  it('should not pass if all identifiers are not equal to plan\'s', () => {
+    const plan = { projectId: 1, mainNo: 2, subNo: 3, url: null };
+    const values = { projectId: 1, mainNo: 3, subNo: 4, files: [] };
+    const errors = model.validateSameIdentifiers(plan)(values);
+    expect(errors.subNo).not.toEqual();
+  });
+
+  it('should not pass if identifiers derived from plan url are not equal to identifiers derived from uploaded file', () => {
+    const plan = { projectId: 1, mainNo: 2, subNo: 3, url: 'https://file-server/2017_654.dwg' };
+    const values = { projectId: 1, mainNo: 2, subNo: 3, files: [{ name: '2018_111.dwg' }] };
+    const errors = model.validateSameIdentifiers(plan)(values);
+    expect(errors.files).not.toEqual();
+  });
+
+  it('should pass if file identifiers but form identifiers do not', () => {
+    const plan = { projectId: 1, mainNo: 2, subNo: 3, url: 'https://file-server/2017_654.dwg' };
+    const values = { projectId: 1, mainNo: 3, subNo: 3, files: [{ name: '2017_654.dwg' }] };
+    const errors = model.validateSameIdentifiers(plan)(values);
+    expect(errors).toEqual();
+  });
+
+  it('should not pass if file with different identifiers is added when url is null', () => {
+    const plan = { projectId: 1, mainNo: 2017, subNo: 654, url: null };
+    const values = { projectId: 1, files: [{ name: '2017_654.dwg' }] };
+    const errors = model.validateSameIdentifiers(plan)(values);
+    expect(errors).toEqual();
+  });
+});

@@ -6,7 +6,7 @@ import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
-import { validatePlans } from './model';
+import { validatePlans, validateSameIdentifiers } from './model';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions
@@ -53,7 +53,8 @@ const formDynamicFieldProps = (plan = {}, project = {}) => fieldsWithValidations
       : plan.approved || project.completed,
   }))
   // show version only when editing
-  .filter(field => field.name !== 'version' || plan);
+  .filter(field => field.name !== 'version' || plan)
+  .map(field => (field.name === 'files' ? { ...field, multiple: !plan } : field));
 
 /**
  * Form initial values for plan editing
@@ -82,7 +83,9 @@ const mapStateToProps = (state, ownProps) => {
     fields: formDynamicFieldProps(plan, project),
     formSendError: state.planForm.error,
     cancelHref: formProjectUrl(project.projectId),
-    validate: validatePlans(allPlans),
+    validate: plan && plan.version > 1
+      ? validateSameIdentifiers(plan)
+      : validatePlans(allPlans),
     initialValues: plan
       ? formInitialValuesForEditing(plan, project)
       : { mainNo: project.mainNo, projectId: project.projectId },

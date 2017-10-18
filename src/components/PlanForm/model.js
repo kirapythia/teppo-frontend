@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import t, { tpl } from '../../locale';
 import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
-import { withTimeout, formPlanIdentifier } from '../../utils';
+import { withTimeout, formPlanIdentifier, parseFileNameFromURL } from '../../utils';
 import { parsePlanProps } from '../../utils/PlanFilenameParser';
 
 /**
@@ -269,3 +269,40 @@ export const validatePlans = allPlans => (values) => {
 
   return undefined;
 };
+
+/**
+ * Validate plans. Returns an error if plan edit is trying to change
+ * plan identifiers
+ * @param {object} plan
+ * @return {function}
+ */
+export const validateSameIdentifiers = plan =>
+  /**
+   * @param {object} values
+   * @return {object|undefined}
+   */
+  (values) => {
+    const { files, projectId } = values;
+
+    if (files && files.length) {
+      const uploadFileIdentifier = formPlanIdentifiersFromFiles(projectId, values.files)[0];
+      const planUrlIdentifier = formPlanIdentifiersFromFiles(
+        projectId,
+        [{ name: parseFileNameFromURL(plan.url || '') }]
+      )[0];
+
+      if (!plan.url) {
+        return uploadFileIdentifier === formPlanIdentifier(plan)
+          ? undefined
+          : { files: 'Not the same!' };
+      }
+
+      return planUrlIdentifier === uploadFileIdentifier
+        ? undefined
+        : { files: 'Not the same!' };
+    }
+
+    return formPlanIdentifier(values) === formPlanIdentifier(plan)
+      ? undefined
+      : { subNo: 'Not the same!' };
+  };

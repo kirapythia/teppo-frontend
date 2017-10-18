@@ -51,7 +51,7 @@ export const getSortedComments = createSelector(
 export const getApprovedCommentsFromPreviousVersion = createSelector(
   getSecondLatestVersionOfPlan,
   listComments,
-  (plan, comments) => R.pipe(
+  (plan = {}, comments) => R.pipe(
     R.filter(R.both(R.propEq('planId', plan.planId), R.propEq('approved', true))),
     R.sortBy(R.prop('createdAt')),
     R.reverse,
