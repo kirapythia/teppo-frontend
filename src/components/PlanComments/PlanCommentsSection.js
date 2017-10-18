@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import t from '../../locale';
 import { getCurrentPlan } from '../../selectors';
-import { getSortedComments } from './selectors';
+import { getApprovedCommentsFromPreviousVersion, getSortedComments } from './selectors';
 import { actions } from './PlanComments.ducks';
 import PlanCommentsList from './PlanCommentsList';
 import PlanCommentForm from './PlanCommentForm';
@@ -14,12 +14,18 @@ import Message from '../common/Message';
  * @param {object} state
  * @return {object} props
  */
-const mapStateToProps = state => ({
-  plan: getCurrentPlan(state),
-  comments: getSortedComments(state),
-  formSendError: state.comments.commentAddError,
-  commentEditError: state.comments.commentEditError,
-});
+const mapStateToProps = (state) => {
+  const plan = getCurrentPlan(state);
+
+  return {
+    plan,
+    comments: plan.approved
+      ? getSortedComments(state)
+      : getApprovedCommentsFromPreviousVersion(state),
+    formSendError: state.comments.commentAddError,
+    commentEditError: state.comments.commentEditError,
+  };
+};
 
 /**
  * Bind action creators to dispatch
@@ -75,15 +81,18 @@ const PlanCommentsSection = ({
       <Message message={commentEditError.message} onClose={clearCommentEditError} />
     }
     <PlanCommentsList
+      readOnly={!plan.approved}
       comments={comments}
       toggleCommentApproval={toggleCommentApproval}
     />
-    <PlanCommentForm
-      plan={plan}
-      addComment={addComment}
-      formSendError={formSendError}
-      clearError={clearCommentAddError}
-    />
+    {plan.approved &&
+      <PlanCommentForm
+        plan={plan}
+        addComment={addComment}
+        formSendError={formSendError}
+        clearError={clearCommentAddError}
+      />
+    }
   </section>
 );
 

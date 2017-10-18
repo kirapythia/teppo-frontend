@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { getCurrentPlanId } from '../../selectors';
+import { getCurrentPlanId, getSecondLatestVersionOfPlan } from '../../selectors';
 import { mapToList } from '../../utils';
 
 const getComments = state => state.comments.comments;
@@ -44,6 +44,16 @@ export const getSortedComments = createSelector(
   getCommentsForCurrentPlan,
   R.sortWith([
     R.descend(R.prop('approved')),
-    R.ascend(R.pipe(R.prop('createdAt'), toDatetime)),
+    R.descend(R.pipe(R.prop('createdAt'), toDatetime)),
   ]),
+);
+
+export const getApprovedCommentsFromPreviousVersion = createSelector(
+  getSecondLatestVersionOfPlan,
+  listComments,
+  (plan, comments) => R.pipe(
+    R.filter(R.both(R.propEq('planId', plan.planId), R.propEq('approved', true))),
+    R.sortBy(R.prop('createdAt')),
+    R.reverse,
+  )(comments),
 );

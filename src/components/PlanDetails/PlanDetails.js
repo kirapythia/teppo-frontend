@@ -10,7 +10,7 @@ import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
-import PlanComments from '../PlanComments';
+import PlanCommentsSection from '../PlanComments';
 import BackToProjectButton from '../common/BackToProjectButton';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
@@ -85,6 +85,9 @@ const PlanDetails = ({
             <PlanComments />
           </div>
         )}
+
+        <PlanCommentsSection />
+
         {!plan.approved && (
           <div className="PlanDetails__actions">
             <div className="row">

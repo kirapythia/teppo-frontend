@@ -25,7 +25,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
  * @param {object} props
  * @param {object} props.comment
  */
-const PlanCommentsListItem = ({ comment, onApproveClick }) => (
+const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
     <div><i className={formIconClassName(comment.approved)} aria-hidden /></div>
     <div className="PlanCommentsListItem__body">
@@ -34,9 +34,9 @@ const PlanCommentsListItem = ({ comment, onApproveClick }) => (
       </div>
       {comment.ptext}
     </div>
-    <div>
-      {chooseActionButton(comment, onApproveClick)}
-    </div>
+    {!readOnly && (
+      <div>{chooseActionButton(comment, onApproveClick)}</div>
+    )}
   </li>
 );
 

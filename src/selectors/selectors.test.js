@@ -244,3 +244,16 @@ describe('listLatestVersionsOfPlans', () => {
     expect(actual).toEqual([plans[1], plans[3]]);
   });
 });
+
+describe('Get second latest version of current plan', () => {
+  it('should return the second latest version', () => {
+    const plans = [
+      { planId: 3, mainNo: 2, subNo: 2, version: 2 },
+      { planId: 4, mainNo: 2, subNo: 2, version: 3 },
+    ];
+    const state = { router: { params: { planId: 4 } }, plans: listToMapBy('planId', plans) };
+    const actual = selectors.getSecondLatestVersionOfPlan(state);
+    expect(actual).toEqual(plans[0]);
+  });
+});
+
