@@ -24,6 +24,8 @@ const fields = {
       required: true,
       type: 'number',
       minLength: 4,
+      min: 2000,
+      max: 32767,
     },
   },
 
@@ -31,10 +33,10 @@ const fields = {
     type: 'text',
     label: t('plan.secondary_id'),
     validation: {
-      required: true,
       type: 'number',
       minLength: 3,
       maxLength: 4,
+      max: 1199,
     },
   },
 

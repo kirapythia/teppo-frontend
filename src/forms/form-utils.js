@@ -47,6 +47,7 @@ const chooseElement = (props) => {
           form={props.meta.form}
           placeholder={placeholder}
           multiple={!!props.multiple}
+          error={props.meta.error}
         />
       );
     default:

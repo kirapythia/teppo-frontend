@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { isOneOf, propSorter, mapToList, concatProps } from '../utils';
+import { propSorter, mapToList, formPlanIdentifier } from '../utils';
 
 /**
  * A collection of selectors that return values from the state. Used mainly
@@ -74,7 +74,9 @@ export const getCurrentSisterProjects = createSelector(
   getCurrentProject,
   getProjects,
   (currentProject = {}, allProjects = []) => allProjects
-    .filter(({ projectId }) => isOneOf(projectId, currentProject.sisterProjects))
+    .filter(({ projectId }) =>
+      R.contains(projectId, R.defaultTo([], currentProject.sisterProjects))
+    )
 );
 
 /**
@@ -96,14 +98,6 @@ export const getProjectAsSelectOptions = createSelector(
     .map(({ name, projectId, hansuProjectId }) =>
       ({ label: `${hansuProjectId} - ${name}`, value: `${projectId}` }))
 );
-
-/**
- * Form a identifier by concatenating projectId, mainNo and subNo
- * @private
- * @param {object} plan
- * @return {function} A function that returns a string when applied on a plan object
- */
-const formPlanIdentifier = concatProps(['projectId', 'mainNo', 'subNo']);
 
 /**
  * Sort plans descending by version number and take the first entry

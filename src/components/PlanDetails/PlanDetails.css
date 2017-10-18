@@ -6,3 +6,12 @@
 .PlanDetails .PlanComments__container {
   margin-top: 2rem;
 }
+
+.PlanDetails__plan-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.PlanDetails__plan-actions > a {
+  margin-right: 1rem;
+}

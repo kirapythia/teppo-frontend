@@ -4,6 +4,7 @@ import { tpl } from '../../locale';
 import { actions } from '../../redux/plans';
 import { actions as Notifications } from '../Notifications';
 import reducer from './PlanDetails.ducks';
+import { formProjectUrl, formPlanUrl } from '../../utils/ajax';
 
 describe('Approving a plan', () => {
   describe('approve plan handler', () => {
@@ -149,7 +150,7 @@ describe('Removing a plan', () => {
       const actual = reducer(undefined, action);
       expect(actual).toEqual(loop(
         actual[0],
-        Cmd.action(push(`/project/${plan.projectId}`)),
+        Cmd.action(push(formProjectUrl(plan.projectId))),
       ));
     });
   });
@@ -210,7 +211,7 @@ describe('Creating a new plan version', () => {
           Cmd.action(Notifications.addSuccessNotification(
             tpl('plan.message.update_success', { mainNo: plan.mainNo, subNo: plan.subNo })
           )),
-          Cmd.action(push(`/project/${plan.projectId}/plan/${plan.planId}/edit`)),
+          Cmd.action(push(formPlanUrl(plan.projectId, plan.planId, 'edit'))),
         ])
       ));
     });

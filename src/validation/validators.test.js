@@ -225,3 +225,61 @@ describe('regex', () => {
   });
 });
 
+
+describe('Max', () => {
+  it('should not pass if value is greater than max', () => {
+    expect(validators.max(10)(11)).not.toEqual();
+    expect(validators.max(10)('11')).not.toEqual();
+  });
+
+  it('should pass if value is equal to max', () => {
+    expect(validators.max(10)(10)).toEqual();
+    expect(validators.max(10)('10')).toEqual();
+  });
+
+  it('should pass if value is less than max', () => {
+    expect(validators.max(10)(8)).toEqual();
+    expect(validators.max(10)('8')).toEqual();
+  });
+
+  it('should pass if value undefined', () => {
+    expect(validators.max(10)(undefined)).toEqual();
+  });
+
+  it('should not pass if value zero and max is less than zero', () => {
+    expect(validators.max(-1)(0)).not.toEqual();
+    expect(validators.max(-1)('0')).not.toEqual();
+  });
+});
+
+describe('Min', () => {
+  it('should pass if value is greater than min', () => {
+    expect(validators.min(10)(11)).toEqual();
+    expect(validators.min(10)('11')).toEqual();
+  });
+
+  it('should pass if value is equal to min', () => {
+    expect(validators.min(10)(10)).toEqual();
+    expect(validators.min(10)('10')).toEqual();
+  });
+
+  it('should not pass if value is less than min', () => {
+    expect(validators.min(10)(8)).not.toEqual();
+    expect(validators.min(10)('8')).not.toEqual();
+  });
+
+  it('should pass if value undefined', () => {
+    expect(validators.min(10)(undefined)).toEqual();
+  });
+
+  it('should pass if value is zero and min is less than zero', () => {
+    expect(validators.min(-1)(0)).toEqual();
+    expect(validators.min(-1)('0')).toEqual();
+  });
+
+  it('should not pass if value is zero and min is greater than zero', () => {
+    expect(validators.min(1)(0)).not.toEqual();
+    expect(validators.min(1)('0')).not.toEqual();
+  });
+});
+

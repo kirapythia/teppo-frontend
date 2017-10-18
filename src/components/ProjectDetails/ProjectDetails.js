@@ -5,12 +5,13 @@ import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, getCurrentSisterProjects, listLatestVersionsOfPlans } from '../../selectors';
 import { formProjectDetailFields } from './model';
+import { formProjectUrl } from '../../utils/ajax';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
 import { ProjectList } from '../ProjectList';
-import BackToLocationButton from '../common/BackToLocationButton';
+import LinkButton from '../common/LinkButton';
 
 import './ProjectDetails.css';
 
@@ -60,22 +61,29 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
         <div className=" ProjectDetails__actions-wrapper">
           <div className="row">
             <div className="six columns">
-              <Link className="button u-full-width" href={`/project/${project.projectId}/edit`}>
-                <i className="fa fa-fw fa-pencil fa-lg" aria-hidden="true" />&nbsp;{t('button.edit_project')}
-              </Link>
+              <LinkButton
+                className="u-full-width"
+                href={`${formProjectUrl(project.projectId, 'edit')}`}
+                icon="fa-pencil"
+                text={t('button.edit_project')}
+              />
             </div>
             <div className="six columns">
-              <Link className="button button-primary u-full-width" href={`/project/${project.projectId}/plan/new`}>
-                <i className="fa fa-fw fa-plus fa-lg" aria-hidden="true" />&nbsp;{t('button.add_plans')}
-              </Link>
+              <LinkButton
+                className="button-primary u-full-width"
+                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+                icon="fa-plus"
+                text={t('button.add_plans')}
+              />
             </div>
           </div>
           <div className="row">
             <div className="twelve columns">
-              <BackToLocationButton
-                text={t('button.back_to_project_list')}
-                href="/"
+              <LinkButton
                 className="u-full-width"
+                icon="fa-angle-left"
+                text={t('button.back_to_project_list')}
+                href={ROUTES.HOME}
               />
             </div>
           </div>

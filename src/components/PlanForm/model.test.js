@@ -10,11 +10,11 @@ describe('Saving plans', () => {
       return model.savePlans({ projectId: 1 });
     });
 
-    it('should resolve promise with server response', () => {
+    it('should resolve promise with server response wrapped in an array of succeeded', () => {
       const plan = {};
       fetch.mockResponseOnce('{}', { ok: true, status: 200 });
       return model.savePlans({ projectId: 1 })
-        .then(result => expect(result).toEqual(plan));
+        .then(result => expect(result[0][0]).toEqual(plan));
     });
 
     it('should reject if values does not include projectId', () => model.savePlans({})
@@ -40,7 +40,7 @@ describe('Saving plans', () => {
       expect(result instanceof Error).toBe(false);
     });
 
-    it('should resolve with a plan object with file url', async () => {
+    it('should resolve with a plan object with file url in the succeeded basket', async () => {
       const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
       const url = 'http://www.file.com/file';
 
@@ -48,7 +48,18 @@ describe('Saving plans', () => {
       fetch.mockResponseOnce(url, { ok: true, status: 200 });
 
       const result = await model.savePlans(plan);
-      expect(result[0]).toEqual({ ...R.omit('files', plan), url });
+      expect(result[0][0]).toEqual({ ...R.omit('files', plan), url });
+    });
+
+    it('should reject with a plan object with file url in the succeeded basket', async () => {
+      const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
+      const url = 'http://www.file.com/file';
+
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+      fetch.mockResponseOnce(url, { ok: true, status: 200 });
+
+      const result = await model.savePlans(plan);
+      expect(result[0][0]).toEqual({ ...R.omit('files', plan), url });
     });
 
     it('should parse plan properties from filename', async () => {
@@ -114,7 +125,20 @@ describe('Saving plans', () => {
       try {
         await model.savePlans(plan);
       } catch (e) {
-        expect(e.message).toBe(tpl('network.error.file.upload', { fileName: 'fileName' }));
+        expect(e.message).toBe(t('network.error.plan.create'));
+      }
+    });
+
+    it('should not call file upload if save plan files', async () => {
+      const plan = { projectId: 1, planId: 2, files: [{ name: 'fileName' }] };
+
+      fetch.resetMocks();
+      const mock = fetch.mockResponseOnce('{}', { ok: false, status: 400 });
+
+      try {
+        await model.savePlans(plan);
+      } catch (e) {
+        expect(mock).toHaveBeenCalledTimes(1);
       }
     });
   });
@@ -129,5 +153,67 @@ describe('Saving plans', () => {
       await model.savePlans(plan);
       expect(mockFn).toHaveBeenCalledTimes(files.length * 2);
     });
+
+    it('should resolve if there is at least one successfull upload', async () => {
+      const files = [{}, {}];
+      const plan = { projectId: 1, planId: 2, files };
+
+      fetch.resetMocks();
+
+      // first plan save and file upload succeeds
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+
+
+      // third plan save fails
+      fetch.mockResponseOnce('{}', { ok: false, status: 500 });
+      fetch.mockResponseOnce(JSON.stringify(plan), { ok: true, status: 200 });
+
+      try {
+        const result = await model.savePlans(plan);
+        expect(result.length).toBe(2);
+      } catch (e) {
+        throw new Error('Not supposed to be here!');
+      }
+    });
+  });
+});
+
+describe('Validating plans', () => {
+  it('should pass if the project has no plans', () => {
+    expect(model.validatePlans([])({})).toEqual();
+  });
+
+  it('should pass if there are no files and no plan form values', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = {};
+    expect(model.validatePlans(plans)(values)).toEqual();
+  });
+
+  it('should pass if project has no plans with the same identifier combination', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = { projectId: 1, mainNo: 3, subNo: 4 };
+    expect(model.validatePlans(plans)(values)).toEqual();
+  });
+
+  it('should not pass if project already has a plan with the same main and sub number combination', () => {
+    const plans = [{ projectId: 1, mainNo: 2, subNo: 3 }];
+    const values = { projectId: 1, mainNo: 2, subNo: 3 };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.subNo).toEqual(t('validation.message.collides_existing_plan_values'));
+  });
+
+  it('should not pass if a file name is parsed to existing plan identifier values', () => {
+    const plans = [{ projectId: 1, mainNo: 2001, subNo: 123 }];
+    const values = { projectId: 1, files: [{ name: '2001_123.dwg' }] };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.double_plan_values'));
+  });
+
+  it('should not pass if files list have values that are parsed to doubles', () => {
+    const plans = [];
+    const values = { projectId: 1, files: [{ name: '2001_123.dwg' }, { name: '123_2001.dwg' }] };
+    const errors = model.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.double_plan_values'));
   });
 });

@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { LOCATION_CHANGED } from 'redux-little-router';
 import { loop, Cmd } from 'redux-loop';
 import { reset } from 'redux-form';
-import { listToMapBy, omit } from '../../utils';
+import { listToMapBy } from '../../utils';
 import { editComment, saveComment, updateComment } from './model';
 import { PLAN_DETAILS } from '../../constants/routes';
 import { actionTypes as ProjectDetails } from '../ProjectDetails';
@@ -106,14 +106,14 @@ export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const { route } = action.payload;
     return route === PLAN_DETAILS
-      ? omit(['commentAddError', 'commentEditError'], state)
+      ? R.omit(['commentAddError', 'commentEditError'], state)
       : state;
   },
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) =>
     ({ ...state, comments: byId(listAllComments(action.payload)) }),
   // handle add comment action
   [ADD_COMMENT]: (state, action) => loop(
-    omit(['commentAddError'], state),
+    R.omit(['commentAddError'], state),
     Cmd.run(saveComment, {
       successActionCreator: actions.addCommentSuccess,
       failActionCreator: actions.addCommentError,
@@ -132,7 +132,7 @@ export default handleActions({
     const { comments } = state;
     const { comment, plan } = action.payload;
     const updated = { ...comment, approved: action.payload.isApproved };
-    const stateWithoutError = omit(['commentEditError'], state);
+    const stateWithoutError = R.omit(['commentEditError'], state);
 
     return loop(
       { ...stateWithoutError, comments: updateComment(comments, updated) },
@@ -154,7 +154,7 @@ export default handleActions({
     };
   },
   // Handle clear comment form error action. Remove commentAddError from the state.
-  [CLEAR_COMMENT_ADD_ERROR]: state => omit(['commentAddError'], state),
+  [CLEAR_COMMENT_ADD_ERROR]: state => R.omit(['commentAddError'], state),
   // Handle clear form error action. Remove error from the state.
-  [CLEAR_COMMENT_EDIT_ERROR]: state => omit(['commentEditError'], state),
+  [CLEAR_COMMENT_EDIT_ERROR]: state => R.omit(['commentEditError'], state),
 }, initialState);

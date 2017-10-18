@@ -1,12 +1,13 @@
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-
+import { zeroPad } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
-import { getCurrentProject } from '../../selectors';
+import { getCurrentProject, listPlans } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
-
+import { validatePlans } from './model';
+import { formProjectUrl } from '../../utils/ajax';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions
@@ -55,17 +56,27 @@ const formDynamicFieldProps = plan => fieldsWithValidations
  * @return {object}
  */
 const mapStateToProps = (state, ownProps) => {
-  const { projectId, mainNo } = getCurrentProject(state) || {};
+  const project = getCurrentProject(state) || {};
+  const { projectId, mainNo } = project;
   const { plan } = ownProps;
+  const allPlans = listPlans(state);
   const fields = formDynamicFieldProps(plan);
   const actionProps = plan
-    ? { initialValues: { ...plan, projectId, files: plan.url ? [plan.url] : [] } }
+    ? { initialValues: {
+      ...plan,
+      projectId,
+      subNo: zeroPad(plan.subNo, 3),
+      files: plan.url
+        ? [plan.url]
+        : [],
+    } }
     : { initialValues: { mainNo, projectId } };
 
   return {
     fields,
     formSendError: state.planForm.error,
-    cancelHref: `/project/${projectId}`,
+    cancelHref: formProjectUrl(projectId),
+    validate: validatePlans(allPlans),
     ...actionProps,
   };
 };

@@ -1,5 +1,6 @@
+import * as R from 'ramda';
 import t, { tpl } from '../locale';
-import { isNil, isNumber, isString } from '../utils';
+import { isNumber, isString } from '../utils';
 
 /**
  * A set of validator function creators. Each validator takes rule value as first argument
@@ -16,9 +17,9 @@ import { isNil, isNumber, isString } from '../utils';
 export const type = requiredType => (value) => {
   switch (requiredType) {
     case 'string':
-      return isNil(value) || isString(value) ? undefined : t('validation.message.type.string');
+      return R.isNil(value) || isString(value) ? undefined : t('validation.message.type.string');
     case 'number':
-      return isNil(value) || isNumber(value) ? undefined : t('validation.message.type.number');
+      return R.isNil(value) || isNumber(value) ? undefined : t('validation.message.type.number');
     case 'integer':
       return isNumber(value) && Number.isInteger(value) ? undefined : t('validation.message.type.integer');
     case 'array':
@@ -48,7 +49,18 @@ export const minLength = min => value => (value && value.length < min ? tpl('val
  * @return {function}
  */
 export const required = () => value => (value ? undefined : t('validation.message.required'));
-
+/**
+ * Validation for maximum value
+ * @param {number|string} maxValue
+ * @return {function}
+ */
+export const max = maxValue => value => ((value || +value === 0) && +value > maxValue ? tpl('validation.message.max', { max: maxValue }) : undefined);
+/**
+ * Validation for minimum value
+ * @param {number|string} minValue
+ * @return {function}
+ */
+export const min = minValue => value => ((value || +value === 0) && +value < minValue ? tpl('validation.message.min', { min: minValue }) : undefined);
 /**
  * Validator for testing against a regex. Will produce an error
  * if value doesn't match the given regex.

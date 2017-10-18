@@ -1,6 +1,6 @@
+import * as R from 'ramda';
 import { Cmd, loop } from 'redux-loop';
 import { createPlan, removePlan, updatePlan } from './model';
-import { pick } from '../../utils';
 import reducer, { actions, actionTypes } from './plans.ducks';
 import * as PlanForm from '../../components/PlanForm';
 import * as ProjectDetails from '../../components/ProjectDetails';
@@ -254,7 +254,7 @@ describe('Creating a new version of a plan', () => {
       const plan = { mainNo: '8001', subNo: '2001', version: 2, projectId: '1' };
       const action = actions.createNewPlanVersion(plan);
       const actual = reducer(undefined, action);
-      const expectedArgs = pick(['mainNo', 'subNo', 'projectId'], plan);
+      const expectedArgs = R.pick(['mainNo', 'subNo', 'projectId'], plan);
 
       expect(actual).toEqual(loop(
         actual[0],

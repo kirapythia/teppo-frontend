@@ -5,6 +5,7 @@ import reducer, { actions } from './PlanForm.ducks';
 import { savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import * as ROUTES from '../../constants/routes';
+import { formProjectUrl } from '../../utils/ajax';
 
 describe('savePlan action', () => {
   it('should set error to null', () => {
@@ -43,7 +44,7 @@ describe('savePlan success action', () => {
   it('should return state unmodified', () => {
     const state = { router: { params: { projectId: 123 } } };
     const payload = {};
-    const result = reducer(state, actions.planSaveSuccessAction(payload));
+    const result = reducer(state, actions.planSaveSuccessAction([[payload], []]));
     expect(result[0]).toBe(state);
   });
 
@@ -51,15 +52,15 @@ describe('savePlan success action', () => {
     const projectId = 123;
     const state = {};
     const values = [{ projectId, subNo: 1, mainNo: 1 }, { projectId, subNo: 2, mainNo: 1 }];
-    const action = actions.planSaveSuccessAction(values);
+    const action = actions.planSaveSuccessAction([values, []]);
     const result = reducer(state, action);
     expect(result).toEqual(loop(
       state,
       Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
-          tpl('plan.message.save_success_multiple', { count: action.payload.length })
+          tpl('plan.message.save_success_multiple', { count: values.length })
         )),
-        Cmd.action(push(`/project/${projectId}`)),
+        Cmd.action(push(formProjectUrl(projectId))),
       ])
     ));
   });
@@ -68,15 +69,15 @@ describe('savePlan success action', () => {
     const projectId = 123;
     const state = {};
     const values = { projectId, subNo: 1, mainNo: 1 };
-    const action = actions.planSaveSuccessAction(values);
+    const action = actions.planSaveSuccessAction([[values], []]);
     const result = reducer(state, action);
     expect(result).toEqual(loop(
       state,
       Cmd.list([
         Cmd.action(NotificationActions.addSuccessNotification(
-          tpl('plan.message.save_success', action.payload[0])
+          tpl('plan.message.save_success', { subNo: 1, mainNo: 1 })
         )),
-        Cmd.action(push(`/project/${projectId}`)),
+        Cmd.action(push(formProjectUrl(projectId))),
       ])
     ));
   });

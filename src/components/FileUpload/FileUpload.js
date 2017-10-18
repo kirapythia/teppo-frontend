@@ -17,11 +17,26 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 /**
  * Input component for file upload via drag and drop or file selection dialog
  * @param {object} props
- * @param {string} props.name
- * @param {string} props.placeholder
- * @param {function} props.onChange
+ * @param {string} props.form Name of the parent form
+ * @param {string} props.name Name of this input
+ * @param {string} props.placeholder Text displayed inside the dropzone
+ * @param {function} props.onChange Callback for file drop
+ * @param {function} props.change Change action creator
+ * @param {boolean} props.multiple Should multiple files be allowed to be selected
+ * @param {boolean} props.disabled
+ * @param {string} props.error
  */
-const FileUpload = ({ form, name, value, placeholder, onChange, change, multiple, disabled }) => (
+const FileUpload = ({
+  form,
+  name,
+  value,
+  placeholder,
+  onChange,
+  change,
+  multiple,
+  disabled,
+  error,
+}) => (
   <div className="FileUpload__wrapper">
     <FileList
       files={value}
@@ -31,6 +46,7 @@ const FileUpload = ({ form, name, value, placeholder, onChange, change, multiple
         change(form, name, remaining);
       }}
     />
+    {error && <div className="text-danger">{error}</div>}
     {!disabled && (
       <Dropzone
         name={name}

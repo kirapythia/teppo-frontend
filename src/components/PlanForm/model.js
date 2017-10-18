@@ -1,6 +1,7 @@
+import * as R from 'ramda';
 import t, { tpl } from '../../locale';
 import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
-import { omit, withTimeout } from '../../utils';
+import { withTimeout, formPlanIdentifier } from '../../utils';
 import { parsePlanProps } from '../../utils/PlanFilenameParser';
 
 /**
@@ -48,6 +49,7 @@ const uploadFile = async (plan, file) => {
   // form form data body for the request
   const data = new FormData();
   data.append('mfile', file);
+  // data.append('plan', new Blob([JSON.stringify(plan)], { type: 'application/json' }));
   // wait for the response
   const response = await withTimeout(
     REQUEST_TIMEOUT,
@@ -112,14 +114,39 @@ const savePlanWithFile = async (planValues, file) => {
  * @param {File} file File to be uploaded
  * @return {object[]} All the saved plans
  */
-const saveFilesAsPlans = async (values) => {
+const saveFilesAsPlans = values => new Promise((resolve, reject) => {
   const { files } = values;
+  const succeeded = [];
+  const rejected = [];
+  /**
+   * Resolve the promise when all file upload/plan save promises are resolved or rejected
+   * and at least one of the promises succeeded. If all requests failed then reject the promise
+   */
+  const resolveWhenAllDone = () => {
+    if (rejected.length === files.length) {
+      reject(new Error(t('network.error.plan.create')));
+    } else if (succeeded.length + rejected.length === files.length) {
+      resolve([succeeded, rejected]);
+    }
+  };
   // omit files property from other plan values because files are uploaded separately
-  const planValues = omit(['files'], values);
-  const promises = files.map(file => savePlanWithFile(planValues, file));
-  // save plan along with the file
-  return Promise.all(promises);
-};
+  const planValues = R.omit(['files'], values);
+
+  // loop all files and save a plan object for each one and upload file to s3
+  // put each resolve or reject value to a corresponding basket and resolve
+  // promise when all requests are done
+  files.forEach((file) => {
+    savePlanWithFile(planValues, file)
+      .then((result) => {
+        succeeded.push(result);
+        resolveWhenAllDone(resolve);
+      })
+      .catch(() => {
+        rejected.push(file.name);
+        resolveWhenAllDone(resolve);
+      });
+  });
+});
 
 /**
  * Save plan(s) to the server
@@ -127,11 +154,14 @@ const saveFilesAsPlans = async (values) => {
  * @param {object} values
  * @return {object|object[]} Plan(s) received from the server as response(s)
  */
-export const savePlans = async values => (
-  values.files && values.files.length
-    ? saveFilesAsPlans(values)
-    : savePlan(values)
-);
+export const savePlans = async (values) => {
+  if (values.files && values.files.length) {
+    return saveFilesAsPlans(values);
+  }
+
+  const plan = await savePlan(values);
+  return [[plan], []];
+};
 
 /**
  * Send edit request to the server
@@ -177,4 +207,65 @@ export const editPlan = async (values) => {
   } catch (e) {
     throw new ServerResponseError(t('network.error.plan.edit'), e.status);
   }
+};
+
+/**
+ * Check if a list contains double values
+ * @private
+ * @param {string[]} list
+ * @return {boolean}
+ */
+const containsDoubles = list => R.uniq(list).length < list.length;
+/**
+ * Check if two lists contains one or more same values
+ * @private
+ * @param {string[]} listA
+ * @param {string[]} listB
+ * @return {boolean}
+ */
+const listsContainSameValues = (listA, listB) => !!R.intersection(listA, listB).length;
+
+/**
+ * Form a list of identifiers from the file list
+ * @private
+ * @param {object} project
+ * @param {object[]} files
+ * @return {string[]}
+ */
+const formPlanIdentifiersFromFiles = (projectId, files) => R.pipe(
+  R.pluck('name'),
+  R.map(parsePlanProps),
+  R.map(R.assoc('projectId', projectId)),
+  R.map(formPlanIdentifier),
+)(files);
+
+/**
+ * Assert that form values will not create plans with same projectId, mainNo and subNo combination
+ * for they are considered to be new versions of the existing plan
+ * @param {object} values Values from the plan form
+ * @param {object} project The project to which the plans are being added
+ * @return {string|undefined} Returns an error message or undefined if validation passes
+ */
+export const validatePlans = allPlans => (values) => {
+  const { files = [] } = values;
+
+  // if project already has plan with same identifier combination
+  if (allPlans.find(R.eqBy(formPlanIdentifier, values))) {
+    return { subNo: t('validation.message.collides_existing_plan_values') };
+  }
+
+  const existing = allPlans.map(formPlanIdentifier);
+  const newPlans = formPlanIdentifiersFromFiles(values.projectId, files);
+
+  // if project already has a plan with the same identifier combination
+  if (listsContainSameValues(existing, newPlans)) {
+    return { files: t('validation.message.double_plan_values') };
+  }
+
+  // if files list has multiple plans with the same identifier combination
+  if (containsDoubles(newPlans)) {
+    return { files: t('validation.message.double_plan_values') };
+  }
+
+  return undefined;
 };
