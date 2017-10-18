@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 import { formIdentifier } from './model';
-import { formPlanUrl } from '../../utils/ajax';
-import { parseFileNameFromURL, versionToCharacter } from '../../utils';
+import { formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../utils';
 
 /**
  * Component for displaying project's plans as a list

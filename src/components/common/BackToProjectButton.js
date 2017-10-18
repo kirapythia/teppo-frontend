@@ -1,7 +1,7 @@
 import React from 'react';
 import t from '../../locale';
 import LinkButton from './LinkButton';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 /**
  * Button that acts as a link to plan's parent project
  * @param {object} props

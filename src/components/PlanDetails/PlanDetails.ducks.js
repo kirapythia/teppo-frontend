@@ -5,7 +5,7 @@ import { combineActions, handleActions } from 'redux-actions';
 import { tpl } from '../../locale';
 import { actionTypes } from '../../redux/plans';
 import { actions as Notifications } from '../Notifications';
-import { formPlanUrl, formProjectUrl } from '../../utils/ajax';
+import { formPlanUrl, formProjectUrl } from '../../utils';
 
 export const NAME = 'planDetails';
 

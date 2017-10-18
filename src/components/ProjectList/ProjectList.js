@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 import t from '../../locale';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 import './ProjectList.css';
 
 /**

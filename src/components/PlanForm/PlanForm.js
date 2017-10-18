@@ -1,13 +1,12 @@
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { zeroPad } from '../../utils';
+import { formProjectUrl, zeroPad } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
 import { validatePlans } from './model';
-import { formProjectUrl } from '../../utils/ajax';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions

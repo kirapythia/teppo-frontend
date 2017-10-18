@@ -8,7 +8,7 @@ import { validateHansuProjectId } from './model';
 import fields from '../../forms/project';
 import { NAME, actions } from './ProjectForm.ducks';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 
 // form field configuration objects with validator functions from field definitions
 const fieldsWithValidations = createFieldsWithValidations(fields);

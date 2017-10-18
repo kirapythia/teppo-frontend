@@ -5,7 +5,7 @@ import reducer, { actions } from './PlanForm.ducks';
 import { savePlans } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import * as ROUTES from '../../constants/routes';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 
 describe('savePlan action', () => {
   it('should set error to null', () => {

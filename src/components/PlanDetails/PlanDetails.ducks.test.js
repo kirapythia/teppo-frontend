@@ -4,7 +4,7 @@ import { tpl } from '../../locale';
 import { actions } from '../../redux/plans';
 import { actions as Notifications } from '../Notifications';
 import reducer from './PlanDetails.ducks';
-import { formProjectUrl, formPlanUrl } from '../../utils/ajax';
+import { formProjectUrl, formPlanUrl } from '../../utils';
 
 describe('Approving a plan', () => {
   describe('approve plan handler', () => {

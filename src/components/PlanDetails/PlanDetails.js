@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getCurrentPlan } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
-import { formPlanUrl } from '../../utils/ajax';
+import { formPlanUrl } from '../../utils';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';

@@ -5,7 +5,7 @@ import { saveProject } from './model';
 import * as ROUTES from '../../constants/routes';
 import { tpl } from '../../locale';
 import { actions as NotificationActions } from '../Notifications';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 
 describe('saveProject action', () => {
   it('should set error to null', () => {
