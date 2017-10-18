@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import t from '../../locale';
-import { getCurrentPlan } from '../../selectors';
+import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { getApprovedCommentsFromPreviousVersion, getSortedComments } from './selectors';
 import { actions } from './PlanComments.ducks';
 import PlanCommentsList from './PlanCommentsList';
@@ -16,6 +16,7 @@ import Message from '../common/Message';
  */
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
+  const project = getCurrentProject(state);
 
   return {
     plan,
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
       : getApprovedCommentsFromPreviousVersion(state),
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
+    readOnly: (project && project.completed) || !plan.approved,
   };
 };
 
@@ -68,6 +70,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  readOnly,
   addComment,
   toggleCommentApproval,
   clearCommentAddError,
@@ -81,11 +84,11 @@ const PlanCommentsSection = ({
       <Message message={commentEditError.message} onClose={clearCommentEditError} />
     }
     <PlanCommentsList
-      readOnly={!plan.approved}
+      readOnly={readOnly}
       comments={comments}
       toggleCommentApproval={toggleCommentApproval}
     />
-    {plan.approved &&
+    {!readOnly &&
       <PlanCommentForm
         plan={plan}
         addComment={addComment}

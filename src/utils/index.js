@@ -135,3 +135,29 @@ export const serverDateToString = (str) => {
   const date = new Date(str);
   return `${date.toLocaleDateString('fi-FI', dateOptions)} ${date.toLocaleTimeString('fi-FI', timeOptions)}`;
 };
+
+/**
+ * Append slug to a base url
+ * @private
+ * @param {string} url
+ * @param {string} slug
+ * @return {string}
+ */
+const appendSlug = (url, slug) => `${url}${slug ? `/${slug}` : ''}`;
+
+/**
+ * Form url for a project
+ * @param {number|string} projectId
+ * @param {string} [slug]
+ * @return {string}
+ */
+export const formProjectUrl = (projectId = '', slug = '') => appendSlug(`/project/${projectId}`, slug);
+
+/**
+ * Form url for a plan
+ * @param {number|string} projectId
+ * @param {number|string} planId
+ * @param {string} [slug]
+ * @return {string}
+ */
+export const formPlanUrl = (projectId, planId = '', slug = '') => appendSlug(`${formProjectUrl(projectId)}/plan/${planId}`, slug);

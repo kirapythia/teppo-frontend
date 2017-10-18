@@ -6,7 +6,7 @@ import * as ROUTES from '../../constants/routes';
 import { saveProject, editProject } from './model';
 import { tpl } from '../../locale';
 import { actions as NotificationActions } from '../Notifications';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 
 /**
  * Export reducer's name. Will be registerd to

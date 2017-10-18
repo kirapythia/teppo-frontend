@@ -1,13 +1,12 @@
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { zeroPad } from '../../utils';
+import { formProjectUrl, zeroPad } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
 import { validatePlans } from './model';
-import { formProjectUrl } from '../../utils/ajax';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions
@@ -40,15 +39,34 @@ const formConfig = {
   keepDirtyOnReinitialize: true,
 };
 
-const formDynamicFieldProps = plan => fieldsWithValidations
+/**
+ * Form field props created dynamically from state
+ * @param {object} plan
+ * @param {object} project
+ * @return {object}
+ */
+const formDynamicFieldProps = (plan = {}, project = {}) => fieldsWithValidations
   .map(field => ({
     ...field,
     disabled: field.disabled !== undefined
       ? field.disabled
-      : Boolean(plan && plan.approved) })
-  )
+      : plan.approved || project.completed,
+  }))
   // show version only when editing
   .filter(field => field.name !== 'version' || plan);
+
+/**
+ * Form initial values for plan editing
+ * @param {object} plan
+ * @param {object} project
+ * @return {object}
+ */
+const formInitialValuesForEditing = (plan, project) => ({
+  ...plan,
+  projectId: project.projectId,
+  subNo: zeroPad(plan.subNo, 3),
+  files: plan.url ? [plan.url] : [],
+});
 
 /**
  * Gather all the props needed from the application state
@@ -57,27 +75,17 @@ const formDynamicFieldProps = plan => fieldsWithValidations
  */
 const mapStateToProps = (state, ownProps) => {
   const project = getCurrentProject(state) || {};
-  const { projectId, mainNo } = project;
   const { plan } = ownProps;
   const allPlans = listPlans(state);
-  const fields = formDynamicFieldProps(plan);
-  const actionProps = plan
-    ? { initialValues: {
-      ...plan,
-      projectId,
-      subNo: zeroPad(plan.subNo, 3),
-      files: plan.url
-        ? [plan.url]
-        : [],
-    } }
-    : { initialValues: { mainNo, projectId } };
 
   return {
-    fields,
+    fields: formDynamicFieldProps(plan, project),
     formSendError: state.planForm.error,
-    cancelHref: formProjectUrl(projectId),
+    cancelHref: formProjectUrl(project.projectId),
     validate: validatePlans(allPlans),
-    ...actionProps,
+    initialValues: plan
+      ? formInitialValuesForEditing(plan, project)
+      : { mainNo: project.mainNo, projectId: project.projectId },
   };
 };
 

@@ -6,7 +6,7 @@ import * as ProjectDetails from '../components/ProjectDetails';
 import * as PlanDetails from '../components/PlanDetails';
 import * as ProjectList from '../components/ProjectList';
 import * as Comments from '../components/PlanComments';
-import projectReducer, * as Project from './project.ducks';
+import projectReducer, * as Project from './project/project.reducer';
 import * as Plans from './plans';
 
 /**

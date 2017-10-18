@@ -1,17 +1,20 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, getCurrentSisterProjects, listLatestVersionsOfPlans } from '../../selectors';
 import { formProjectDetailFields } from './model';
-import { formProjectUrl } from '../../utils/ajax';
+import { formProjectUrl } from '../../utils';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import PlansList from '../PlansList';
 import LoadingOverlay from '../common/LoadingOverlay';
 import { ProjectList } from '../ProjectList';
 import LinkButton from '../common/LinkButton';
+import Button from '../common/Button';
+import { actions } from './ProjectDetails.ducks';
 
 import './ProjectDetails.css';
 
@@ -23,6 +26,16 @@ const mapStateToProps = state => ({
   isFetching: state.projectDetails.isFetching,
 });
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleProjectCompletion: actions.toggleProjectCompletion,
+}, dispatch);
+
+const mergeProps = (stateProps, actionCreators) => ({
+  ...stateProps,
+  ...actionCreators,
+  toggleProjectCompletion: () => actionCreators.toggleProjectCompletion(stateProps.project),
+});
+
 /**
  * Show project details with plans list etc.
  * @param {object} props
@@ -31,8 +44,16 @@ const mapStateToProps = state => ({
  * @param {object[]} props.plans
  * @param {boolean} props.isFetching
  * @param {object[]} props.sisterProjects
+ * @param {function} props.toggleProjectCompletion
  */
-const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) => (
+const ProjectDetails = ({
+  error,
+  project,
+  plans,
+  isFetching,
+  sisterProjects,
+  toggleProjectCompletion,
+}) => (
   <div className="ProjectDetails">
     <LoadingOverlay isVisible={isFetching} />
     {error && (
@@ -48,6 +69,22 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
           fields={formProjectDetailFields(project)}
         />
 
+        <div className="text-right">
+          {project.completed
+            ? <Button
+              icon="fa-undo"
+              text={t('button.project_complete_revert')}
+              className="button-red"
+              onClick={toggleProjectCompletion}
+            />
+            : <Button
+              icon="fa-check"
+              text={t('button.project_complete')}
+              onClick={toggleProjectCompletion}
+            />
+          }
+        </div>
+
         <div>
           <h3>{t('project.sister_projects')}</h3>
           <ProjectList projects={sisterProjects} />
@@ -55,11 +92,11 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
 
         <div className="ProjectDetails__plans-wrapper">
           <h3>{t('header.project.plans')}</h3>
-          <PlansList project={project} plans={plans} />
+          <PlansList project={project} plans={plans} readOnly={project.completed} />
         </div>
 
         <div className=" ProjectDetails__actions-wrapper">
-          <div className="row">
+          {!project.completed && <div className="row">
             <div className="six columns">
               <LinkButton
                 className="u-full-width"
@@ -77,6 +114,7 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
               />
             </div>
           </div>
+          }
           <div className="row">
             <div className="twelve columns">
               <LinkButton
@@ -93,4 +131,4 @@ const ProjectDetails = ({ error, project, plans, isFetching, sisterProjects }) =
   </div>
 );
 
-export default connect(mapStateToProps)(ProjectDetails);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(ProjectDetails);

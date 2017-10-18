@@ -1,5 +1,5 @@
-import reducer from './project.ducks';
-import * as ProjectDetails from '../components/ProjectDetails';
+import reducer from './project.reducer';
+import * as ProjectDetails from '../../components/ProjectDetails';
 
 describe('Project fetch, edit or save success', () => {
   it('should add project to the state', () => {

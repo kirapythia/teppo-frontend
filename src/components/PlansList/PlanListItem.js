@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 import { formIdentifier } from './model';
-import { formPlanUrl } from '../../utils/ajax';
-import { parseFileNameFromURL, versionToCharacter } from '../../utils';
+import { formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../utils';
 
 /**
  * Component for displaying project's plans as a list
  * @param {object} props
  * @param {object} props.plan
  * @param {number} props.projectId
+ * @param {boolean} props.readOnly
  */
-const PlanListItem = ({ plan = {}, project = {} }) => (
+const PlanListItem = ({ plan = {}, project = {}, readOnly }) => (
   <li className="PlansListItem">
     <div className="one column">
       {plan.approved
@@ -30,9 +30,15 @@ const PlanListItem = ({ plan = {}, project = {} }) => (
     </div>
     <div className="one columns">{versionToCharacter(plan.version)}</div>
     <div className="two columns text-right">
-      <Link href={formPlanUrl(project.projectId, plan.planId, 'edit')}>
-        <i className="fa fa-pencil fa-lg" />
-      </Link>
+      {readOnly
+        ? <span className="fa-stack">
+          <i className="fa fa-pencil fa-stack-1x" style={{ color: '#222' }} />
+          <i className="fa fa-ban fa-stack-2x text-danger fa-flip-horizontal" />
+        </span>
+        : <Link href={formPlanUrl(project.projectId, plan.planId, 'edit')}>
+          <i className="fa fa-pencil fa-lg" />
+        </Link>
+      }
     </div>
   </li>
 );
