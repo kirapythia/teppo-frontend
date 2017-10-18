@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
-import { getCurrentPlan } from '../../selectors';
+import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import { formPlanUrl } from '../../utils';
@@ -17,11 +17,16 @@ import Button from '../common/Button';
 import LoadingOverlay from '../common/LoadingOverlay';
 import './PlanDetails.css';
 
-const mapStateToProps = state => ({
-  error: state.projectDetails.error,
-  plan: getCurrentPlan(state),
-  isFetching: state.planDetails.isFetching,
-});
+const mapStateToProps = (state) => {
+  const project = getCurrentProject(state);
+
+  return {
+    error: state.projectDetails.error,
+    plan: getCurrentPlan(state),
+    isFetching: state.planDetails.isFetching,
+    readOnly: project && project.completed,
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   approvePlan: actions.approvePlan,
@@ -48,6 +53,7 @@ const mergeProps = (stateProps, actionCreators) => ({
  */
 const PlanDetails = ({
   plan,
+  readOnly,
   error,
   approvePlan,
   removePlan,
@@ -68,7 +74,7 @@ const PlanDetails = ({
     {!error && plan && (
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
-        {plan.approved && (
+        {!readOnly && plan.approved && (
           <div>
             <div className="PlanDetails__plan-actions">
               <LinkButton
@@ -87,8 +93,8 @@ const PlanDetails = ({
 
         <PlanCommentsSection />
 
-        {!plan.approved && (
-          <div className="PlanDetails__actions">
+        <div className="PlanDetails__actions">
+          {!readOnly && !plan.approved && (
             <div className="row">
               <div className="six columns">
                 <Button
@@ -109,11 +115,11 @@ const PlanDetails = ({
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="twelve columns"><BackToProjectButton plan={plan} /></div>
-            </div>
+          )}
+          <div className="row">
+            <div className="twelve columns"><BackToProjectButton plan={plan} /></div>
           </div>
-        )}
+        </div>
       </div>
     )}
   </div>

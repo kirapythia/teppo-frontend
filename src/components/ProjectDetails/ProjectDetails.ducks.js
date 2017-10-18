@@ -2,8 +2,10 @@ import * as R from 'ramda';
 import { createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
-import { fetchProject } from './model';
+import { fetchProject, updateProject } from './model';
 import * as ROUTES from '../../constants/routes';
+import * as ProjectActions from '../../redux/project/project.actions';
+import * as ProjectActiontypes from '../../redux/project/project.actiontypes';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -13,6 +15,7 @@ export const NAME = 'projectDetails';
 
 export const FETCH_PROJECT_SUCCESS = 'pythia-webclient/ProjectDetails/FETCH_PROJECT_SUCCESS';
 const FETCH_PROJECT_ERROR = 'pythia-webclient/ProjectDetails/FETCH_PROJECT_ERROR';
+const TOGGE_PROJECT_COMPLETION = 'pythia-webclient/ProjectDetails/TOGGE_PROJECT_COMPLETION';
 
 export const actions = {
   // action that's dispatched after project has been
@@ -23,6 +26,10 @@ export const actions = {
   // action that's dispatched when project fetch fails
   fetchProjectError: createAction(
     FETCH_PROJECT_ERROR,
+  ),
+  // action for updating project's completed property
+  toggleProjectCompletion: createAction(
+    TOGGE_PROJECT_COMPLETION,
   ),
 };
 
@@ -80,4 +87,18 @@ export default handleActions({
       )
       : stateWithError;
   },
+  // toggle project completed property and save updated project to the server
+  [TOGGE_PROJECT_COMPLETION]: (state, action) => loop(
+    { ...state, isFetching: true },
+    Cmd.run(updateProject, {
+      successActionCreator: ProjectActions.projectUpdateSuccess,
+      failActionCreator: ProjectActions.projectUpdateError,
+      args: [{ ...action.payload, completed: !action.payload.completed }],
+    })
+  ),
+  // when update succeeds then set loading false
+  [ProjectActiontypes.PROJECT_UPDATE_SUCCESS]: state => ({ ...state, isFetching: false }),
+  // when update fails then set loading false and add error to the state
+  [ProjectActiontypes.PROJECT_UPDATE_ERROR]: (state, action) =>
+    ({ ...state, isFetching: false, error: action.payload }),
 }, initialState);

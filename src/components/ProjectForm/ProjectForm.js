@@ -44,10 +44,12 @@ const formConfig = {
 /**
  * Form field configurations. Form validation functions and then add options
  * to the sisterProjects field
- * @param {object[]} projects
+ * @param {object[]} options
+ * @param {object} project
  * @return {object[]}
  */
-const formFieldConfigs = (options = []) => fieldsWithValidations
+const formFieldConfigs = (options = [], project = {}) => fieldsWithValidations
+  .map(f => ({ ...f, disabled: project.completed }))
   .map(f => (f.name === 'sisterProjects' ? { ...f, options } : f));
 
 /**
@@ -62,7 +64,7 @@ const mapStateToProps = (state, ownProps) => {
   // props that are needed in every case
   const commonProps = {
     formSendError: state.projectForm.error,
-    fields: formFieldConfigs(selectOptions),
+    fields: formFieldConfigs(selectOptions, project),
   };
 
   // props that depend on whether the form is

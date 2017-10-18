@@ -9,8 +9,9 @@ import './PlansList.css';
  * @param {object} props
  * @param {object} props.project
  * @param {object[]} props.plans
+ * @param {boolean} props.readOnly If true all actions are disabled
  */
-const PlansList = ({ project, plans }) => (
+const PlansList = ({ project, plans, readOnly }) => (
   <div>
     {!!plans.length && <div className="PlansList__header">
       <div className="one column">&nbsp;</div>
@@ -26,6 +27,7 @@ const PlansList = ({ project, plans }) => (
             key={plan.planId}
             plan={plan}
             project={project}
+            readOnly={readOnly}
           />))
         : <li className="PlansList__placeholder text-italic">{t('project.details.no_plans')}</li>
       }
