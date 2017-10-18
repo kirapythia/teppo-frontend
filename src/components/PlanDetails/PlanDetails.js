@@ -82,7 +82,6 @@ const PlanDetails = ({
                 onClick={createNewPlanVersion}
               />
             </div>
-            <PlanCommentsSection />
           </div>
         )}
 
