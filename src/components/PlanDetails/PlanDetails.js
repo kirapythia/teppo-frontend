@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
+import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
@@ -74,7 +75,7 @@ const PlanDetails = ({
     {!error && plan && (
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
-        {!readOnly && plan.approved && (
+        {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
           <div>
             <div className="PlanDetails__plan-actions">
               <LinkButton
@@ -94,7 +95,7 @@ const PlanDetails = ({
         <PlanCommentsSection />
 
         <div className="PlanDetails__actions">
-          {!readOnly && !plan.approved && (
+          {!readOnly && !plan.status === PLAN_STATUS.APPROVED && (
             <div className="row">
               <div className="six columns">
                 <Button

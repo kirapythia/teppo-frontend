@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { Cmd, loop } from 'redux-loop';
 import { createPlan, removePlan, updatePlan } from './model';
 import reducer, { actions, actionTypes } from './plans.ducks';
+import PLAN_STATUS from '../../constants/plan-status';
 import * as PlanForm from '../../components/PlanForm';
 import * as ProjectDetails from '../../components/ProjectDetails';
 
@@ -143,7 +144,7 @@ describe('Approving a plan', () => {
     });
 
     it('should update the plan object', () => {
-      const plan = { approved: false };
+      const plan = { status: PLAN_STATUS.WAITING_FOR_APPROVAL };
       const action = actions.approvePlan(plan);
       const actual = reducer(undefined, action);
       expect(actual).toEqual(loop(
@@ -151,7 +152,7 @@ describe('Approving a plan', () => {
         Cmd.run(updatePlan, {
           successActionCreator: actions.updatePlanSuccess,
           failActionCreator: actions.updatePlanError,
-          args: [{ ...plan, approved: true }],
+          args: [{ ...plan, status: PLAN_STATUS.APPROVED }],
         })
       ));
     });
