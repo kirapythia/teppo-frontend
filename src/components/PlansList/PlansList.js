@@ -14,7 +14,7 @@ import './PlansList.css';
 const PlansList = ({ project, plans, readOnly }) => (
   <div>
     {!!plans.length && <div className="PlansList__header">
-      <div className="one column">&nbsp;</div>
+      <div className="one column">{t('common.status')}</div>
       <div className="three columns">{t('common.id')}</div>
       <div className="five columns">{t('common.file')}</div>
       <div className="two columns">{t('common.version')}</div>
