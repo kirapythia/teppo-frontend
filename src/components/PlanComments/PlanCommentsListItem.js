@@ -7,9 +7,9 @@ const formIconClassName = isApproved => cx('fa', 'fa-2x', isApproved ? 'fa-comme
 
 const chooseActionButton = (comment, callback) => (comment.approved
   ? <Button
-    className="button-red"
     onClick={() => callback(comment, false)}
     icon="fa-undo"
+    text={t('button.cancel')}
     title={t('button.revert_comment_approve')}
   />
   : <Button
