@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { createAction, combineActions, handleActions } from 'redux-actions';
 import { Cmd, loop } from 'redux-loop';
 import { mapToList, listToMapBy } from '../../utils';
+import PLAN_STATUS from '../../constants/plan-status';
 import { createPlan, removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
@@ -76,7 +77,7 @@ export default handleActions({
     Cmd.run(updatePlan, {
       successActionCreator: actions.updatePlanSuccess,
       failActionCreator: actions.updatePlanError,
-      args: [{ ...action.payload, approved: true }],
+      args: [{ ...action.payload, status: PLAN_STATUS.APPROVED }],
     })
   ),
 

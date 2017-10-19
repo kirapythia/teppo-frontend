@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'redux-little-router';
 import { formIdentifier } from './model';
+import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../utils';
 
 /**
@@ -13,7 +14,7 @@ import { formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../uti
 const PlanListItem = ({ plan = {}, project = {}, readOnly }) => (
   <li className="PlansListItem">
     <div className="one column">
-      {plan.approved
+      {plan.status === PLAN_STATUS.APPROVED
         ? <i className="text-success fa fa-check" />
         : <span>&nbsp;</span>
       }

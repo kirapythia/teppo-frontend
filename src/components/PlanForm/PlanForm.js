@@ -2,6 +2,7 @@ import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { formProjectUrl, zeroPad } from '../../utils';
+import PLAN_STATUS from '../../constants/plan-status';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
@@ -50,7 +51,7 @@ const formDynamicFieldProps = (plan = {}, project = {}) => fieldsWithValidations
     ...field,
     disabled: field.disabled !== undefined
       ? field.disabled
-      : plan.approved || project.completed,
+      : plan.status === PLAN_STATUS.APPROVED || project.completed,
   }))
   // show version only when editing
   .filter(field => field.name !== 'version' || plan);

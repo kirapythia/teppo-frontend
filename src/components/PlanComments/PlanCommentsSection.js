@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import t from '../../locale';
+import PLAN_STATUS from '../../constants/plan-status';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { getApprovedCommentsFromPreviousVersion, getSortedComments } from './selectors';
 import { actions } from './PlanComments.ducks';
@@ -17,15 +18,16 @@ import Message from '../common/Message';
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
   const project = getCurrentProject(state);
+  const isPlanApproved = plan.status === PLAN_STATUS.APPROVED;
 
   return {
     plan,
-    comments: plan.approved
+    comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
-    readOnly: (project && project.completed) || !plan.approved,
+    readOnly: (project && project.completed) || !isPlanApproved,
   };
 };
 
