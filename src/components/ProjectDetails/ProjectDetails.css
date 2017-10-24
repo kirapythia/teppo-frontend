@@ -14,10 +14,17 @@
   height: 100%;
 }
 
-.ProjectDetails__plans-wrapper {
-  flex: 1;
+.ProjectDetails__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
-.ProjectDetails__actions-wrapper {
-  margin-top: 2rem;
+.ProjectDetails__actions > *:first-child {
+  margin-right: 1rem;
+}
+
+.ProjectDetails__plans-wrapper {
+  flex: 1;
+  margin-bottom: 10rem;
 }
