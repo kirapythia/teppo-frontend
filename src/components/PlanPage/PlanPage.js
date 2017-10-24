@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const formProjectDetailFields = project => ([
   { label: t('project.name'), value: project.name },
   { label: t('project.hansuProjectId'), value: project.hansuProjectId },
+  { label: t('plan.primary_id'), value: project.mainNo },
 ]);
 
 /**
