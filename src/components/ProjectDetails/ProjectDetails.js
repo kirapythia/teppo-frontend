@@ -69,7 +69,12 @@ const ProjectDetails = ({
           fields={formProjectDetailFields(project)}
         />
 
-        <div className="text-right">
+        <div className="ProjectDetails__actions">
+          <LinkButton
+            href={`${formProjectUrl(project.projectId, 'edit')}`}
+            icon="fa-pencil"
+            text={t('button.edit_project')}
+          />
           {project.completed
             ? <Button
               icon="fa-undo"
@@ -95,37 +100,25 @@ const ProjectDetails = ({
           <PlansList project={project} plans={plans} readOnly={project.completed} />
         </div>
 
-        <div className=" ProjectDetails__actions-wrapper">
-          {!project.completed && <div className="row">
-            <div className="six columns">
-              <LinkButton
-                className="u-full-width"
-                href={`${formProjectUrl(project.projectId, 'edit')}`}
-                icon="fa-pencil"
-                text={t('button.edit_project')}
-              />
-            </div>
-            <div className="six columns">
-              <LinkButton
-                className="button-primary u-full-width"
-                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
-                icon="fa-plus"
-                text={t('button.add_plans')}
-              />
-            </div>
+        {!project.completed && <div className="row">
+          <div className="six columns">
+            <LinkButton
+              className="u-full-width"
+              icon="fa-angle-left"
+              text={t('button.back_to_project_list')}
+              href={ROUTES.HOME}
+            />
           </div>
-          }
-          <div className="row">
-            <div className="twelve columns">
-              <LinkButton
-                className="u-full-width"
-                icon="fa-angle-left"
-                text={t('button.back_to_project_list')}
-                href={ROUTES.HOME}
-              />
-            </div>
+          <div className="six columns">
+            <LinkButton
+              className="button-primary u-full-width"
+              href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+              icon="fa-plus"
+              text={t('button.add_plans')}
+            />
           </div>
         </div>
+        }
       </div>
     )}
   </div>

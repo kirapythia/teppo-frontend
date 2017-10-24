@@ -54,19 +54,14 @@ const PlanCommentForm = ({
       validation={{ required: true }}
     />
 
-    <div className="PlanCommentForm__actions row">
-      <div className="six columns">
-        <BackToProjectButton plan={plan} />
-      </div>
-      <div className="six columns">
-        <FormSubmitButton
-          buttonText={t('button.send')}
-          buttonSubmittingText={t('button.sending')}
-          iconClassName="fa-envelope-o"
-          disabled={!valid || submitting || pristine}
-          isSubmitting={submitting}
-        />
-      </div>
+    <div className="PlanCommentForm__actions">
+      <FormSubmitButton
+        buttonText={t('button.send')}
+        buttonSubmittingText={t('button.sending')}
+        iconClassName="fa-envelope-o"
+        disabled={!valid || submitting || pristine}
+        isSubmitting={submitting}
+      />
     </div>
   </form>
 );
