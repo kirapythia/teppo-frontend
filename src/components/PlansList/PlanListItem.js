@@ -23,9 +23,8 @@ const formPlanFileUrls = R.pipe(
  * @param {object} props
  * @param {object} props.plan
  * @param {number} props.projectId
- * @param {boolean} props.readOnly
  */
-const PlanListItem = ({ plan = {}, project = {}, readOnly }) => (
+const PlanListItem = ({ plan = {}, project = {} }) => (
   <li className="PlansListItem">
     <div className="one column">
       {plan.status === PLAN_STATUS.APPROVED
@@ -38,19 +37,8 @@ const PlanListItem = ({ plan = {}, project = {}, readOnly }) => (
         {formIdentifier(plan)}
       </Link>
     </div>
-    <div className="five columns">{formPlanFileUrls(plan)}</div>
-    <div className="one columns">{versionToCharacter(plan.version)}</div>
-    <div className="two columns text-right">
-      {readOnly
-        ? <span className="fa-stack">
-          <i className="fa fa-pencil fa-stack-1x" style={{ color: '#222' }} />
-          <i className="fa fa-ban fa-stack-2x text-danger fa-flip-horizontal" />
-        </span>
-        : <Link href={formPlanUrl(project.projectId, plan.planId, 'edit')}>
-          <i className="fa fa-pencil fa-lg" />
-        </Link>
-      }
-    </div>
+    <div className="six columns">{formPlanFileUrls(plan)}</div>
+    <div className="two columns">{versionToCharacter(plan.version)}</div>
   </li>
 );
 

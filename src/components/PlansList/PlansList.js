@@ -9,16 +9,14 @@ import './PlansList.css';
  * @param {object} props
  * @param {object} props.project
  * @param {object[]} props.plans
- * @param {boolean} props.readOnly If true all actions are disabled
  */
-const PlansList = ({ project, plans, readOnly }) => (
+const PlansList = ({ project, plans }) => (
   <div>
     {!!plans.length && <div className="PlansList__header">
       <div className="one column">{t('common.status')}</div>
       <div className="three columns">{t('common.id')}</div>
-      <div className="five columns">{t('common.file')}</div>
+      <div className="six columns">{t('common.file')}</div>
       <div className="two columns">{t('common.version')}</div>
-      <div className="one columns">&nbsp;</div>
     </div>}
     <ul className="PlansList clear-list-styles">
       {plans.length
@@ -27,7 +25,6 @@ const PlansList = ({ project, plans, readOnly }) => (
             key={plan.planId}
             plan={plan}
             project={project}
-            readOnly={readOnly}
           />))
         : <li className="PlansList__placeholder text-italic">{t('project.details.no_plans')}</li>
       }

@@ -69,7 +69,6 @@ export const actions = {
  */
 const byId = listToMapBy('planId');
 
-// ProjectForm reducer
 export default handleActions({
   // Handle approve plan action. Update plan object in the server.
   [actionTypes.APPROVE_PLAN]: (state, action) => loop(
@@ -105,7 +104,6 @@ export default handleActions({
   // handle plan edit/create success
   // and new plan version creation
   [combineActions(
-    PlanForm.PLAN_EDIT_SUCCESS,
     PlanForm.PLAN_SAVE_SUCCESS,
     actionTypes.UPDATE_PLAN_SUCCESS,
   )]: (state, action) => byId(mapToList(state)

@@ -6,7 +6,7 @@ import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
-import { formPlanUrl } from '../../utils';
+import { formProjectUrl } from '../../utils';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   approvePlan: actions.approvePlan,
   removePlan: actions.removePlan,
-  createNewPlanVersion: actions.createNewPlanVersion,
 }, dispatch);
 
 const mergeProps = (stateProps, actionCreators) => ({
@@ -40,7 +39,6 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   approvePlan: () => actionCreators.approvePlan(stateProps.plan),
   removePlan: () => actionCreators.removePlan(stateProps.plan),
-  createNewPlanVersion: () => actionCreators.createNewPlanVersion(stateProps.plan),
 });
 
 /**
@@ -59,7 +57,6 @@ const PlanDetails = ({
   approvePlan,
   removePlan,
   isFetching,
-  createNewPlanVersion,
 }) => (
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
@@ -77,16 +74,11 @@ const PlanDetails = ({
         <ShowDetails fields={formPlanDetailFields(plan)} />
         {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
           <div>
-            <div className="PlanDetails__plan-actions">
+            <div className="text-right">
               <LinkButton
-                icon="fa-pencil"
-                text={t('button.edit_plan')}
-                href={`${formPlanUrl(plan.projectId, plan.planId)}/edit`}
-              />
-              <Button
                 icon="fa-plus"
                 text={t('button.new_plan_version')}
-                onClick={createNewPlanVersion}
+                href={formProjectUrl(plan.projectId, 'plan/new')}
               />
             </div>
           </div>

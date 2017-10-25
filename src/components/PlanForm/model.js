@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import t, { tpl } from '../../locale';
-import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
+import { postJSON, ServerResponseError } from '../../utils/ajax';
 import { withTimeout, formPlanIdentifier, parseFileNameFromURL } from '../../utils';
 import { parsePlanProps } from '../../utils/PlanFilenameParser';
 
@@ -18,14 +18,6 @@ const REQUEST_TIMEOUT = 2 * 60 * 1000;
  * @return {string}
  */
 const planSaveUrl = ({ projectId }) => `/pythia/v1/projects/${projectId}/plans/`;
-/**
- * Form an url for plan save
- * @private
- * @param {object} plan
- * @param {number} plan.projectId
- * @return {string}
- */
-const planEditUrl = ({ projectId, planId }) => `/pythia/v1/projects/${projectId}/plans/${planId}`;
 
 /**
  * Form an url for file upload
@@ -161,52 +153,6 @@ export const savePlans = async (values) => {
 
   const plan = await savePlan(values);
   return [[plan], []];
-};
-
-/**
- * Send edit request to the server
- * @private
- * @async
- * @param {object} values Values from the plan form
- * @return {object} Plan received from the server as response
- */
-const doEditPlanRequest = async (values) => {
-  if (!values.planId) {
-    return Promise.reject(new Error(t('plan.error.edit.no_id')));
-  }
-
-  try {
-    return await withTimeout(REQUEST_TIMEOUT, putJSON(planEditUrl(values), values));
-  } catch (e) {
-    throw new ServerResponseError(t('network.error.plan.edit'), e.status);
-  }
-};
-
-/**
- * Edit and send project to the server
- * @async
- * @param {object} values
- * @return {object} Plan received from the server as response
- */
-export const editPlan = async (values) => {
-  try {
-    const { files } = values;
-
-    // send edit plan request and wait for success
-    const plan = await doEditPlanRequest(values);
-
-    // if a file was added to the plan then try to upload it to the s3 bucket
-    if (files.length) {
-      // do the request and wait for the success
-      const fileUploadResponse = await uploadFile(values, files[0]);
-      // add link url to the response and resolve
-      return ({ ...plan, url: fileUploadResponse });
-    }
-    // if a file was not added then just resolve with response received from the edit request
-    return plan;
-  } catch (e) {
-    throw new ServerResponseError(t('network.error.plan.edit'), e.status);
-  }
 };
 
 /**

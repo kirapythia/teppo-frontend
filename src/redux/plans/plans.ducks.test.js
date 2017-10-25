@@ -41,33 +41,6 @@ describe('Save plan success', () => {
   });
 });
 
-describe('Plan edit success', () => {
-  it('should replace the current object in the byId mapping', () => {
-    const plan = { planId: '1' };
-    const initialState = { 1: { planId: '1' } };
-    const action = PlanForm.actions.planEditSuccessAction(plan);
-    const actual = reducer(initialState, action);
-    expect(actual['1']).toBe(plan);
-  });
-
-  it('should not discard other entries in the byId mapping', () => {
-    const plan1 = { planId: '1' };
-    const plan2 = { planId: '2' };
-    const initialState = { 2: plan2 };
-    const action = PlanForm.actions.planEditSuccessAction(plan1);
-    const actual = reducer(initialState, action);
-    expect(actual['2']).toBe(initialState['2']);
-  });
-
-  it('should not mutate state object', () => {
-    const plan = {};
-    const initialState = { plansById: {} };
-    const action = PlanForm.actions.planEditSuccessAction(plan);
-    const actual = reducer(initialState, action);
-    expect(actual).not.toBe(initialState);
-  });
-});
-
 describe('Fetch project success action', () => {
   it('should add plan from project to the byId mapping', () => {
     const project = { plans: [{ planId: '1' }] };
