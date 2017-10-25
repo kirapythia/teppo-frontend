@@ -70,24 +70,24 @@ describe('Plan edit success', () => {
 
 describe('Fetch project success action', () => {
   it('should add plan from project to the byId mapping', () => {
-    const project = { latestPlans: [{ planId: '1' }] };
+    const project = { plans: [{ planId: '1' }] };
     const initialState = {};
     const action = ProjectDetails.actions.fetchProjectSuccess(project);
     const actual = reducer(initialState, action);
-    expect(actual['1']).toBe(project.latestPlans[0]);
+    expect(actual['1']).toBe(project.plans[0]);
   });
 
   it('should add all plans from project to the byId mapping', () => {
-    const project = { latestPlans: [{ planId: '1' }, { planId: '2' }] };
+    const project = { plans: [{ planId: '1' }, { planId: '2' }] };
     const initialState = {};
     const action = ProjectDetails.actions.fetchProjectSuccess(project);
     const actual = reducer(initialState, action);
-    expect(actual['1']).toBe(project.latestPlans[0]);
-    expect(actual['2']).toBe(project.latestPlans[1]);
+    expect(actual['1']).toBe(project.plans[0]);
+    expect(actual['2']).toBe(project.plans[1]);
   });
 
   it('should not keep previous entries', () => {
-    const project = { latestPlans: [{ planId: '1' }] };
+    const project = { plans: [{ planId: '1' }] };
     const initialState = { 3: { planId: 3 } };
     const action = ProjectDetails.actions.fetchProjectSuccess(project);
     const actual = reducer(initialState, action);
@@ -95,7 +95,7 @@ describe('Fetch project success action', () => {
   });
 
   it('should not mutate the original state', () => {
-    const project = { latestPlans: [{ planId: '1' }] };
+    const project = { plans: [{ planId: '1' }] };
     const initialState = {};
     const action = ProjectDetails.actions.fetchProjectSuccess(project);
     const actual = reducer(initialState, action);

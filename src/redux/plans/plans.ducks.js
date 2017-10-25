@@ -112,7 +112,7 @@ export default handleActions({
     .concat(Array.isArray(action.payload) ? action.payload[0] : action.payload)),
 
   // handle project fetch success
-  [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.latestPlans),
+  [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.plans),
 
   // Handle approve plan success action. Remove corresponding plan from the plans list
   [actionTypes.REMOVE_PLAN_SUCCESS]: (state, action) =>

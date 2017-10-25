@@ -96,7 +96,7 @@ const initialState = {
 const byId = listToMapBy('textId');
 
 const listAllComments = R.pipe(
-  R.prop('latestPlans'),
+  R.prop('plans'),
   R.pluck('commentValues'),
   R.flatten,
 );
