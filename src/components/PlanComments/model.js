@@ -1,4 +1,4 @@
-import { postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
+import { formCommentApiUrl, postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
 import { withTimeout } from '../../utils';
 import t from '../../locale';
 
@@ -10,7 +10,7 @@ import t from '../../locale';
  * @return {Promise}
  */
 export const saveComment = (plan, comment) =>
-  withTimeout(2 * 60 * 1000, postJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}/comments/`, comment)
+  withTimeout(2 * 60 * 1000, postJSON(formCommentApiUrl(plan), comment)
     .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.save'), error.status))));
 
 /**
@@ -23,7 +23,7 @@ export const saveComment = (plan, comment) =>
 export const editComment = (plan, comment) =>
   withTimeout(
     2 * 60 * 1000,
-    putJSON(`/pythia/v1/projects/${plan.projectId}/plans/${plan.planId}/comments/${comment.textId}`, comment)
+    putJSON(formCommentApiUrl({ ...plan, ...comment }), comment)
       .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.edit'), error.status)))
   );
 

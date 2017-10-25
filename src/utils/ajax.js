@@ -88,3 +88,30 @@ export const postJSON = (url, body) => requestAndParseJSON(post, url, body);
  * @return {object} parsed JSON
  */
 export const putJSON = (url, body) => requestAndParseJSON(put, url, body);
+
+/**
+ * Form api url for project entity
+ * @param {object} props
+ * @param {number} props.projectId
+ * @return {string}
+ */
+export const formProjectApiUrl = ({ projectId } = {}) => `/pythia/v1/projects/${projectId || ''}`;
+
+/**
+ * Form api url for plan entity
+ * @param {object} props
+ * @param {number} props.projectId
+ * @param {number} props.planId
+ * @return {string}
+ */
+export const formPlanApiUrl = ({ projectId, planId }) => `${formProjectApiUrl({ projectId })}/plans/${planId || ''}`;
+
+/**
+ * Form api url for comment entity
+ * @param {object} props
+ * @param {number} props.projectId
+ * @param {number} props.planId
+ * @param {number} props.textId
+ * @return {string}
+ */
+export const formCommentApiUrl = ({ projectId, planId, textId }) => `${formPlanApiUrl({ projectId, planId })}/comments/${textId || ''}`;

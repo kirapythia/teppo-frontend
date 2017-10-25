@@ -1,8 +1,7 @@
 import t from '../../locale';
-import { get, postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
+import { formProjectApiUrl, get, postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
 import { withTimeout } from '../../utils';
 
-export const PROJECT_URL = '/pythia/v1/projects/';
 export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansuprojectid/';
 
 /**
@@ -12,7 +11,7 @@ export const FETCH_PROJECT_BY_HANSU_PROJECT_ID_URL = '/pythia/v1/projects/hansup
  * @return {Promise}
  */
 export const saveProject = project =>
-  withTimeout(2 * 60 * 1000, postJSON(PROJECT_URL, project)
+  withTimeout(2 * 60 * 1000, postJSON(formProjectApiUrl(), project)
     .catch((error) => {
       throw new ServerResponseError(t('network.error.project.create'), error.status);
     }));
@@ -25,7 +24,7 @@ export const saveProject = project =>
  */
 export const editProject = project => new Promise((resolve, reject) => {
   if (!project.projectId) return reject(new Error(t('project.error.edit.no_id')));
-  return putJSON(`${PROJECT_URL}${project.projectId}`, project)
+  return putJSON(formProjectApiUrl(project), project)
     .then(resolve)
     .catch((error) => {
       reject(new ServerResponseError(t('network.error.project.edit'), error.status));
