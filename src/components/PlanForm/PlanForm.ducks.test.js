@@ -24,7 +24,7 @@ describe('savePlan action', () => {
       Cmd.run(savePlans, {
         successActionCreator: actions.planSaveSuccessAction,
         failActionCreator: actions.planFailAction,
-        args: [payload],
+        args: [payload, false],
       }))
     );
   });

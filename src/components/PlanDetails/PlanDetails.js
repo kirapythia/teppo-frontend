@@ -6,7 +6,7 @@ import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import { actions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
-import { formProjectUrl } from '../../utils';
+import { formPlanUrl } from '../../utils';
 import t from '../../locale';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
@@ -73,21 +73,19 @@ const PlanDetails = ({
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
         {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-          <div>
-            <div className="text-right">
-              <LinkButton
-                icon="fa-plus"
-                text={t('button.new_plan_version')}
-                href={formProjectUrl(plan.projectId, 'plan/new')}
-              />
-            </div>
+          <div className="text-right">
+            <LinkButton
+              icon="fa-plus"
+              text={t('button.new_plan_version')}
+              href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
+            />
           </div>
         )}
 
         <PlanCommentsSection />
 
         <div className="PlanDetails__actions">
-          {!readOnly && !plan.status === PLAN_STATUS.APPROVED && (
+          {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
             <div className="row">
               <div className="six columns">
                 <Button

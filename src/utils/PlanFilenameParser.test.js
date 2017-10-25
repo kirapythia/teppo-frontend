@@ -67,24 +67,6 @@ describe('Resolving plan subNo from a file name', () => {
   });
 });
 
-describe('Resolving plan version from a file name', () => {
-  it('should resolve file version if it is a single letter after sub number', () => {
-    expect(parsePlanProps('2017_123A.pdf').version).toEqual('A');
-  });
-
-  it('should resolve file version if it is a two letters after sub number', () => {
-    expect(parsePlanProps('2017_123XX.pdf').version).toEqual('XX');
-  });
-
-  it('should resolve file version if it is lowercased', () => {
-    expect(parsePlanProps('2017_123xx.pdf').version).toEqual('xx');
-  });
-
-  it('should resolve file version if it is longer than two letters', () => {
-    expect(parsePlanProps('2017_123xxx.pdf').version).toEqual();
-  });
-});
-
 it('should not return mainNo property if it is not found', () => {
   const result = parsePlanProps('xxxx_xxx.pdf');
   expect('mainNo' in result).toBe(false);

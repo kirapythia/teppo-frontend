@@ -1,6 +1,8 @@
 import React from 'react';
+import * as R from 'ramda';
 import { connect } from 'react-redux';
 import t from '../../locale';
+import { versionToCharacter } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
@@ -11,10 +13,12 @@ const mapStateToProps = state => ({
   plan: getCurrentPlan(state),
 });
 
-const formProjectDetailFields = project => ([
-  { label: t('project.name'), value: project.name },
-  { label: t('project.hansuProjectId'), value: project.hansuProjectId },
-  { label: t('plan.primary_id'), value: project.mainNo },
+const formDetailFields = values => R.filter(Boolean, [
+  { label: t('project.name'), value: values.name },
+  { label: t('project.hansuProjectId'), value: values.hansuProjectId },
+  { label: t('plan.primary_id'), value: values.mainNo },
+  values.subNo && { label: t('plan.secondary_id'), value: values.subNo },
+  !R.isNil(values.version) && { label: t('common.version'), value: versionToCharacter(values.version) },
 ]);
 
 /**
@@ -25,9 +29,9 @@ const formProjectDetailFields = project => ([
  */
 const PlanPage = ({ plan, project = {} }) => (
   <div className="PlanPage">
-    <h2>{ plan ? t('button.edit_plan') : t('plan.add.header') }</h2>
+    <h2>{ plan ? t('plan.create_new_version') : t('plan.add.header') }</h2>
     <ShowDetails
-      fields={formProjectDetailFields(project)}
+      fields={formDetailFields({ ...project, ...(plan || {}) })}
       className="ShowDetails--highlighted"
     />
     <PlanForm plan={plan} />

@@ -46,8 +46,7 @@ export const parsePlanProps = (value = '') => {
   const match = value.match(PLAN_FILENAME_EXP) || [];
   const mainNo = isValidMainNo(match[1]) && match[1];
   const subNo = isValidSubNo(match[2]) && match[2];
-  const version = match[3];
   // only pick values that are not falsy
-  return R.pickBy(Boolean, { mainNo, subNo, version });
+  return R.pickBy(Boolean, { mainNo, subNo });
 };
 

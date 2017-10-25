@@ -114,6 +114,26 @@ export const formPlanIdentifier = R.pipe(
   concatProps(['projectId', 'mainNo', 'subNo'])
 );
 
+/**
+ * Get all non null file urls from a plan
+ * @param {object} plan
+ * @return {string[]}
+ */
+export const getPlanFileUrls = R.pipe(
+  R.props(['pdfUrl', 'xmlUrl']),
+  R.filter(Boolean),
+);
+
+/**
+ * Get all non null file names from a plan
+ * @param {object} plan
+ * @return {string[]}
+ */
+export const getPlanFileNames = R.pipe(
+  getPlanFileUrls,
+  R.map(parseFileNameFromURL),
+);
+
 const dateOptions = {
   weekday: 'short',
   day: 'numeric',

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { createAction, handleActions } from 'redux-actions';
+import { combineActions, createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
 import { savePlans } from './model';
@@ -15,6 +15,7 @@ import { formProjectUrl } from '../../utils';
 export const NAME = 'planForm';
 
 const SAVE_PLAN = 'pythia-webclient/ProjectForm/SAVE_PLAN';
+const VERSION_PLAN = 'pythia-webclient/ProjectForm/VERSION_PLAN';
 export const PLAN_SAVE_SUCCESS = 'pythia-webclient/ProjectForm/PLAN_SAVE_SUCCESS';
 const PLAN_FAIL = 'pythia-webclient/ProjectForm/PLAN_FAIL';
 const CLEAR_SEND_ERROR = 'pythia-webclient/ProjectForm/CLEAR_SEND_ERROR';
@@ -27,6 +28,15 @@ export const actions = {
    */
   savePlan: createAction(
     SAVE_PLAN,
+  ),
+
+  /**
+   * Create a new version of a plan
+   * @param {object} formValues
+   * @return {object} action object
+   */
+  versionPlan: createAction(
+    VERSION_PLAN
   ),
   /**
    * Action triggered if the createProject action succeeds
@@ -64,10 +74,13 @@ export default handleActions({
     }
     return state;
   },
-  // handle savePlan action
+  // handle savePlan and versionPlan actions
   // return redux loop command like object that will be
   // interpreted by redux-loop middleware
-  [SAVE_PLAN]: (state, action) => loop(
+  [combineActions(
+    SAVE_PLAN,
+    VERSION_PLAN,
+  )]: (state, action) => loop(
     // remove error from the state
     R.omit(['error'], state),
     // Middleware will call savePlan and if it succeeds
@@ -77,7 +90,7 @@ export default handleActions({
       successActionCreator: actions.planSaveSuccessAction,
       failActionCreator: actions.planFailAction,
       // these args are passed to the savePlan function
-      args: [action.payload],
+      args: [action.payload, action.type === VERSION_PLAN],
     })
   ),
   // handle savePlan success action
