@@ -5,7 +5,6 @@ import { renderField } from '../../forms/form-utils';
 import { NAME } from './PlanComments.ducks';
 import Message from '../common/Message';
 import FormSubmitButton from '../CreateEditAndSaveForm/FormSubmitButton';
-import BackToProjectButton from '../common/BackToProjectButton';
 
 const formConfig = {
   /**
@@ -34,7 +33,6 @@ const formConfig = {
  * @param {submitting} props.submitting
  */
 const PlanCommentForm = ({
-  plan,
   addComment,
   handleSubmit,
   clearError,
