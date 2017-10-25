@@ -32,6 +32,10 @@
   margin-left: 6px;
 }
 
+.PlanListItem__fileUrl:not(:last-child):after {
+  content: ", ";
+}
+
 .PlansListItem__RemoveButton {
   color: #DB0202;
 }
