@@ -1,6 +1,5 @@
 import t from '../locale';
 import { append } from './normalizers';
-import { versionToCharacter } from '../utils';
 
 /**
  * Field definitions for the plan form. Object key is field name and
@@ -17,36 +16,6 @@ import { versionToCharacter } from '../utils';
  *                               the value given cannot be converted to a number
  */
 const fields = {
-  mainNo: {
-    type: 'text',
-    label: t('plan.primary_id'),
-    validation: {
-      required: true,
-      type: 'number',
-      minLength: 4,
-      min: 2000,
-      max: 32767,
-    },
-  },
-
-  subNo: {
-    type: 'text',
-    label: t('plan.secondary_id'),
-    validation: {
-      type: 'number',
-      minLength: 3,
-      maxLength: 4,
-      max: 1199,
-    },
-  },
-
-  version: {
-    type: 'text',
-    label: t('common.version'),
-    disabled: true,
-    format: versionToCharacter,
-  },
-
   files: {
     type: 'file',
     multiple: true,

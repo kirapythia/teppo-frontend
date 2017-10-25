@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => bindActionCreators({
   approvePlan: actions.approvePlan,
   removePlan: actions.removePlan,
-  createNewPlanVersion: actions.createNewPlanVersion,
 }, dispatch);
 
 const mergeProps = (stateProps, actionCreators) => ({
@@ -40,7 +39,6 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   approvePlan: () => actionCreators.approvePlan(stateProps.plan),
   removePlan: () => actionCreators.removePlan(stateProps.plan),
-  createNewPlanVersion: () => actionCreators.createNewPlanVersion(stateProps.plan),
 });
 
 /**
@@ -59,7 +57,6 @@ const PlanDetails = ({
   approvePlan,
   removePlan,
   isFetching,
-  createNewPlanVersion,
 }) => (
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
@@ -76,26 +73,19 @@ const PlanDetails = ({
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
         {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-          <div>
-            <div className="PlanDetails__plan-actions">
-              <LinkButton
-                icon="fa-pencil"
-                text={t('button.edit_plan')}
-                href={`${formPlanUrl(plan.projectId, plan.planId)}/edit`}
-              />
-              <Button
-                icon="fa-plus"
-                text={t('button.new_plan_version')}
-                onClick={createNewPlanVersion}
-              />
-            </div>
+          <div className="text-right">
+            <LinkButton
+              icon="fa-plus"
+              text={t('button.new_plan_version')}
+              href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
+            />
           </div>
         )}
 
         <PlanCommentsSection />
 
         <div className="PlanDetails__actions">
-          {!readOnly && !plan.status === PLAN_STATUS.APPROVED && (
+          {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
             <div className="row">
               <div className="six columns">
                 <Button

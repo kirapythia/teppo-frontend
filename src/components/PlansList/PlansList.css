@@ -28,12 +28,8 @@
   cursor: pointer;
 }
 
-.PlansListItem .IconButton {
-  margin-left: 6px;
-}
-
-.PlansListItem__RemoveButton {
-  color: #DB0202;
+.PlanListItem__fileUrl:not(:last-child):after {
+  content: ", ";
 }
 
 .PlansListItem:hover {

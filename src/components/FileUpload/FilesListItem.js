@@ -9,8 +9,8 @@ import IconButton from '../common/IconButton';
  * @param {boolean} props.disabled If true then the remove button is hidden
  * @param {function} props.removeFile Callback for the remove button
  */
-const FilesListItem = ({ file, removeFile, disabled }) => {
-  const fileName = (file instanceof File ? file.name : file);
+const FilesListItem = ({ file = {}, removeFile, disabled }) => {
+  const fileName = file.name;
   return (
     <li>
       <div><i className="fa fa-file-text fa-fw" /></div>

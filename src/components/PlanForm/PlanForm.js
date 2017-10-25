@@ -1,13 +1,12 @@
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { formProjectUrl, zeroPad } from '../../utils';
-import PLAN_STATUS from '../../constants/plan-status';
+import { formProjectUrl, getPlanFileUrls } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
 import { NAME, actions } from './PlanForm.ducks';
-import { validatePlans } from './model';
+import { validatePlans, validateSamePlan } from './validator';
 import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
 // form field configuration objects with validator functions from field definitions
@@ -41,35 +40,6 @@ const formConfig = {
 };
 
 /**
- * Form field props created dynamically from state
- * @param {object} plan
- * @param {object} project
- * @return {object}
- */
-const formDynamicFieldProps = (plan = {}, project = {}) => fieldsWithValidations
-  .map(field => ({
-    ...field,
-    disabled: field.disabled !== undefined
-      ? field.disabled
-      : plan.status === PLAN_STATUS.APPROVED || project.completed,
-  }))
-  // show version only when editing
-  .filter(field => field.name !== 'version' || plan);
-
-/**
- * Form initial values for plan editing
- * @param {object} plan
- * @param {object} project
- * @return {object}
- */
-const formInitialValuesForEditing = (plan, project) => ({
-  ...plan,
-  projectId: project.projectId,
-  subNo: zeroPad(plan.subNo, 3),
-  files: plan.url ? [plan.url] : [],
-});
-
-/**
  * Gather all the props needed from the application state
  * @param {object} state
  * @return {object}
@@ -80,13 +50,15 @@ const mapStateToProps = (state, ownProps) => {
   const allPlans = listPlans(state);
 
   return {
-    fields: formDynamicFieldProps(plan, project),
+    fields: fieldsWithValidations,
     formSendError: state.planForm.error,
     cancelHref: formProjectUrl(project.projectId),
-    validate: validatePlans(allPlans),
-    initialValues: plan
-      ? formInitialValuesForEditing(plan, project)
-      : { mainNo: project.mainNo, projectId: project.projectId },
+    validate: plan
+      ? validateSamePlan(plan)
+      : validatePlans(allPlans),
+    initialValues: {
+      projectId: project.projectId,
+    },
   };
 };
 
@@ -99,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
   clearSendError: actions.clearSendError,
   submitAction: ownProps.plan
-    ? actions.editPlan
+    ? actions.versionPlan
     : actions.savePlan,
 }, dispatch);
 

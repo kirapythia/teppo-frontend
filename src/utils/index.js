@@ -35,7 +35,7 @@ export const isURL = value => /^http(s?):\/\//.test(value);
  * @param {string} url
  * @return {string} file name
  */
-export const parseFileNameFromURL = url => url.substring(url.lastIndexOf('/') + 1);
+export const parseFileNameFromURL = (url = '') => url.substring(url.lastIndexOf('/') + 1);
 
 /**
  * Create array sorter that sorts
@@ -112,6 +112,26 @@ export const formPlanIdentifier = R.pipe(
   // but from the form it is zero padded string
   R.mapObjIndexed((value, key) => (key === 'subNo' ? zeroPad(value, 3) : value)),
   concatProps(['projectId', 'mainNo', 'subNo'])
+);
+
+/**
+ * Get all non null file urls from a plan
+ * @param {object} plan
+ * @return {string[]}
+ */
+export const getPlanFileUrls = R.pipe(
+  R.props(['pdfUrl', 'xmlUrl']),
+  R.filter(Boolean),
+);
+
+/**
+ * Get all non null file names from a plan
+ * @param {object} plan
+ * @return {string[]}
+ */
+export const getPlanFileNames = R.pipe(
+  getPlanFileUrls,
+  R.map(parseFileNameFromURL),
 );
 
 const dateOptions = {
