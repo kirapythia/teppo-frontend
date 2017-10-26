@@ -1,6 +1,5 @@
 import * as R from 'ramda';
-import { ServerResponseError } from '../../utils/ajax';
-import t, { tpl } from '../../locale';
+import t from '../../locale';
 import * as model from './model';
 
 describe('Saving plans', () => {

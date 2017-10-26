@@ -1,7 +1,7 @@
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { formProjectUrl, getPlanFileUrls } from '../../utils';
+import { formProjectUrl } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
 import formFields from '../../forms/plan';
 import { getCurrentProject, listPlans } from '../../selectors';
