@@ -65,11 +65,17 @@ export const validatePlans = (allPlans = []) => (values) => {
     };
   }
 
-  const existing = pluckAllFileNames(projectsPlans);
-  const newPlans = R.pluck('name', files);
+  const newPlanFilenames = R.pluck('name', files);
+  const mainNumbers = R.map(Number, R.pluck('mainNo', R.map(parsePlanProps, newPlanFilenames)));
+
+  if (!R.all(R.equals(values.mainNo), mainNumbers)) {
+    return { files: t('validation.message.main_number_conflict') };
+  }
+
+  const existingFilenames = pluckAllFileNames(projectsPlans);
 
   // if project already has a plan with the same identifier combination
-  if (listsContainSameValues(existing, newPlans)) {
+  if (listsContainSameValues(existingFilenames, newPlanFilenames)) {
     return { files: t('validation.message.collides_existing_plan_values') };
   }
 
