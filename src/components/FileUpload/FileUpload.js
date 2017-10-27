@@ -36,6 +36,7 @@ const FileUpload = ({
   multiple,
   disabled,
   error,
+  accept,
 }) => (
   <div className="FileUpload__wrapper">
     <FileList
@@ -49,6 +50,7 @@ const FileUpload = ({
     {error && <div className="text-danger">{error}</div>}
     {!disabled && (
       <Dropzone
+        accept={accept}
         name={name}
         value={value}
         className="FileUpload"

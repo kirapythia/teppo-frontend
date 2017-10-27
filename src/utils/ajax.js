@@ -1,3 +1,6 @@
+import { tpl } from '../locale';
+import { withTimeout } from './index';
+
 /**
  * An error caused by an invalid request
  * @class InvalidRequestError
@@ -68,6 +71,33 @@ const requestAndParseJSON = (method, ...props) =>
   method(...props)
     .then(parseJSONBody);
 
+
+  /**
+ * Upload a file to the server
+ * @private
+ * @async
+ * @param {object} plan
+ * @param {File} file
+ * @param {boolean} isVersioning
+ * @return {string} File url received as a response
+ */
+export const uploadFile = async (url, file) => {
+  // form form data body for the request
+  const data = new FormData();
+  data.append('mfile', file);
+  // wait for the response
+  const response = await withTimeout(
+    2 * 60 * 1000,
+    fetch(url, { method: 'POST', body: data })
+  );
+
+  if (!response.ok) {
+    throw new Error(tpl('network.error.file.upload', { filename: file.name }));
+  }
+
+  return response.json();
+};
+
 /**
  * Do a get request and parse it's body (JSON)
  * @see post
@@ -104,14 +134,17 @@ export const formProjectApiUrl = ({ projectId } = {}) => `/pythia/v1/projects/${
  * @param {number} props.planId
  * @return {string}
  */
-export const formPlanApiUrl = ({ projectId, planId }) => `${formProjectApiUrl({ projectId })}/plans/${planId || ''}`;
+export const formPlanApiUrl = ({ projectId, planId }) => `${formProjectApiUrl({ projectId })}/plans${planId ? `/${planId}` : ''}`;
 
 /**
  * Form api url for comment entity
- * @param {object} props
- * @param {number} props.projectId
- * @param {number} props.planId
- * @param {number} props.textId
+ * @param {object} plan
+ * @param {number} plan.projectId
+ * @param {number} plan.planId
+ * @param {object} comment
+ * @param {number} comment.textId
+ * @param {string} slug
  * @return {string}
  */
-export const formCommentApiUrl = ({ projectId, planId, textId }) => `${formPlanApiUrl({ projectId, planId })}/comments/${textId || ''}`;
+export const formCommentApiUrl = ({ projectId, planId }, { textId } = {}, slug = '') =>
+  `${formPlanApiUrl({ projectId, planId })}/comments/${textId || ''}${slug ? `/${slug}` : ''}`;

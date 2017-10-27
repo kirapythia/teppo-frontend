@@ -99,6 +99,7 @@ const listAllComments = R.pipe(
   R.prop('plans'),
   R.pluck('commentValues'),
   R.flatten,
+  R.filter(Boolean),
 );
 
 export default handleActions({

@@ -4,6 +4,7 @@ import t from '../../locale';
 import { renderField } from '../../forms/form-utils';
 import { NAME } from './PlanComments.ducks';
 import Message from '../common/Message';
+import BackToProjectButton from '../common/BackToProjectButton';
 import FormSubmitButton from '../CreateEditAndSaveForm/FormSubmitButton';
 
 const formConfig = {
@@ -33,6 +34,7 @@ const formConfig = {
  * @param {submitting} props.submitting
  */
 const PlanCommentForm = ({
+  plan,
   addComment,
   handleSubmit,
   clearError,
@@ -52,14 +54,29 @@ const PlanCommentForm = ({
       validation={{ required: true }}
     />
 
-    <div className="PlanCommentForm__actions">
-      <FormSubmitButton
-        buttonText={t('button.send')}
-        buttonSubmittingText={t('button.sending')}
-        iconClassName="fa-envelope-o"
-        disabled={!valid || submitting || pristine}
-        isSubmitting={submitting}
-      />
+    <Field
+      type="file"
+      accept="image/*"
+      name="files"
+      label={t('common.file')}
+      component={renderField}
+      placeholder={t('plan.comments.file.placeholder')}
+      multiple={false}
+    />
+
+    <div className="PlanCommentForm__actions row">
+      <div className="six columns">
+        <BackToProjectButton plan={plan} />
+      </div>
+      <div className="six columns">
+        <FormSubmitButton
+          buttonText={t('button.send')}
+          buttonSubmittingText={t('button.sending')}
+          iconClassName="fa-envelope-o"
+          disabled={!valid || submitting || pristine}
+          isSubmitting={submitting}
+        />
+      </div>
     </div>
   </form>
 );
