@@ -1,0 +1,16 @@
+.RoleListItem {
+  /*margin-bottom: 0;*/
+}
+
+.RoleListItem:hover {
+  background-color: #eee;
+  color: #1EAEDB;
+  cursor: pointer;
+}
+
+.fa {
+  padding-top: 3px;
+  color: grey;
+  /* background: black; */
+}
+

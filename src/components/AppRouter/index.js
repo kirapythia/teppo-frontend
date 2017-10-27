@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import * as ROUTES from '../../constants/routes';
 import Layout from '../Layout';
 import HomePage from '../HomePage';
+import Projects from '../Projects';
 import ProjectPage from '../ProjectPage';
 import ProjectDetails from '../ProjectDetails';
 import PlanDetails from '../PlanDetails';
@@ -20,6 +21,9 @@ const AppRouter = () => (
     <Layout>
       <Fragment forRoute={ROUTES.HOME}>
         <HomePage />
+      </Fragment>
+      <Fragment forRoute={ROUTES.PROJECTS}>
+        <Projects />
       </Fragment>
       <Fragment withConditions={location =>
         R.contains(location.route, [ROUTES.PROJECT, ROUTES.EDIT_PROJECT])}

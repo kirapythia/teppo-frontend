@@ -7,6 +7,7 @@ import * as PlanDetails from '../components/PlanDetails';
 import * as ProjectList from '../components/ProjectList';
 import * as Comments from '../components/PlanComments';
 import projectReducer, * as Project from './project/project.reducer';
+import userReducer, * as Users from './users/users.ducks';
 import * as Plans from './plans';
 
 /**
@@ -24,4 +25,5 @@ export default {
   [Comments.NAME]: Comments.reducer,
   [Project.NAME]: projectReducer,
   [Plans.NAME]: Plans.reducer,
+  [Users.NAME]: userReducer,
 };

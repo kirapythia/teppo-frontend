@@ -1,4 +1,5 @@
 export const HOME = '/';
+export const PROJECTS = '/projects';
 export const PROJECT = '/project/new';
 export const EDIT_PROJECT = '/project/:projectId/edit';
 export const PROJECT_DETAILS = '/project/:projectId';
@@ -13,6 +14,7 @@ export const NOT_FOUND_PAGE = '/404';
  */
 export default {
   [HOME]: {},
+  [PROJECTS]: {},
   [PROJECT]: {},
   [EDIT_PROJECT]: {},
   [PROJECT_DETAILS]: {},
