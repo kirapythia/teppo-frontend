@@ -58,6 +58,7 @@ const mapStateToProps = (state, ownProps) => {
       : validatePlans(allPlans),
     initialValues: {
       projectId: project.projectId,
+      mainNo: project.mainNo,
     },
   };
 };

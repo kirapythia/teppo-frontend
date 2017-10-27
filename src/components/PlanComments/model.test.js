@@ -45,7 +45,10 @@ describe('Saving a comment', () => {
     const expected = t('network.error.comment.save');
     const plan = { planId: 2, projectId: 1 };
     fetch.mockResponseOnce('{}', { ok: false, status: 404 });
-    return saveComment(plan).catch(err => expect(err.message).toEqual(expected));
+    return saveComment(plan).catch((err) => {
+      console.log(err);
+      expect(err.message).toEqual(expected);
+    });
   });
 });
 

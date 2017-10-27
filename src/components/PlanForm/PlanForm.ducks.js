@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { combineActions, createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
-import { savePlans } from './model';
+import { savePlans, uniqByPlanProps } from './model';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
 import * as ROUTES from '../../constants/routes';
@@ -96,12 +96,13 @@ export default handleActions({
   // handle savePlan success action
   [PLAN_SAVE_SUCCESS]: (state, action) => {
     const [succeeded, failed] = action.payload;
+    const actualCreatedPlans = uniqByPlanProps(succeeded);
     const effects = [
       // dispatch addSuccessNotification action to display a success notification
       NotificationActions.addSuccessNotification(
-        succeeded.length > 1
-          ? tpl('plan.message.save_success_multiple', { count: succeeded.length })
-          : tpl('plan.message.save_success', { ...succeeded[0] })
+        actualCreatedPlans.length > 1
+          ? tpl('plan.message.save_success_multiple', { count: actualCreatedPlans.length })
+          : tpl('plan.message.save_success', { ...actualCreatedPlans[0] })
       ),
       // dispatch (react-little-router's) push action to navigate
       // to project details page

@@ -1,13 +1,7 @@
 import * as R from 'ramda';
 import t from '../../locale';
-import { formPlanApiUrl } from '../../utils/ajax';
-import { withTimeout } from '../../utils';
-
-/**
- * Ajax request timeout in milliseconds (2 minutes)
- * @type {number}
- */
-const REQUEST_TIMEOUT = 2 * 60 * 1000;
+import { formPlanIdentifier } from '../../utils';
+import { formPlanApiUrl, uploadFile } from '../../utils/ajax';
 
 /**
  * Upload a file to the server
@@ -18,22 +12,10 @@ const REQUEST_TIMEOUT = 2 * 60 * 1000;
  * @param {boolean} isVersioning
  * @return {string} File url received as a response
  */
-const uploadFile = async (projectId, file, isVersioning) => {
-  // form form data body for the request
-  const data = new FormData();
-  data.append('mfile', file);
-  // wait for the response
-  const response = await withTimeout(
-    REQUEST_TIMEOUT,
-    fetch(`${formPlanApiUrl({ projectId })}${isVersioning ? '?version=true' : ''}`, { method: 'POST', body: data })
-  );
-
-  if (!response.ok) {
-    throw new Error();
-  }
-
-  return response.json();
-};
+const savePlan = (projectId, file, isVersioning) => uploadFile(
+  `${formPlanApiUrl({ projectId })}${isVersioning ? '?version=true' : ''}`,
+  file
+);
 
 /**
  * Loop all files and save them as individual plans. Try to resolve
@@ -65,7 +47,7 @@ const saveFiles = ({ projectId, files }, isVersioning) => new Promise((resolve, 
   // put each resolve or reject value to a corresponding basket and resolve
   // promise when all requests are done
   files.forEach((file) => {
-    uploadFile(projectId, file, isVersioning)
+    savePlan(projectId, file, isVersioning)
       .then((result) => {
         succeeded.push(R.omit(['files'], result));
         resolveWhenAllDone(resolve);
@@ -95,3 +77,5 @@ export const savePlans = async (values, isVersioning) => {
 
   return saveFiles(values, isVersioning);
 };
+
+export const uniqByPlanProps = R.uniqBy(formPlanIdentifier);

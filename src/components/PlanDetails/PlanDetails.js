@@ -107,9 +107,7 @@ const PlanDetails = ({
               </div>
             </div>
           )}
-          <div className="row">
-            <div className="twelve columns"><BackToProjectButton plan={plan} /></div>
-          </div>
+          {plan.status !== PLAN_STATUS.APPROVED && <BackToProjectButton plan={plan} />}
         </div>
       </div>
     )}
