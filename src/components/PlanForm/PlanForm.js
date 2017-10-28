@@ -70,7 +70,6 @@ const mapStateToProps = (state, ownProps) => {
  * @return {object}
  */
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
-  clearSendError: actions.clearSendError,
   submitAction: ownProps.plan
     ? actions.versionPlan
     : actions.savePlan,

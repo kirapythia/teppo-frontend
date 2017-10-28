@@ -2,12 +2,14 @@ import * as R from 'ramda';
 import { combineActions, createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
-import { savePlans, uniqByPlanProps } from './model';
+import { validateOnSave } from './validator';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
 import * as ROUTES from '../../constants/routes';
-import { formProjectUrl } from '../../utils';
-
+import { formProjectUrl, formPlanIdentifier } from '../../utils';
+import { formPlanApiUrl } from '../../utils/ajax';
+import { parsePlanProps } from '../../utils/PlanFilenameParser';
+import * as FileUpload from '../FileUploadDialog';
 /**
  * Export reducer's name. Will be registerd to
  * the application state with this name
@@ -16,9 +18,17 @@ export const NAME = 'planForm';
 
 const SAVE_PLAN = 'pythia-webclient/ProjectForm/SAVE_PLAN';
 const VERSION_PLAN = 'pythia-webclient/ProjectForm/VERSION_PLAN';
-export const PLAN_SAVE_SUCCESS = 'pythia-webclient/ProjectForm/PLAN_SAVE_SUCCESS';
 const PLAN_FAIL = 'pythia-webclient/ProjectForm/PLAN_FAIL';
-const CLEAR_SEND_ERROR = 'pythia-webclient/ProjectForm/CLEAR_SEND_ERROR';
+
+export const actionTypes = {
+  PLAN_SAVE_SUCCESS: 'pythia-webclient/ProjectForm/PLAN_SAVE_SUCCESS',
+};
+
+const selectIndividualPlans = R.pipe(
+  R.defaultTo([]),
+  R.pluck('name'),
+  R.uniqBy(R.pipe(parsePlanProps, formPlanIdentifier)),
+);
 
 export const actions = {
   /**
@@ -28,6 +38,8 @@ export const actions = {
    */
   savePlan: createAction(
     SAVE_PLAN,
+    R.identity,
+    ({ projectId }) => ({ url: `${formPlanApiUrl({ projectId })}` }),
   ),
 
   /**
@@ -36,7 +48,9 @@ export const actions = {
    * @return {object} action object
    */
   versionPlan: createAction(
-    VERSION_PLAN
+    VERSION_PLAN,
+    R.identity,
+    ({ projectId }) => ({ url: `${formPlanApiUrl({ projectId })}?version=true` }),
   ),
   /**
    * Action triggered if the createProject action succeeds
@@ -44,8 +58,7 @@ export const actions = {
    * @return {object}
    */
   planSaveSuccessAction: createAction(
-    PLAN_SAVE_SUCCESS,
-    value => [].concat(value),
+    actionTypes.PLAN_SAVE_SUCCESS,
   ),
   /**
    * Action triggered if the createAction project fails
@@ -55,79 +68,88 @@ export const actions = {
   planFailAction: createAction(
     PLAN_FAIL,
   ),
-  /**
-   * Action triggered when form send error is closed
-   * @return {object}
-   */
-  clearSendError: createAction(
-    CLEAR_SEND_ERROR
-  ),
+};
+
+const initialState = {
+  fileUploadReducerKey: 'planForm',
 };
 
 // ProjectForm reducer
 export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const { route } = action.payload;
+    const { projectId } = action.payload.params;
+
     // clear error when entering the form
-    if (state.error && R.contains(route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])) {
-      return R.omit(['error'], state);
+    if (R.contains(route, [ROUTES.PLAN, ROUTES.EDIT_PLAN])) {
+      return { ...state, projectId };
     }
     return state;
   },
   // handle savePlan and versionPlan actions
   // return redux loop command like object that will be
   // interpreted by redux-loop middleware
-  [combineActions(
-    SAVE_PLAN,
-    VERSION_PLAN,
-  )]: (state, action) => loop(
-    // remove error from the state
-    R.omit(['error'], state),
-    // Middleware will call savePlan and if it succeeds
-    // then planSuccessAction action will be dispatched
-    // otherwise planFailAction action will be dispatched
-    Cmd.run(savePlans, {
-      successActionCreator: actions.planSaveSuccessAction,
-      failActionCreator: actions.planFailAction,
-      // these args are passed to the savePlan function
-      args: [action.payload, action.type === VERSION_PLAN],
-    })
-  ),
-  // handle savePlan success action
-  [PLAN_SAVE_SUCCESS]: (state, action) => {
-    const [succeeded, failed] = action.payload;
-    const actualCreatedPlans = uniqByPlanProps(succeeded);
-    const effects = [
-      // dispatch addSuccessNotification action to display a success notification
-      NotificationActions.addSuccessNotification(
-        actualCreatedPlans.length > 1
-          ? tpl('plan.message.save_success_multiple', { count: actualCreatedPlans.length })
-          : tpl('plan.message.save_success', { ...actualCreatedPlans[0] })
-      ),
-      // dispatch (react-little-router's) push action to navigate
-      // to project details page
-      push(formProjectUrl(succeeded[0].projectId)),
-    ];
-
-    if (failed.length) {
-      effects.push(NotificationActions.addErrorNotification(
-        action.payload.length > 1
-          ? tpl('plan.message.save_error_multiple', { count: failed })
-          : tpl('plan.message.save_error', { filename: failed[0] })
-      ));
-    }
+  [combineActions(SAVE_PLAN, VERSION_PLAN)]: (state, action) => {
+    const errors = validateOnSave(action.payload);
+    const effect = errors
+      // errors cause plan fail action as a side effect
+      ? actions.planFailAction(new Error(R.values(errors).join(', ')))
+      // if validation passes then start file upload batch
+      : FileUpload.actions.startBatch(
+        state.fileUploadReducerKey,
+        action.payload.files,
+        action.meta.url,
+      );
 
     return loop(
-      // state will not be changed
+      // remove error from the state
+      R.omit(['error'], state),
+      // middleware will run an action depending on validation result
+      Cmd.action(effect),
+    );
+  },
+  // handle batch end action
+  [FileUpload.actionTypes.FILE_UPLOAD_BATCH_END]: (state, action) => {
+    // do not react to batch end actions that doesn't concern planForm
+    if (action.meta.key !== 'planForm') return state;
+
+    const { responses, failed } = action.payload;
+    const effects = R.filter(Boolean, [
+      FileUpload.actions.clearBatch('planForm'),
+      !!responses.length && actions.planSaveSuccessAction(responses),
+      !!failed.length && actions.planFailAction(failed),
+    ]);
+
+    return loop(state, Cmd.list(effects.map(effect => Cmd.action(effect))));
+  },
+  // handle plan save success action
+  [actionTypes.PLAN_SAVE_SUCCESS]: (state, action) => {
+    const individualPlans = R.uniqBy(formPlanIdentifier, action.payload);
+    return loop(
       state,
-      // batch will run multiple actions in parallel
-      Cmd.list(effects.map(effect => Cmd.action(effect)))
+      Cmd.list([
+        // display a success notification for succeeded files
+        Cmd.action(NotificationActions.addSuccessNotification(
+          individualPlans.length > 1
+            ? tpl('plan.message.save_success_multiple', { count: individualPlans.length })
+            : tpl('plan.message.save_success', { ...individualPlans[0] })
+        )),
+        // navigate to the project details page
+        Cmd.action(push(formProjectUrl(state.projectId))),
+      ])
     );
   },
   // handle savePlan fail action
-  // just adds error to the state
-  [PLAN_FAIL]: (state, action) => ({ ...state, error: action.payload }),
-  // handle clear send error action
-  // just remove error from the state
-  [CLEAR_SEND_ERROR]: state => R.omit(['error'], state),
-}, {});
+  [PLAN_FAIL]: (state, action) => {
+    const individualPlans = selectIndividualPlans(action.payload);
+    return loop(
+      state,
+      // display an error notification for failed files
+      Cmd.action(NotificationActions.addErrorNotification(
+        individualPlans.length > 1
+          ? tpl('plan.message.save_error_multiple', { count: individualPlans.length })
+          : tpl('plan.message.save_error', { filename: individualPlans[0] })
+      ))
+    );
+  },
+}, initialState);

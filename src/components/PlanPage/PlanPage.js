@@ -6,11 +6,13 @@ import { versionToCharacter } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
+import FileUploadDialog from '../FileUploadDialog';
 import './PlanPage.css';
 
 const mapStateToProps = state => ({
   project: getCurrentProject(state),
   plan: getCurrentPlan(state),
+  fileUploadReducerKey: state.planForm.fileUploadReducerKey,
 });
 
 const formDetailFields = values => R.filter(Boolean, [
@@ -27,14 +29,20 @@ const formDetailFields = values => R.filter(Boolean, [
  * @param {object} props.plan
  * @param {object} props.project
  */
-const PlanPage = ({ plan, project = {} }) => (
+const PlanPage = ({ plan, project = {}, fileUploadReducerKey }) => (
   <div className="PlanPage">
     <h2>{ plan ? t('plan.create_new_version') : t('plan.add.header') }</h2>
     <ShowDetails
       fields={formDetailFields({ ...project, ...(plan || {}) })}
       className="ShowDetails--highlighted"
     />
+
     <PlanForm plan={plan} />
+
+    <FileUploadDialog
+      reducerKey={fileUploadReducerKey}
+      title={t('plan.fileupload_dialog.title')}
+    />
   </div>
 );
 

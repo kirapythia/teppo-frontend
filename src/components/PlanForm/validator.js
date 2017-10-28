@@ -128,3 +128,30 @@ export const validateSamePlan = (plan = {}) => (values) => {
 
   return undefined;
 };
+
+/**
+ * Validate files before save
+ * @param {object} values A plan object
+ * @param {number} values.projectId
+ * @param {number} values.mainNo
+ * @param {File[]} values.files
+ * @return {object|undefined} Errors object, field name as a key
+ *                            and error string as value
+ */
+export const validateOnSave = (values) => {
+  const errors = {};
+
+  if (!values.projectId) {
+    errors.projectId = t('plan.error.save.no_project_id');
+  }
+
+  if (!values.mainNo) {
+    errors.mainNo = t('plan.error.save.no_mainNo');
+  }
+
+  if (!(values.files || []).length) {
+    errors.files = t('plan.error.save.no_files');
+  }
+
+  return R.isEmpty(errors) ? undefined : errors;
+};
