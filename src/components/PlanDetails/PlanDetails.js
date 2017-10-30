@@ -16,6 +16,7 @@ import BackToProjectButton from '../common/BackToProjectButton';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
 import LoadingOverlay from '../common/LoadingOverlay';
+import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 
 const mapStateToProps = (state) => {
@@ -81,9 +82,8 @@ const PlanDetails = ({
             />
           </div>
         )}
-
+        <PlanVersionHistory />
         <PlanCommentsSection />
-
         <div className="PlanDetails__actions">
           {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
             <div className="row">

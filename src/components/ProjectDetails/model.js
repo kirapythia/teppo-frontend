@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import t from '../../locale';
 import { formProjectApiUrl, getJSON, putJSON, ServerResponseError } from '../../utils/ajax';
 import { serverDateToString, withTimeout } from '../../utils';
@@ -38,3 +39,10 @@ export const formProjectDetailFields = project => ([
   { label: t('project.completed'), value: project.completed },
   { label: t('project.description'), value: project.description },
 ]);
+
+/**
+ * Sort plans by identifier (main/subnumber) descending
+ * @param {object[]} plans
+ * @return {object[]} sorted plans
+ */
+export const sortPlansBySubNo = R.sortBy(R.prop('subNo'));

@@ -92,13 +92,13 @@ const PlanCommentsSection = ({
       toggleCommentApproval={toggleCommentApproval}
     />
     {!readOnly && <div>
-      <h4>{t('plan.comments.form.title')}</h4>,
+      <h4>{t('plan.comments.form.title')}</h4>
       <PlanCommentForm
         plan={plan}
         addComment={addComment}
         formSendError={formSendError}
         clearError={clearCommentAddError}
-      />,
+      />
     </div>}
   </section>
 );

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as ROUTES from '../../constants/routes';
 import t from '../../locale';
 import { getCurrentProject, getCurrentSisterProjects, listLatestVersionsOfPlans } from '../../selectors';
-import { formProjectDetailFields } from './model';
+import { sortPlansBySubNo, formProjectDetailFields } from './model';
 import { formProjectUrl } from '../../utils';
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
   error: state.projectDetails.error,
   project: getCurrentProject(state),
   sisterProjects: getCurrentSisterProjects(state),
-  plans: listLatestVersionsOfPlans(state),
+  plans: sortPlansBySubNo(listLatestVersionsOfPlans(state)),
   isFetching: state.projectDetails.isFetching,
 });
 
@@ -97,7 +97,7 @@ const ProjectDetails = ({
 
         <div className="ProjectDetails__plans-wrapper">
           <h3>{t('header.project.plans')}</h3>
-          <PlansList project={project} plans={plans} readOnly={project.completed} />
+          <PlansList project={project} plans={plans} />
         </div>
 
         {!project.completed && <div className="row">

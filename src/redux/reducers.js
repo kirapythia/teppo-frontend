@@ -6,6 +6,7 @@ import * as ProjectDetails from '../components/ProjectDetails';
 import * as PlanDetails from '../components/PlanDetails';
 import * as ProjectList from '../components/ProjectList';
 import * as Comments from '../components/PlanComments';
+import * as PlanVersionHistory from '../components/PlanVersionHistory';
 import projectReducer, * as Project from './project/project.reducer';
 import * as Plans from './plans';
 
@@ -24,4 +25,5 @@ export default {
   [Comments.NAME]: Comments.reducer,
   [Project.NAME]: projectReducer,
   [Plans.NAME]: Plans.reducer,
+  [PlanVersionHistory.NAME]: PlanVersionHistory.reducer,
 };

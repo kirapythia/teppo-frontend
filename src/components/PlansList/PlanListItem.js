@@ -1,9 +1,8 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Link } from 'redux-little-router';
-import { formIdentifier } from './model';
 import PLAN_STATUS from '../../constants/plan-status';
-import { getPlanFileUrls, formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../utils';
+import { formPlanIdentifierText, getPlanFileUrls, formPlanUrl, parseFileNameFromURL, versionToCharacter } from '../../utils';
 
 /**
  * Form link elements for each file url
@@ -34,7 +33,7 @@ const PlanListItem = ({ plan = {}, project = {} }) => (
     </div>
     <div className="three columns PlansListItem__identifier">
       <Link href={formPlanUrl(project.projectId, plan.planId)}>
-        {formIdentifier(plan)}
+        {formPlanIdentifierText(plan)}
       </Link>
     </div>
     <div className="six columns">{formPlanFileUrls(plan)}</div>
