@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as selectors from './index';
 import { listToMapBy } from '../utils';
 
@@ -254,6 +255,54 @@ describe('Get second latest version of current plan', () => {
     const state = { router: { params: { planId: 4 } }, plans: listToMapBy('planId', plans) };
     const actual = selectors.getSecondLatestVersionOfPlan(state);
     expect(actual).toEqual(plans[0]);
+  });
+});
+
+describe('listLatestVersionsOfPlans', () => {
+  it('should return an array', () => {
+    const state = { planVersionHistory: { plans: [] }, router: { params: {} } };
+    const actual = selectors.listAllPlanVersions(state);
+    expect(actual).toEqual([]);
+  });
+
+  it('should return plans with the same mainNo and subNo', () => {
+    const plans = {
+      1: { planId: 1, projectId: 10, mainNo: 1, subNo: 2, version: 1 },
+      2: { planId: 2, projectId: 10, mainNo: 1, subNo: 2, version: 2 },
+    };
+    const state = { plans, planVersionHistory: { plans: R.values(plans) }, router: { params: { planId: '1' } } };
+    const actual = selectors.listAllPlanVersions(state);
+    expect(actual).toEqual(R.values(plans));
+  });
+
+  it('should sort plans by version', () => {
+    const plans = {
+      1: { planId: 1, projectId: 10, mainNo: 1, subNo: 2, version: 1 },
+      2: { planId: 2, projectId: 10, mainNo: 1, subNo: 2, version: 2 },
+    };
+    const state = { plans, planVersionHistory: { plans: R.values(plans) }, router: { params: { planId: '1' } } };
+    const actual = selectors.listAllPlanVersions(state);
+    expect(actual).toEqual(R.values(plans));
+  });
+
+  it('should not include plans with different subNo', () => {
+    const plans = {
+      1: { planId: 1, projectId: 10, mainNo: 1, subNo: 2, version: 1 },
+      3: { planId: 3, projectId: 10, mainNo: 1, subNo: 5, version: 2 },
+    };
+    const state = { plans, planVersionHistory: { plans: R.values(plans) }, router: { params: { planId: '1' } } };
+    const actual = selectors.listAllPlanVersions(state);
+    expect(actual[0]).toBe(plans['1']);
+  });
+
+  it('should not include plans with different mainNo', () => {
+    const plans = {
+      1: { planId: 1, projectId: 10, mainNo: 1, subNo: 2, version: 1 },
+      3: { planId: 3, projectId: 10, mainNo: 2, subNo: 2, version: 2 },
+    };
+    const state = { plans, planVersionHistory: { plans: R.values(plans) }, router: { params: { planId: '1' } } };
+    const actual = selectors.listAllPlanVersions(state);
+    expect(actual[0]).toBe(plans['1']);
   });
 });
 
