@@ -9,11 +9,15 @@ import './LoadingOverlay.css';
  * @param {boolean} props.isVisible
  * @param {JSXElement[]} props.children
  */
-const LoadingOverlay = ({ isVisible, text = `${t('lang.loading')}...` }) => (
+const LoadingOverlay = ({ isVisible, text = `${t('lang.loading')}...`, size = 'large' }) => (
   <div className={cx('LoadingOverlay', { 'LoadingOverlay--visible': isVisible })}>
     <div className="LoadingOverlay__content">
       <div className="LoadingOverlay__spinner">
-        <i className="fa fa-pulse fa-spinner fa-5x" />
+        <i className={cx('fa fa-pulse fa-spinner', {
+          'fa-2x': size === 'small',
+          'fa-5x': size === 'large',
+          })}
+        />
       </div>
       <span>{text}</span>
     </div>
