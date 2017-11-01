@@ -1,0 +1,34 @@
+fieldset {
+  padding: 0;
+  border: 0;
+  margin-bottom: 2rem;
+}
+
+input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+input,
+textarea {
+  letter-spacing: .5pt;
+  width: 100%;
+}
+
+input[disabled],
+textarea[disabled] {
+  background: #efefef;
+}
+
+textarea {
+  resize: vertical;
+}
+
+form .error {
+  background-color: #f8d7da;
+  border-color: #721c24;
+}
+
+.clear-list-styles {
+  list-style: none;
+  padding-left: 0;
+}

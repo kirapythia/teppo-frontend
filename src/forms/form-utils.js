@@ -1,6 +1,8 @@
 import React from 'react';
+import Select from 'react-select';
+import * as R from 'ramda';
 import cx from 'classnames';
-import Dropzone from 'react-dropzone';
+import FileUpload from '../components/FileUpload';
 
 import createValidators from '../validation';
 
@@ -14,25 +16,43 @@ import createValidators from '../validation';
  * @param {boolean} error
  * @return {HTMLElement}
  */
-const chooseElement = ({ type, input, placeholder, touched, error }) => {
-  const hasError = touched && error;
+const chooseElement = (props) => {
+  const { type, input, placeholder, disabled } = props;
+  const hasError = props.touched && props.error;
   const className = cx({ error: hasError });
 
   // choose element by type. Add cases for radios and checkboxes if needed
   switch (type) {
     case 'textarea':
-      return <textarea {...{ ...input, placeholder, className }} />;
+      return <textarea {...{ ...input, placeholder, className, disabled }} />;
+    case 'multiselect':
+      return (
+        <Select
+          {...input}
+          multi
+          simpleValue
+          joinValues
+          disabled={disabled}
+          onBlur={() => input.onBlur(input.value)}
+          options={props.options}
+          closeOnSelect={false}
+          placeholder={placeholder}
+        />
+      );
     case 'file':
       return (
-        <Dropzone
+        <FileUpload
           {...input}
-          onDrop={input.onChange}
-        >
-          <span>{placeholder}</span>
-        </Dropzone>
+          disabled={disabled}
+          form={props.meta.form}
+          placeholder={placeholder}
+          multiple={!!props.multiple}
+          error={props.meta.error}
+          accept={props.accept}
+        />
       );
     default:
-      return <input {...{ ...input, type, placeholder, className }} />;
+      return <input {...{ ...input, type, placeholder, className, disabled }} />;
   }
 };
 
@@ -48,20 +68,17 @@ const chooseElement = ({ type, input, placeholder, touched, error }) => {
  * @param {object} props.meta input meta data (validation state etc)
  * @return {React.Component}
  */
-export const renderField = ({
-  placeholder,
-  type,
-  input,
-  label,
-  validation = {},
-  meta: { form, touched, error },
-}) => (
-  <fieldset>
-    <label htmlFor={`${form}_${input.name}`}>{`${label} ${validation.required ? '*' : ''}`}</label>
-    { chooseElement({ type, input, placeholder, touched, error })}
-    {touched && error && <div className="text-danger">{error}</div>}
-  </fieldset>
-);
+export const renderField = (props) => {
+  const { input, label, validation, meta: { form, touched, error } } = props;
+
+  return (
+    <fieldset>
+      <label htmlFor={`${form}_${input.name}`}>{`${label} ${R.prop('required', validation) ? '*' : ''}`}</label>
+      { chooseElement(props)}
+      {touched && error && <div className="text-danger">{error}</div>}
+    </fieldset>
+  );
+};
 
 /**
  * Form a map of fields from field definitions. Create validator functions based on validation rules

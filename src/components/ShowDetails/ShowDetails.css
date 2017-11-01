@@ -1,0 +1,32 @@
+
+
+.ShowDetails {
+  padding: 1rem 0;
+}
+
+.ShowDetails--highlighted {
+  background-color: #ddd;
+  border-radius: 2px;
+  padding: 2rem;
+}
+
+.ShowDetails--highlighted .row {
+  margin: .2rem 0;
+}
+
+@media (min-width: 550px) {
+  .ShowDetails__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .ShowDetails__label {
+    min-width: 33%;
+    margin-right: 2rem;
+  }
+
+  .ShowDetails__value {
+    flex: 1;
+  }
+};

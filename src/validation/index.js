@@ -1,4 +1,4 @@
-import validators from './validators';
+import * as validators from './validators';
 
 /**
  * Form validators functions based on given rules set

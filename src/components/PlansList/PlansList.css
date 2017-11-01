@@ -1,0 +1,48 @@
+.PlansList {
+  margin-bottom: 0;
+}
+
+.PlansList__header {
+  display: flex;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
+.PlansList__identifier {
+  margin-right: 1rem;
+}
+
+.PlansList__version {
+  flex: 1;
+}
+
+.PlansListItem {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .4rem .5rem;
+  border-radius: 4px;
+  margin-bottom: 0;
+}
+
+.PlansListItem__identifier a {
+  cursor: pointer;
+}
+
+.PlanListItem__fileUrl:not(:last-child):after {
+  content: ", ";
+}
+
+.PlansListItem:hover {
+  background-color: #eee;
+  color: #1EAEDB;
+}
+
+.PlansListItem:hover a {
+  color: #1EAEDB;
+}
+
+@media (max-width: 550px) {
+  .PlansListItem {
+    border-bottom: 1px solid skyblue;
+  }
+}

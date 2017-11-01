@@ -1,0 +1,68 @@
+.FileUploadDialog {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 4px 4px 18px #aaa;
+  padding: 2rem;
+}
+
+.FileUploadDialog__indicator-wrapper {
+  margin-bottom: 2rem;
+}
+
+.FileUploadDialog__indicator-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FileUploadDialog__indicator-track,
+.FileUploadDialog__indicator {
+  border-radius: 4px;
+}
+
+.FileUploadDialog__indicator-track {
+  width: 100%;
+  background-color: #aaa;
+}
+
+@keyframes GrandientSlider {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+.FileUploadDialog__indicator {
+  background: limegreen;
+  background: linear-gradient(to right,
+    rgba(145,232,66,1) 17%,
+    rgba(145,232,66,1) 42%,
+    rgba(210,255,82,1) 75%,
+    rgba(210,255,82,1) 100%
+  );
+  background-size: 200% 200%;
+
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  transition: all .8s ease-out;
+  animation: GrandientSlider 5s ease infinite;
+  overflow: hidden;
+}
+
+.FileUploadDialog__indicator--success {
+  background: limegreen;
+}
+
+.FileUploadDialog__indicator--error {
+  background: #d20c0c;
+}
+
+.FileUploadDialog__indicator--warning {
+  background: goldenrod;
+}
+
+.FileUploadDialog__indicator-filesize {
+  padding: .2rem;
+  margin: .5rem 0;
+  border-radius: 4px;
+  background-color: rgba(255,255, 255, .6);
+}

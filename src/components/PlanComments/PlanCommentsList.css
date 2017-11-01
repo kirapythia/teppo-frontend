@@ -1,0 +1,53 @@
+.PlanCommentsListItem {
+  padding: 1rem;
+  border-radius: 2px;
+  border-bottom: 2px solid rgba(30, 174, 219, .5);
+}
+
+.PlanCommentsListItem > div:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.PlanCommentsListItem--approved {
+  background-color: rgba(79, 206, 29, 0.2);
+  border-bottom-color: rgba(41, 107, 15, 0.2);
+}
+
+.PlanCommentsListItem--approved .fa-comment-o {
+  color: rgba(79, 206, 29, 1);
+}
+
+.PlanCommentsListItem__image {
+  width: 60px;
+  height: 60px;
+  color: #257491;
+}
+
+.PlanCommentsListItem__image .crop {
+  width: 60px;
+  height: 60px;
+}
+
+.PlanCommentsListItem__author a {
+  color: #257491;
+}
+
+.PlanCommentsListItem button {
+  width: 100%;
+}
+
+@media (min-width: 550px) {
+  .PlanCommentsListItem {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .PlanCommentsListItem button {
+    width: auto;
+  }
+
+  .PlanCommentsListItem__body {
+    flex: 1;
+  }
+}

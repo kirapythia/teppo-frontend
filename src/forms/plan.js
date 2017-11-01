@@ -1,4 +1,5 @@
 import t from '../locale';
+import { append } from './normalizers';
 
 /**
  * Field definitions for the plan form. Object key is field name and
@@ -15,28 +16,12 @@ import t from '../locale';
  *                               the value given cannot be converted to a number
  */
 const fields = {
-  mainNo: {
-    type: 'text',
-    label: t('plan.primary_id'),
-    validation: {
-      required: true,
-      type: 'number',
-    },
-  },
-
-  subNo: {
-    type: 'text',
-    label: t('plan.secondary_id'),
-    validation: {
-      required: true,
-      type: 'number',
-    },
-  },
-
   files: {
     type: 'file',
+    multiple: true,
     label: t('plan.files'),
     placeholder: t('dropzone.placeholder'),
+    normalize: append,
   },
 };
 

@@ -4,6 +4,6 @@
 
 .Message .CloseIconButton {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: .7rem;
+  right: 1.25rem;
 }

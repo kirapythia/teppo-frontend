@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'redux-little-router';
 import t from '../../locale';
 import { PROJECT } from '../../constants/routes';
+import LinkButton from '../common/LinkButton';
+import ProjectListContainer from '../ProjectList';
 
 /**
  * Landing page
  */
 const HomePage = () => (
   <div>
-    <Link className="button" href={PROJECT}>{t('button.add_project')}</Link>
+    <ProjectListContainer />
+    <LinkButton
+      className="button-primary"
+      href={PROJECT}
+      icon="fa-file-o"
+      text={t('button.add_project')}
+    />
   </div>
 );
 

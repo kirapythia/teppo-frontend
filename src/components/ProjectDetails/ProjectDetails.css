@@ -1,0 +1,30 @@
+.ProjectDetails {
+  height: 100%;
+  position: relative;
+}
+
+.ProjectDetails h3 {
+  margin: 2rem 0;
+}
+
+.ProjectDetails__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.ProjectDetails__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.ProjectDetails__actions > *:first-child {
+  margin-right: 1rem;
+}
+
+.ProjectDetails__plans-wrapper {
+  flex: 1;
+  margin-bottom: 10rem;
+}

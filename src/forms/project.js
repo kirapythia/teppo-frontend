@@ -1,4 +1,5 @@
 import t from '../locale';
+import { listToString, stringToNumberList, stripTags } from './normalizers';
 
 /**
  * Field definitions for the project form. Object key is field name and
@@ -30,6 +31,9 @@ const fields = {
     validation: {
       required: true,
       type: 'number',
+      minLength: 4,
+      min: 2000,
+      max: 32767,
     },
   },
 
@@ -39,23 +43,22 @@ const fields = {
     validation: {
       type: 'string',
       required: true,
+      regex: /^[a-zåäö0-9_-\s]+$/i,
     },
   },
 
-  /*
-  alternativeNames: {
-    type: 'text',
-    label: t('project.alternative_names'),
-    normalize: stringToList,
-    format: value => (value || []).join(', '),
-    validation: {
-      type: 'array',
-    },
+  sisterProjects: {
+    type: 'multiselect',
+    label: t('project.sister_projects'),
+    placeholder: t('project.sister_projects.placeholder'),
+    normalize: stringToNumberList,
+    format: listToString,
   },
-  */
+
   description: {
     type: 'textarea',
     label: t('project.description'),
+    normalize: stripTags,
   },
 };
 

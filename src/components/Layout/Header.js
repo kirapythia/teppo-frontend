@@ -2,11 +2,21 @@ import React from 'react';
 import { Link } from 'redux-little-router';
 import t from '../../locale';
 import { HOME } from '../../constants/routes';
+import espooLogo from './espoo_logo.png';
 
 const Header = () => (
-  <div className="Header">
-    <h1><Link href={HOME}>{t('app.name')}</Link></h1>
-  </div>
+  <header className="Header container">
+    <div className="row">
+      <div className="twelve columns">
+        <h1 className="Header__title">
+          <Link href={HOME}>
+            <img className="Header__logo" src={espooLogo} alt="Espoo" />
+            <span>{t('app.name')}</span>
+          </Link>
+        </h1>
+      </div>
+    </div>
+  </header>
 );
 
 export default Header;

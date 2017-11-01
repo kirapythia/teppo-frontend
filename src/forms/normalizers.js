@@ -12,6 +12,28 @@ export const stringToList = value => (value ? value.replace(/,\s/g, ',').split(/
 /**
  * Concatenate a list of values separating them with a comma and a space
  * @param {*[]} value
- * @param {string} value
+ * @return {string} value
  */
-export const listToString = value => (value ? value.join(', ') : '');
+export const listToString = value => (value ? value.join(',') : '');
+
+/**
+ * Format a comma separated string list into an array of numbers
+ * @param {*} value
+ * @return {number[]}
+ */
+export const stringToNumberList = value => stringToList(value).map(Number);
+
+/**
+ * Strip tags from html input
+ * @param {string} value
+ * @return {string}
+ */
+export const stripTags = (value = '') => value.replace(/(<([^>]+)>)/ig, '');
+
+/**
+ * Append normalizer. Appends new values to the previous values
+ * @param {*|*[]} value
+ * @param {*[]} prev
+ * @return {*[]}
+ */
+export const append = (value, prev = []) => prev.concat(value);

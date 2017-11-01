@@ -8,9 +8,9 @@ import './Layout.css';
 const Layout = ({ children }) => (
   <div className="PageLayout">
     <Header />
-    <div className="PageLayout__content">
+    <main className="PageLayout__content container">
       { children }
-    </div>
+    </main>
     <Footer />
   </div>
 );

@@ -1,5 +1,5 @@
 import createValidators from './index';
-import validators from './validators';
+import * as validators from './validators';
 
 
 it('should return an empty array if given no rules', () => {

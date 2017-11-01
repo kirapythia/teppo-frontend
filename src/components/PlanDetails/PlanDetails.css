@@ -1,0 +1,8 @@
+.PlanDetails .ShowDetails,
+.PlanDetails__actions button {
+  margin-bottom: 2rem;
+}
+
+.PlanDetails .PlansList {
+  margin-bottom: 2rem;
+}

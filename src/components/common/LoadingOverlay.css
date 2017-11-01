@@ -1,0 +1,30 @@
+.LoadingOverlay__content {
+  margin: auto;
+  color: #333;
+}
+
+.LoadingOverlay__spinner {
+  color: #33C3F0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

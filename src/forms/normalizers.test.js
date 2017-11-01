@@ -37,7 +37,7 @@ describe('listToString', () => {
 
   it('should return comma-space concatenated values', () => {
     const values = ['a', 'b', 'c'];
-    expect(normalizers.listToString(values)).toEqual(values.join(', '));
+    expect(normalizers.listToString(values)).toEqual(values.join(','));
   });
 
   it('should return an zero length string if value is null', () => {

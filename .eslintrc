@@ -2,7 +2,7 @@
   "extends": "airbnb",
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "ecmaFeatures": {
       "jsx": true,
       "experimentalObjectRestSpread": true
@@ -32,6 +32,11 @@
     }],
     "import/prefer-default-export": 0,
     "func-names": 0,
-    "prefer-arrow-callback": 0
+    "prefer-arrow-callback": 0,
+    "object-curly-newline": 0,
+    "react/jsx-closing-tag-location": 0,
+    "function-paren-newline": 0,
+    "jsx-a11y/label-has-for": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 }

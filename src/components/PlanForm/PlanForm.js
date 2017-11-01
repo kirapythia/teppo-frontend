@@ -1,13 +1,17 @@
+import * as R from 'ramda';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-
+import { formProjectUrl } from '../../utils';
 import { createFieldsWithValidations } from '../../forms/form-utils';
-import fields from '../../forms/plan';
-import { getCurrentProjectId } from '../../selectors';
-import { NAME, actions } from './PlanForm-ducks';
+import formFields from '../../forms/plan';
+import { getCurrentProject, listPlans } from '../../selectors';
+import { NAME, actions } from './PlanForm.ducks';
+import { validatePlans, validateSamePlan } from './validator';
+import CreateEditAndSaveForm from '../CreateEditAndSaveForm';
 
-import CreateAndSaveForm from '../Form/CreateAndSaveForm';
+// form field configuration objects with validator functions from field definitions
+const fieldsWithValidations = createFieldsWithValidations(formFields);
 
 /**
  * Redux-form configuration object
@@ -24,35 +28,55 @@ const formConfig = {
    * @type {boolean}
    */
   destroyOnUnmount: true,
+  /**
+   * Tell redux-form to reinitialize itself when initialValues change
+   * @type {boolean}
+   */
+  enableReinitialize: true,
+  /**
+   * Tell redux-form to keep it's dirty values when reinitializing
+   * @type {boolean}
+   */
+  keepDirtyOnReinitialize: true,
 };
-
-// form field configuration objects with validator functions from field definitions
-const fieldsWithValidations = createFieldsWithValidations(fields);
 
 /**
  * Gather all the props needed from the application state
  * @param {object} state
  * @return {object}
  */
-const mapStateToProps = state => ({
-  projectId: getCurrentProjectId(state),
-  formSendError: state.planForm.error,
-  fields: fieldsWithValidations,
-  cancelHref: `/project/${getCurrentProjectId(state)}`,
-  project: state.projectDetails.project,
-  initialValues: state.projectDetails.project
-    ? { mainNo: state.projectDetails.project.mainNo }
-    : undefined,
-});
+const mapStateToProps = (state, ownProps) => {
+  const project = getCurrentProject(state) || {};
+  const { plan } = ownProps;
+  const allPlans = listPlans(state);
+  const fieldProps = fieldsWithValidations.map(f =>
+    (f.name !== 'files' ? f : R.assoc('multiple', !plan, f))
+  );
+
+  return {
+    fields: fieldProps,
+    formSendError: state.planForm.error,
+    cancelHref: formProjectUrl(project.projectId),
+    validate: plan
+      ? validateSamePlan(plan)
+      : validatePlans(allPlans),
+    initialValues: {
+      projectId: project.projectId,
+      mainNo: project.mainNo,
+    },
+  };
+};
 
 /**
  * Gather all the action creators needed
  * @param {function} dispatch the dispatcher function
+ * @param {object} ownProps actual props passed to the component
  * @return {object}
  */
-const mapDispatchToProps = dispatch => bindActionCreators({
-  saveAction: actions.savePlan,
-  clearSendError: actions.clearSendError,
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
+  submitAction: ownProps.plan
+    ? actions.versionPlan
+    : actions.savePlan,
 }, dispatch);
 
 /**
@@ -62,4 +86,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm(formConfig)
-)(CreateAndSaveForm);
+)(CreateEditAndSaveForm);
