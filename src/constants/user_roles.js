@@ -1,8 +1,9 @@
 export default {
-  ADMIN: 'admin',
-  PLANNER_ADMIN: 'planner_admin',
+  ADMIN: 'Pekka Pääkäyttäjä',
+  PLANNER_ADMIN: 'Seija Pääkäyttäjä-Suunnittelija',
   PLANNER: 'Sirpa Suunnittelija',
+  INSPECTOR: 'Taru Tarkastaja',
   APPROVER: 'Helvi Hyväksyjä',
-  MAINTENANCE: 'Kake Avatar',
-  ONLOOKER: 'Kalle Katselija'
-}
+  MAINTENANCE: 'Kaija Kunnossapito',
+  ONLOOKER: 'Kalle Katselija',
+};

@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 import t from '../../locale';
 import Button from '../common/Button';
+import RoleAuth from '../RoleAuth';
+import { planCommentsListItemAuthorized } from '../../constants/user_authorization.json';
+
+const authorized = planCommentsListItemAuthorized;
+
+const mapStateToProps = state => ({
+  role: state.user.role,
+});
 
 const formIconClassName = isApproved => cx('fa', 'fa-2x', isApproved ? 'fa-comment' : 'fa-comment-o');
 
@@ -25,7 +34,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
  * @param {object} props
  * @param {object} props.comment
  */
-const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
+const PlanCommentsListItem = ({ comment, onApproveClick, readOnly, role }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
     <div><i className={formIconClassName(comment.approved)} aria-hidden /></div>
     <div className="PlanCommentsListItem__body">
@@ -35,9 +44,11 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
       {comment.ptext}
     </div>
     {!readOnly && (
-      <div>{chooseActionButton(comment, onApproveClick)}</div>
+      <RoleAuth authorized={authorized} role={role} >
+        <div>{chooseActionButton(comment, onApproveClick)}</div>
+      </RoleAuth>
     )}
   </li>
 );
 
-export default PlanCommentsListItem;
+export default connect(mapStateToProps)(PlanCommentsListItem);
