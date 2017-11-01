@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import t from '../../locale';
-import { versionToCharacter } from '../../utils';
+import { versionToCharacter, zeroPad } from '../../utils';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import ShowDetails from '../ShowDetails';
 import PlanForm from '../PlanForm';
@@ -19,7 +19,7 @@ const formDetailFields = values => R.filter(Boolean, [
   { label: t('project.name'), value: values.name },
   { label: t('project.hansuProjectId'), value: values.hansuProjectId },
   { label: t('plan.primary_id'), value: values.mainNo },
-  values.subNo && { label: t('plan.secondary_id'), value: values.subNo },
+  values.subNo && { label: t('plan.secondary_id'), value: zeroPad(values.subNo, 3) },
   !R.isNil(values.version) && { label: t('common.version'), value: versionToCharacter(values.version) },
 ]);
 
