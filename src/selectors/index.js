@@ -11,6 +11,7 @@ import { propSorter, mapToList, formPlanIdentifier } from '../utils';
 
 const getProjectDetails = state => state.project;
 const getPlans = state => state.plans;
+const getPlansFromVersionHistory = state => state.planVersionHistory.plans;
 
 /**
  * Get all projects as a list
@@ -121,6 +122,11 @@ export const listLatestVersionsOfPlans = createSelector(
   )
 );
 
+/**
+ * Get the second latest version of a plan
+ * @param {object} state
+ * @return {object} Plan object
+ */
 export const getSecondLatestVersionOfPlan = createSelector(
   getCurrentPlan,
   listPlans,
@@ -128,4 +134,18 @@ export const getSecondLatestVersionOfPlan = createSelector(
     R.filter(R.eqBy(formPlanIdentifier, plan)),
     getNthVersion(R.nth(1))
   )(plans)
+);
+
+/**
+ * Get all versions of a plan from the version history and sort them by version
+ * @param {object} state
+ * @return {object[]} A list of plan objects
+ */
+export const listAllPlanVersions = createSelector(
+  getCurrentPlan,
+  getPlansFromVersionHistory,
+  (plan, allPlans) => R.pipe(
+    R.filter(R.eqBy(formPlanIdentifier, plan)),
+    R.sortBy(R.prop('version'))
+  )(allPlans),
 );

@@ -101,6 +101,14 @@ export const concatProps = propNames => R.pipe(R.props(propNames), R.map(String)
 export const zeroPad = (value, minLength) =>
   `${R.repeat('0', Math.max(0, minLength - String(value).length)).join('')}${value}`;
 
+
+/**
+ * Form plan identifier from main and sub number
+ * @param {object} plan
+ * @return {string}
+ */
+export const formPlanIdentifierText = plan => `${plan.mainNo}/${zeroPad(plan.subNo, 3)}`;
+
 /**
  * Form a identifier by concatenating projectId, mainNo and subNo
  * @private

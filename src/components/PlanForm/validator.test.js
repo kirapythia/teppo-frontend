@@ -37,51 +37,58 @@ describe('Validating when creating a plan', () => {
 
   it('should not pass if plan already has a pdf file with same props', () => {
     const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123.pdf' }];
-    const values = { projectId: 1, files: [{ name: '2001_123.pdf' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.pdf' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));
   });
 
   it('should not pass if plan already has a xml file with same props', () => {
     const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123.xml' }];
-    const values = { projectId: 1, files: [{ name: '2001_123.xml' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.xml' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));
   });
 
   it('should pass if plan already has an xml file with same props but a pdf file is being added', () => {
     const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123.xml' }];
-    const values = { projectId: 1, files: [{ name: '2001_123.pdf' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.pdf' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors).toEqual();
   });
 
   it('should pass if plan already has a pdf file with same props but an xml file is being added', () => {
     const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123.pdf' }];
-    const values = { projectId: 1, files: [{ name: '2001_123.xml' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.xml' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors).toEqual();
   });
 
   it('should not pass if files list have double values', () => {
     const plans = [];
-    const values = { projectId: 1, files: [{ name: '2001_123.pdf' }, { name: '2001_123.pdf' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.pdf' }, { name: '2001_123.pdf' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors.files).toEqual(t('validation.message.double_plan_values'));
   });
 
   it('should pass if files list files with same names but with different file extensions', () => {
     const plans = [];
-    const values = { projectId: 1, files: [{ name: '2001_123.xml' }, { name: '2001_123.pdf' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.xml' }, { name: '2001_123.pdf' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors).toEqual();
   });
 
   it('should pass if files list have values with same names but with different file extensions', () => {
     const plans = [];
-    const values = { projectId: 1, files: [{ name: '2001_123.pdf' }, { name: '2001_123.xml' }] };
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.pdf' }, { name: '2001_123.xml' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors).toEqual();
+  });
+
+  it('should not pass if plan\'s main number does not match the projects main number', () => {
+    const plans = [];
+    const values = { projectId: 1, mainNo: 8877, files: [{ name: '2001_123.pdf' }] };
+    const errors = validator.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.main_number_conflict'));
   });
 });
 

@@ -9,6 +9,7 @@ import { actions } from './PlanComments.ducks';
 import PlanCommentsList from './PlanCommentsList';
 import PlanCommentForm from './PlanCommentForm';
 import Message from '../common/Message';
+import './PlanCommentsSection.css';
 
 /**
  * Select needed props from the global state
@@ -90,14 +91,15 @@ const PlanCommentsSection = ({
       comments={comments}
       toggleCommentApproval={toggleCommentApproval}
     />
-    {!readOnly &&
+    {!readOnly && <div>
+      <h4>{t('plan.comments.form.title')}</h4>
       <PlanCommentForm
         plan={plan}
         addComment={addComment}
         formSendError={formSendError}
         clearError={clearCommentAddError}
       />
-    }
+    </div>}
   </section>
 );
 

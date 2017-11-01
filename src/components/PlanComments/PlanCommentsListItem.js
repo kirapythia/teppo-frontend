@@ -5,6 +5,7 @@ import t from '../../locale';
 import Button from '../common/Button';
 import RoleAuth from '../RoleAuth';
 import { planCommentsListItemAuthorized } from '../../constants/user_authorization.json';
+import PreviewImage from '../common/PreviewImage';
 
 const authorized = planCommentsListItemAuthorized;
 
@@ -36,18 +37,27 @@ const chooseActionButton = (comment, callback) => (comment.approved
  */
 const PlanCommentsListItem = ({ comment, onApproveClick, readOnly, role }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
-    <div><i className={formIconClassName(comment.approved)} aria-hidden /></div>
+    <div className="PlanCommentsListItem__image">
+      {comment.url
+        ? <PreviewImage url={comment.url} size={60} />
+        : <i className="fa fa-2x fa-comment-o" aria-hidden />
+      }
+    </div>
     <div className="PlanCommentsListItem__body">
       <div className="PlanCommentsListItem__author">
         <a href="mailto:seija.suunnittelija@espoo.fi">Seija Suunnittelija</a>
       </div>
       {comment.ptext}
     </div>
+<<<<<<< HEAD
     {!readOnly && (
       <RoleAuth authorized={authorized} role={role} >
         <div>{chooseActionButton(comment, onApproveClick)}</div>
       </RoleAuth>
     )}
+=======
+    {!readOnly && (<div>{chooseActionButton(comment, onApproveClick)}</div>)}
+>>>>>>> master
   </li>
 );
 

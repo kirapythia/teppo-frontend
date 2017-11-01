@@ -1,17 +1,36 @@
-import { formCommentApiUrl, postJSON, putJSON, ServerResponseError } from '../../utils/ajax';
+import * as R from 'ramda';
+import { formCommentApiUrl, postJSON, putJSON, ServerResponseError, uploadFile } from '../../utils/ajax';
 import { withTimeout } from '../../utils';
 import t from '../../locale';
 
 /**
- * Send comment to the server
+ * Save comment json entity
+ * @param {object} plan
+ * @param {object} comment
+ * @return {Promise}
+ */
+const saveCommentEntity = (plan, comment) =>
+  withTimeout(2 * 60 * 1000, postJSON(formCommentApiUrl(plan), comment));
+
+/**
+ * Save comment and it's attachment file to the server
  * @async
  * @param {object} plan
  * @param {object} comment
  * @return {Promise}
  */
-export const saveComment = (plan, comment) =>
-  withTimeout(2 * 60 * 1000, postJSON(formCommentApiUrl(plan), comment)
-    .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.save'), error.status))));
+export const saveComment = async (plan, values) => {
+  const file = R.head(R.propOr([], 'files', values));
+
+  try {
+    const comment = await saveCommentEntity(plan, values);
+    if (!file) return comment;
+    const fileUploadResult = await uploadFile(formCommentApiUrl(plan, comment, 'files'), file);
+    return fileUploadResult;
+  } catch (e) {
+    throw new ServerResponseError(t('network.error.comment.save'), e.status);
+  }
+};
 
 /**
  * Edit comment
@@ -23,7 +42,7 @@ export const saveComment = (plan, comment) =>
 export const editComment = (plan, comment) =>
   withTimeout(
     2 * 60 * 1000,
-    putJSON(formCommentApiUrl({ ...plan, ...comment }), comment)
+    putJSON(formCommentApiUrl(plan, comment), comment)
       .catch(error => Promise.reject(new ServerResponseError(t('network.error.comment.edit'), error.status)))
   );
 

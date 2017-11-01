@@ -1,29 +1,31 @@
 .PlanCommentsListItem {
   padding: 1rem;
   border-radius: 2px;
-}
-
-.PlanCommentsListItem {
   border-bottom: 2px solid rgba(30, 174, 219, .5);
 }
 
-.PlanCommentsListItem--approved {
-  background-color: rgba(79, 206, 29, 0.2) !important;
-  border-bottom-color: rgba(41, 107, 15, 0.2) !important;
+.PlanCommentsListItem > div:not(:last-child) {
+  margin-right: 1rem;
 }
 
-.PlanCommentsListItem--approved .fa-comment {
+.PlanCommentsListItem--approved {
+  background-color: rgba(79, 206, 29, 0.2);
+  border-bottom-color: rgba(41, 107, 15, 0.2);
+}
+
+.PlanCommentsListItem--approved .fa-comment-o {
   color: rgba(79, 206, 29, 1);
 }
 
-.PlanCommentsListItem > div:first-child {
-  margin-right: 2rem;
+.PlanCommentsListItem__image {
+  width: 60px;
+  height: 60px;
   color: #257491;
 }
 
-.PlanCommentsListItem__author_icon {
-  color: #257491;
-  margin-right: 1rem;
+.PlanCommentsListItem__image .crop {
+  width: 60px;
+  height: 60px;
 }
 
 .PlanCommentsListItem__author a {
@@ -43,11 +45,9 @@
 
   .PlanCommentsListItem button {
     width: auto;
-    margin-top: 1rem;
   }
 
   .PlanCommentsListItem__body {
     flex: 1;
-    margin-right: .6rem;
   }
 }
