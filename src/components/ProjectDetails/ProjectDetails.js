@@ -100,7 +100,7 @@ const ProjectDetails = ({
           <PlansList project={project} plans={plans} />
         </div>
 
-        {!project.completed && <div className="row">
+        <div className="row">
           <div className="six columns">
             <LinkButton
               className="u-full-width"
@@ -110,15 +110,17 @@ const ProjectDetails = ({
             />
           </div>
           <div className="six columns">
-            <LinkButton
-              className="button-primary u-full-width"
-              href={`${formProjectUrl(project.projectId, 'plan/new')}`}
-              icon="fa-plus"
-              text={t('button.add_plans')}
-            />
+            {project.completed
+              ? <span>&nbsp;</span>
+              : <LinkButton
+                className="button-primary u-full-width"
+                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+                icon="fa-plus"
+                text={t('button.add_plans')}
+              />
+            }
           </div>
         </div>
-        }
       </div>
     )}
   </div>

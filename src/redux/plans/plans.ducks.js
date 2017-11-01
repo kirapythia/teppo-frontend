@@ -14,7 +14,7 @@ import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
 export const NAME = 'plans';
 
 export const actionTypes = {
-  APPROVE_PLAN: 'pythia-webclient/PlanDetails/APPROVE_PLAN',
+  UPDATE_PLAN: 'pythia-webclient/PlanDetails/UPDATE_PLAN',
 
   UPDATE_PLAN_SUCCESS: 'pythia-webclient/PlanDetails/UPDATE_PLAN_SUCCESS',
   UPDATE_PLAN_ERROR: 'pythia-webclient/PlanDetails/UPDATE_PLAN_ERROR',
@@ -28,7 +28,13 @@ export const actionTypes = {
 
 export const actions = {
   approvePlan: createAction(
-    actionTypes.APPROVE_PLAN,
+    actionTypes.UPDATE_PLAN,
+    plan => ({ ...plan, status: PLAN_STATUS.APPROVED }),
+  ),
+
+  acceptToMaintenance: createAction(
+    actionTypes.UPDATE_PLAN,
+    plan => ({ ...plan, maintenanceDuty: true }),
   ),
 
   updatePlanSuccess: createAction(
@@ -70,13 +76,13 @@ export const actions = {
 const byId = listToMapBy('planId');
 
 export default handleActions({
-  // Handle approve plan action. Update plan object in the server.
-  [actionTypes.APPROVE_PLAN]: (state, action) => loop(
+  // Handle plan update action. Update plan object in the server.
+  [actionTypes.UPDATE_PLAN]: (state, action) => loop(
     state,
     Cmd.run(updatePlan, {
       successActionCreator: actions.updatePlanSuccess,
       failActionCreator: actions.updatePlanError,
-      args: [{ ...action.payload, status: PLAN_STATUS.APPROVED }],
+      args: [action.payload],
     })
   ),
 

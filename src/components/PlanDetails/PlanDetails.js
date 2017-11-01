@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
-import { actions } from '../../redux/plans';
+import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
 
   return {
+    project,
     error: state.projectDetails.error,
     plan: getCurrentPlan(state),
     isFetching: state.planDetails.isFetching,
@@ -31,8 +32,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  approvePlan: actions.approvePlan,
-  removePlan: actions.removePlan,
+  approvePlan: planActions.approvePlan,
+  removePlan: planActions.removePlan,
+  acceptToMaintenance: planActions.acceptToMaintenance,
 }, dispatch);
 
 const mergeProps = (stateProps, actionCreators) => ({
@@ -40,6 +42,7 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   approvePlan: () => actionCreators.approvePlan(stateProps.plan),
   removePlan: () => actionCreators.removePlan(stateProps.plan),
+  acceptToMaintenance: () => actionCreators.acceptToMaintenance(stateProps.plan),
 });
 
 /**
@@ -49,14 +52,17 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {object} props.error Error from remove or approve plan actions
  * @param {function} props.approvePlan Approve plan action
  * @param {function} props.removePlan Remove plan action
+ * @param {function} props.acceptToMaintenance Accept to maintenance action
  * @param {boolean} props.isFetching Is an ajax request being processed
  */
 const PlanDetails = ({
+  project,
   plan,
   readOnly,
   error,
   approvePlan,
   removePlan,
+  acceptToMaintenance,
   isFetching,
 }) => (
   <div className="PlanDetails">
@@ -73,15 +79,23 @@ const PlanDetails = ({
     {!error && plan && (
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
-        {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-          <div className="text-right">
+        <div className="text-right">
+          {project.completed && plan.status === PLAN_STATUS.APPROVED && (
+            <Button
+              disabled={plan.maintenanceDuty}
+              text={t('button.approve_to_maintenance')}
+              icon="fa-check"
+              onClick={acceptToMaintenance}
+            />
+          )}
+          {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
             <LinkButton
               icon="fa-plus"
               text={t('button.new_plan_version')}
               href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
             />
-          </div>
-        )}
+          )}
+        </div>
         <PlanVersionHistory />
         <PlanCommentsSection />
         <div className="PlanDetails__actions">
@@ -107,7 +121,9 @@ const PlanDetails = ({
               </div>
             </div>
           )}
-          {plan.status !== PLAN_STATUS.APPROVED && <BackToProjectButton plan={plan} />}
+          {(plan.status !== PLAN_STATUS.APPROVED || readOnly) &&
+            <BackToProjectButton plan={plan} />
+          }
         </div>
       </div>
     )}

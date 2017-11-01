@@ -16,7 +16,7 @@ const initialState = {
 export default handleActions({
   // Handle actions that initiate a fetch request
   [combineActions(
-    actionTypes.APPROVE_PLAN,
+    actionTypes.UPDATE_PLAN,
     actionTypes.REMOVE_PLAN,
     actionTypes.CREATE_NEW_PLAN_VERSION,
   )]: state => ({ ...state, isFetching: true }),
