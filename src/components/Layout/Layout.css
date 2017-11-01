@@ -9,25 +9,27 @@
 }
 
 .Header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
   background-color: #fff;
   padding: 1rem 0;
 }
 
-.Header .row > .column:first-child {
-  text-align: left;
-}
-
 .Header__logo {
-  margin-right: 3rem;
+  margin-right: 1.2rem;
   vertical-align: bottom;
 }
 
 .Header__title {
-  font-size: 4rem;
+  flex: 1;
   vertical-align: middle;
 }
 
-.Header a {
+.Header__title a {
+  vertical-align: super;
+  color: #0066b3;
   text-decoration: none;
 }
 
