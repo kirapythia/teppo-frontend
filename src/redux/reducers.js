@@ -9,6 +9,7 @@ import * as Comments from '../components/PlanComments';
 import * as PlanVersionHistory from '../components/PlanVersionHistory';
 import projectReducer, * as Project from './project/project.reducer';
 import * as Plans from './plans';
+import * as FileUpload from '../components/FileUploadDialog';
 
 /**
  * All redux reducers as an object. Reducer name as key and reducer function as value
@@ -25,5 +26,6 @@ export default {
   [Comments.NAME]: Comments.reducer,
   [Project.NAME]: projectReducer,
   [Plans.NAME]: Plans.reducer,
+  [FileUpload.NAME]: FileUpload.reducer,
   [PlanVersionHistory.NAME]: PlanVersionHistory.reducer,
 };

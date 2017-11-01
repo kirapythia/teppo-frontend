@@ -42,8 +42,22 @@ describe('Validating when creating a plan', () => {
     expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));
   });
 
+  it('should not pass if plan already has a pdf file with same props and with version in file name', () => {
+    const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123_0.pdf' }];
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.pdf' }] };
+    const errors = validator.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));
+  });
+
   it('should not pass if plan already has a xml file with same props', () => {
     const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123.xml' }];
+    const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.xml' }] };
+    const errors = validator.validatePlans(plans)(values);
+    expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));
+  });
+
+  it('should not pass if plan already has a xml file with same props and with version in file name', () => {
+    const plans = [{ projectId: 1, mainNo: 2001, subNo: 123, pdfUrl: '2001_123_0.xml' }];
     const values = { projectId: 1, mainNo: 2001, files: [{ name: '2001_123.xml' }] };
     const errors = validator.validatePlans(plans)(values);
     expect(errors.files).toEqual(t('validation.message.collides_existing_plan_values'));

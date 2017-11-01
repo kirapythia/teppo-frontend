@@ -106,8 +106,7 @@ export default handleActions({
   [combineActions(
     PlanForm.PLAN_SAVE_SUCCESS,
     actionTypes.UPDATE_PLAN_SUCCESS,
-  )]: (state, action) => byId(mapToList(state)
-    .concat(Array.isArray(action.payload) ? action.payload[0] : action.payload)),
+  )]: (state, action) => byId(mapToList(state).concat(action.payload)),
 
   // handle project fetch success
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.plans),
