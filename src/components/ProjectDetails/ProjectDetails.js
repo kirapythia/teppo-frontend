@@ -15,10 +15,13 @@ import { ProjectList } from '../ProjectList';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
 import { actions } from './ProjectDetails.ducks';
+import RoleAuth from '../RoleAuth';
+import authorized from '../../constants/user_authorization';
 
 import './ProjectDetails.css';
 
 const mapStateToProps = state => ({
+  role: state.user.role,
   error: state.projectDetails.error,
   project: getCurrentProject(state),
   sisterProjects: getCurrentSisterProjects(state),
@@ -47,6 +50,7 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {function} props.toggleProjectCompletion
  */
 const ProjectDetails = ({
+  role,
   error,
   project,
   plans,
@@ -70,24 +74,28 @@ const ProjectDetails = ({
         />
 
         <div className="ProjectDetails__actions">
-          <LinkButton
-            href={`${formProjectUrl(project.projectId, 'edit')}`}
-            icon="fa-pencil"
-            text={t('button.edit_project')}
-          />
-          {project.completed
-            ? <Button
-              icon="fa-undo"
-              text={t('button.project_complete_revert')}
-              className="button-red"
-              onClick={toggleProjectCompletion}
+          <RoleAuth authorized={authorized.editProjectAuthorized} role={role}>
+            <LinkButton
+              href={`${formProjectUrl(project.projectId, 'edit')}`}
+              icon="fa-pencil"
+              text={t('button.edit_project')}
             />
-            : <Button
-              icon="fa-check"
-              text={t('button.project_complete')}
-              onClick={toggleProjectCompletion}
-            />
-          }
+          </RoleAuth>
+          <RoleAuth authorized={authorized.completeProjectAuthorized} role={role}>
+            {project.completed
+              ? <Button
+                icon="fa-undo"
+                text={t('button.project_complete_revert')}
+                className="button-red"
+                onClick={toggleProjectCompletion}
+              />
+              : <Button
+                icon="fa-check"
+                text={t('button.project_complete')}
+                onClick={toggleProjectCompletion}
+              />
+            }
+          </RoleAuth>
         </div>
 
         <div>
@@ -110,12 +118,14 @@ const ProjectDetails = ({
             />
           </div>
           <div className="six columns">
-            <LinkButton
-              className="button-primary u-full-width"
-              href={`${formProjectUrl(project.projectId, 'plan/new')}`}
-              icon="fa-plus"
-              text={t('button.add_plans')}
-            />
+            <RoleAuth authorized={authorized.createPlanAuthorized} role={role}>
+              <LinkButton
+                className="button-primary u-full-width"
+                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+                icon="fa-plus"
+                text={t('button.add_plans')}
+              />
+            </RoleAuth>
           </div>
         </div>
         }

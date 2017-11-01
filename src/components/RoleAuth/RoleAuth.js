@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 export const RoleAuth = ({ authorized, role, children }) => (
   <div className="RoleAuth">
-    {authorized.includes(role) ? children : null }
+    {(authorized.indexOf(role) > -1) ? children : null }
   </div>
 );
 

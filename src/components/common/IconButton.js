@@ -1,10 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
-import { filterEnter } from '../../utils';
 import './IconButton.css';
 
-// // call given fn only when enter is pressed
-// const filterEnter = fn => e => (e.key === 'Enter' && fn());
+// call given fn only when enter is pressed
+const filterEnter = fn => e => (e.key === 'Enter' && fn());
 
 /**
  * An icon with a role of button

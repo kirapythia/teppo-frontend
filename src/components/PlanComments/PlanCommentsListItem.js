@@ -4,16 +4,12 @@ import cx from 'classnames';
 import t from '../../locale';
 import Button from '../common/Button';
 import RoleAuth from '../RoleAuth';
-import { planCommentsListItemAuthorized } from '../../constants/user_authorization.json';
+import authorized from '../../constants/user_authorization';
 import PreviewImage from '../common/PreviewImage';
-
-const authorized = planCommentsListItemAuthorized;
 
 const mapStateToProps = state => ({
   role: state.user.role,
 });
-
-const formIconClassName = isApproved => cx('fa', 'fa-2x', isApproved ? 'fa-comment' : 'fa-comment-o');
 
 const chooseActionButton = (comment, callback) => (comment.approved
   ? <Button
@@ -49,15 +45,11 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly, role }) => (
       </div>
       {comment.ptext}
     </div>
-<<<<<<< HEAD
     {!readOnly && (
-      <RoleAuth authorized={authorized} role={role} >
+      <RoleAuth authorized={authorized.planCommentsListItemAuthorized} role={role} >
         <div>{chooseActionButton(comment, onApproveClick)}</div>
       </RoleAuth>
     )}
-=======
-    {!readOnly && (<div>{chooseActionButton(comment, onApproveClick)}</div>)}
->>>>>>> master
   </li>
 );
 

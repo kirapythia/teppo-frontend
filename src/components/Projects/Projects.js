@@ -3,19 +3,24 @@ import t from '../../locale';
 import { PROJECT } from '../../constants/routes';
 import LinkButton from '../common/LinkButton';
 import ProjectListContainer from '../ProjectList';
+import RoleAuth from '../RoleAuth';
+import authorized from '../../constants/user_authorization';
+
 
 /**
- * User's projects by role, Filtering Missing????
+ * LIst all projects. Should be list user's projects by role, Filtering Missing????
  */
-const Projects = ({ role }) =>  (
+const Projects = ({ role }) => (
   <div>
-  <ProjectListContainer />
-  <LinkButton
-    className="button-primary"
-    href={PROJECT}
-    icon="fa-file-o"
-    text={t('button.add_project')}
-  />
+    <ProjectListContainer />
+    <RoleAuth authorized={authorized.createProjectAuthorized} role={role} >
+      <LinkButton
+        className="button-primary"
+        href={PROJECT}
+        icon="fa-file-o"
+        text={t('button.add_project')}
+      />
+    </RoleAuth>
   </div>
 );
 
