@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { combineActions, createAction, handleActions } from 'redux-actions';
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
+import { stopSubmit } from 'redux-form';
 import { validateOnSave } from './validator';
 import { actions as NotificationActions } from '../Notifications';
 import { tpl } from '../../locale';
@@ -144,12 +145,15 @@ export default handleActions({
     const individualPlans = selectIndividualPlans(action.payload);
     return loop(
       state,
-      // display an error notification for failed files
-      Cmd.action(NotificationActions.addErrorNotification(
-        individualPlans.length > 1
-          ? tpl('plan.message.save_error_multiple', { count: individualPlans.length })
-          : tpl('plan.message.save_error', { filename: individualPlans[0] })
-      ))
+      Cmd.list([
+        // display an error notification for failed files
+        Cmd.action(NotificationActions.addErrorNotification(
+          individualPlans.length > 1
+            ? tpl('plan.message.save_error_multiple', { count: individualPlans.length })
+            : tpl('plan.message.save_error', { filename: individualPlans[0] })
+        )),
+        Cmd.action(stopSubmit('planForm')),
+      ])
     );
   },
 }, initialState);

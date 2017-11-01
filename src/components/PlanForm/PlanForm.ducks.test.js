@@ -1,5 +1,6 @@
 import { loop, Cmd } from 'redux-loop';
 import { push, LOCATION_CHANGED } from 'redux-little-router';
+import { stopSubmit } from 'redux-form';
 import t, { tpl } from '../../locale';
 import reducer, { actions } from './PlanForm.ducks';
 import { actions as NotificationActions } from '../Notifications';
@@ -184,7 +185,7 @@ describe('Plan success action', () => {
   });
 });
 
-describe('Plan success action', () => {
+describe('Plan fail action', () => {
   it('should return state unmodified', () => {
     const files = [{ name: '1234_123.pdf' }];
     const state = {};
@@ -197,37 +198,43 @@ describe('Plan success action', () => {
     const files = [{ name: '1234_123.pdf' }];
     const action = actions.planFailAction(files);
     const result = reducer(undefined, action);
-    const notification = NotificationActions.addErrorNotification(
+    const notification = Cmd.action(NotificationActions.addErrorNotification(
       tpl('plan.message.save_error', { filename: files[0].name })
-    );
-    expect(result).toEqual(loop(result[0], Cmd.action(notification)));
+    ));
+    const stopSubmitAction = Cmd.action(stopSubmit('planForm'));
+    expect(result).toEqual(loop(result[0], Cmd.list([notification, stopSubmitAction])));
   });
 
   it('should display a notification for multiple plans if succeeded length is greater than 1', () => {
     const files = [{ name: '1234_111.pdf' }, { name: '1234_222.pdf' }, { name: '1234_333.pdf' }];
     const action = actions.planFailAction(files);
     const result = reducer(undefined, action);
-    const notification = NotificationActions.addErrorNotification(
+    const notification = Cmd.action(NotificationActions.addErrorNotification(
       tpl('plan.message.save_error_multiple', { count: files.length })
-    );
-    expect(result).toEqual(loop(result[0], Cmd.action(notification)));
+    ));
+    const stopSubmitAction = Cmd.action(stopSubmit('planForm'));
+    expect(result).toEqual(loop(result[0], Cmd.list([notification, stopSubmitAction])));
   });
 
   it('should display a notification for every individual plan', () => {
     const files = [{ name: '1234_222.xml' }, { name: '1234_222.pdf' }, { name: '1234_333.pdf' }];
     const action = actions.planFailAction(files);
     const result = reducer(undefined, action);
-    const notification = NotificationActions.addErrorNotification(
+    const notification = Cmd.action(NotificationActions.addErrorNotification(
       tpl('plan.message.save_error_multiple', { count: files.length - 1 })
-    );
-    expect(result).toEqual(loop(result[0], Cmd.action(notification)));
+    ));
+    const stopSubmitAction = Cmd.action(stopSubmit('planForm'));
+    expect(result).toEqual(loop(result[0], Cmd.list([notification, stopSubmitAction])));
   });
 });
 
 describe('navigation to the form page', () => {
   it('should add projectId to the state', () => {
     const projectId = '123';
-    const action = { type: LOCATION_CHANGED, payload: { route: ROUTES.PLAN, params: { projectId } } };
+    const action = {
+      type: LOCATION_CHANGED,
+      payload: { route: ROUTES.PLAN, params: { projectId } }
+    };
     const result = reducer(undefined, action);
     expect(result.projectId).toBe(projectId);
   });
