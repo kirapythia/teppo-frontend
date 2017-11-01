@@ -2,6 +2,10 @@ html, body, #root, .full-height {
   height: 100%;
 }
 
+h1, h2, h3 {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 .text-italic {
   font-style: italic;
 }
@@ -45,4 +49,11 @@ html, body, #root, .full-height {
   color: #856404;
   background-color: #fff3cd;
   border-color: #ffeeba;
+}
+
+
+@media (min-width: 550px) {
+  h1 { font-size: 4.4rem; }
+  h2 { font-size: 3.6rem; }
+  h3 { font-size: 2.4rem; }
 }
