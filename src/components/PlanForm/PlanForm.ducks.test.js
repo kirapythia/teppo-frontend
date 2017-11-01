@@ -233,7 +233,7 @@ describe('navigation to the form page', () => {
     const projectId = '123';
     const action = {
       type: LOCATION_CHANGED,
-      payload: { route: ROUTES.PLAN, params: { projectId } }
+      payload: { route: ROUTES.PLAN, params: { projectId } },
     };
     const result = reducer(undefined, action);
     expect(result.projectId).toBe(projectId);

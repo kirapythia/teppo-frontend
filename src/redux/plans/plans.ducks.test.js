@@ -79,12 +79,13 @@ describe('Fetch project success action', () => {
 describe('Approving a plan', () => {
   describe('approve plan action', () => {
     it('should have a type', () => {
-      expect(actions.approvePlan().type).toEqual(actionTypes.APPROVE_PLAN);
+      expect(actions.approvePlan().type).toEqual(actionTypes.UPDATE_PLAN);
     });
 
     it('should pass plan as payload', () => {
       const plan = {};
-      expect(actions.approvePlan(plan).payload).toBe(plan);
+      const update = { status: PLAN_STATUS.APPROVED };
+      expect(actions.approvePlan(plan).payload).toEqual(update);
     });
   });
 

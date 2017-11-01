@@ -18,6 +18,21 @@ const formPlanFileUrls = R.pipe(
 );
 
 /**
+ * Choose a correct component for indicating plan status
+ * @param {object} props
+ * @param {object} plan
+ */
+const PlanStatusIcon = ({ plan }) => {
+  if (plan.maintenanceDuty) {
+    return <i className="text-success fa fa-check-circle-o" />;
+  }
+  if (plan.status === PLAN_STATUS.APPROVED) {
+    return <i className="text-success fa fa-check" />;
+  }
+  return <span>&nbsp;</span>;
+};
+
+/**
  * Component for displaying project's plans as a list
  * @param {object} props
  * @param {object} props.plan
@@ -25,12 +40,7 @@ const formPlanFileUrls = R.pipe(
  */
 const PlanListItem = ({ plan = {}, project = {} }) => (
   <li className="PlansListItem">
-    <div className="one column">
-      {plan.status === PLAN_STATUS.APPROVED
-        ? <i className="text-success fa fa-check" />
-        : <span>&nbsp;</span>
-      }
-    </div>
+    <div className="one column"><PlanStatusIcon plan={plan} /></div>
     <div className="three columns PlansListItem__identifier">
       <Link href={formPlanUrl(project.projectId, plan.planId)}>
         {formPlanIdentifierText(plan)}
