@@ -28,7 +28,7 @@
     "test": "react-scripts test --env=jsdom --setupFiles=./config/test/shim.js ./config/test/setup.js",
     "eject": "react-scripts eject",
     "lint": "node ./node_modules/eslint/bin/eslint src/**/*.{js,jsx}",
-    "test-coverage": "react-scripts test --env=jsdom --coverage --collectCoverageFrom=src/**/*js --collectCoverageFrom=!src/index.js"
+    "test-coverage": "react-scripts test --env=jsdom --setupFiles=./config/test/shim.js ./config/test/setup.js --coverage --collectCoverageFrom=src/**/*js --collectCoverageFrom=!src/index.js"
   },
   "devDependencies": {
     "enzyme": "^3.1.0",
