@@ -1,4 +1,4 @@
-import * as Routes from '../constants/routes';
+// import * as Routes from '../constants/routes';
 import authorized from '../constants/user_authorization';
 
 /**
@@ -6,13 +6,14 @@ import authorized from '../constants/user_authorization';
  * to perform an action. FIXME: not actually implemented yet!
  * @return {boolean}
  */
+
+
 const authenticate = (user, action) => {
-  const rules = authorized[action.payload.route]
+  const rules = authorized[action.payload.route];
+  if (!user) return false;
   return rules ?
-    state.user.role// checkRules
-    : true
-
-
-}
+    (rules.indexOf(user.role) > -1)
+    : true;
+};
 
 export default authenticate;
