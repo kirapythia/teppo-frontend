@@ -1,16 +1,19 @@
-.RoleListItem {
-  /*margin-bottom: 0;*/
+.RoleListItem button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  border: 0;
 }
 
-.RoleListItem:hover {
-  background-color: #eee;
+.RoleListItem button:hover,
+.RoleListItem button:focus {
   color: #1EAEDB;
+  background-color: #eee;
   cursor: pointer;
 }
 
-.fa {
-  padding-top: 3px;
+.RoleListItem .fa {
   color: grey;
-  /* background: black; */
 }
 
