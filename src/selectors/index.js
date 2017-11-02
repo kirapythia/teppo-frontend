@@ -149,3 +149,17 @@ export const listAllPlanVersions = createSelector(
     R.sortBy(R.prop('version'))
   )(allPlans),
 );
+
+/**
+ * Get latest version of a plan
+ * @param {object} state
+ * @return {object} plan entity
+ */
+export const getLatestPlanVersion = createSelector(
+  getCurrentPlan,
+  listPlans,
+  (plan, plans) => R.pipe(
+    R.filter(R.eqBy(formPlanIdentifier, plan)),
+    getNthVersion(R.head)
+  )(plans)
+);

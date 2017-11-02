@@ -1,8 +1,9 @@
 import React from 'react';
+import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
-import { getCurrentPlan, getCurrentProject } from '../../selectors';
+import { getCurrentPlan, getCurrentProject, getLatestPlanVersion } from '../../selectors';
 import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
@@ -21,13 +22,17 @@ import './PlanDetails.css';
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
+  const plan = getCurrentPlan(state);
+  const latestPlan = getLatestPlanVersion(state);
 
   return {
     project,
+    plan,
     error: state.projectDetails.error,
-    plan: getCurrentPlan(state),
     isFetching: state.planDetails.isFetching,
-    readOnly: project && project.completed,
+    // use prop instead of propEq because it's undef safe
+    readOnly: R.prop('planId', latestPlan) !== R.prop('planId', plan) ||
+      (project && project.completed),
   };
 };
 
@@ -97,7 +102,7 @@ const PlanDetails = ({
           )}
         </div>
         <PlanVersionHistory />
-        <PlanCommentsSection />
+        {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
           {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
             <div className="row">
