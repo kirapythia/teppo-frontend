@@ -1,15 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import cx from 'classnames';
 import t from '../../locale';
 import Button from '../common/Button';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
 import PreviewImage from '../common/PreviewImage';
-
-const mapStateToProps = state => ({
-  role: state.user.role,
-});
 
 const chooseActionButton = (comment, callback) => (comment.approved
   ? <Button
@@ -31,7 +26,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
  * @param {object} props
  * @param {object} props.comment
  */
-const PlanCommentsListItem = ({ comment, onApproveClick, readOnly, role }) => (
+const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
     <div className="PlanCommentsListItem__image">
       {comment.url
@@ -46,11 +41,11 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly, role }) => (
       {comment.ptext}
     </div>
     {!readOnly && (
-      <RoleAuth authorized={authorized.planCommentsListItemAuthorized} role={role} >
+      <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
         <div>{chooseActionButton(comment, onApproveClick)}</div>
       </RoleAuth>
     )}
   </li>
 );
 
-export default connect(mapStateToProps)(PlanCommentsListItem);
+export default PlanCommentsListItem;

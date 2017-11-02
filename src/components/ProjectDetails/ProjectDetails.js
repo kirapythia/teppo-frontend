@@ -21,7 +21,6 @@ import authorized from '../../constants/user_authorization';
 import './ProjectDetails.css';
 
 const mapStateToProps = state => ({
-  role: state.user.role,
   error: state.projectDetails.error,
   project: getCurrentProject(state),
   sisterProjects: getCurrentSisterProjects(state),
@@ -50,7 +49,6 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {function} props.toggleProjectCompletion
  */
 const ProjectDetails = ({
-  role,
   error,
   project,
   plans,
@@ -74,7 +72,7 @@ const ProjectDetails = ({
         />
 
         <div className="ProjectDetails__actions">
-          <RoleAuth authorized={authorized.editProjectAuthorized} role={role}>
+          <RoleAuth authorized={authorized.editProjectAuthorized}>
             <LinkButton
               href={`${formProjectUrl(project.projectId, 'edit')}`}
               icon="fa-pencil"
@@ -82,7 +80,7 @@ const ProjectDetails = ({
               disabled={project.completed}
             />
           </RoleAuth>
-          <RoleAuth authorized={authorized.completeProjectAuthorized} role={role}>
+          <RoleAuth authorized={authorized.completeProjectAuthorized}>
             {project.completed
               ? <Button
                 icon="fa-undo"
@@ -115,11 +113,11 @@ const ProjectDetails = ({
               className="u-full-width"
               icon="fa-angle-left"
               text={t('button.back_to_project_list')}
-              href={ROUTES.HOME}
+              href={ROUTES.PROJECTS}
             />
           </div>
           <div className="six columns">
-            <RoleAuth authorized={authorized.createPlanAuthorized} role={role}>
+            <RoleAuth authorized={authorized.createPlanAuthorized}>
               { project.completed
                 ? <span>&nbsp;</span>
                 : <LinkButton

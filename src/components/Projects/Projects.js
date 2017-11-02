@@ -8,12 +8,12 @@ import authorized from '../../constants/user_authorization';
 
 
 /**
- * LIst all projects. Should be list user's projects by role, Filtering Missing????
+ * Project listing page
  */
-const Projects = ({ role }) => (
+const Projects = () => (
   <div>
     <ProjectListContainer />
-    <RoleAuth authorized={authorized.createProjectAuthorized} role={role} >
+    <RoleAuth authorized={authorized.createProjectAuthorized}>
       <LinkButton
         className="button-primary"
         href={PROJECT}

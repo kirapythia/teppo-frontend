@@ -36,8 +36,6 @@ const initialState = {
 export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const currentlocation = action.payload.route;
-
-//    if (R.contains(currentlocation, [HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
     if (R.contains(currentlocation, [PROJECTS, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
       return loop(
         { ...state, isFetching: true },

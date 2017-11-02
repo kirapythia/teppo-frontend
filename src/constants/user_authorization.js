@@ -7,6 +7,7 @@ export default {
   createPlanAuthorized: ['ADMIN', 'PLANNER_ADMIN', 'PLANNER'],
   approveDiscardPlanAuthorized: ['ADMIN', 'PLANNER_ADMIN'],
   planCommentsListItemAuthorized: ['ADMIN', 'PLANNER_ADMIN'],
+  planMaintenanceApproval: ['MAINTENANCE'],
   [Routes.EDIT_PLAN]: ['ADMIN', 'PLANNER_ADMIN', 'PLANNER'],
   [Routes.EDIT_PROJECT]: ['ADMIN', 'PLANNER_ADMIN', 'PLANNER'],
 };

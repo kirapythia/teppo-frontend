@@ -30,7 +30,6 @@ const mapStateToProps = (state) => {
   return {
     project,
     plan,
-    role: state.user.role,
     error: state.projectDetails.error,
     isFetching: state.planDetails.isFetching,
     // use prop instead of propEq because it's undef safe
@@ -66,7 +65,6 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanDetails = ({
   project,
   plan,
-  role,
   readOnly,
   error,
   approvePlan,
@@ -90,15 +88,17 @@ const PlanDetails = ({
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
-            <Button
-              disabled={plan.maintenanceDuty}
-              text={t('button.approve_to_maintenance')}
-              icon="fa-check"
-              onClick={acceptToMaintenance}
-            />
+            <RoleAuth authorized={authorized.planMaintenanceApproval}>
+              <Button
+                disabled={plan.maintenanceDuty}
+                text={t('button.approve_to_maintenance')}
+                icon="fa-check"
+                onClick={acceptToMaintenance}
+              />
+            </RoleAuth>
           )}
           {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-            <RoleAuth authorized={authorized.createPlanAuthorized} role={role}>
+            <RoleAuth authorized={authorized.createPlanAuthorized}>
               <LinkButton
                 icon="fa-plus"
                 text={t('button.new_plan_version')}
@@ -110,7 +110,7 @@ const PlanDetails = ({
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
-          <RoleAuth authorized={authorized.approveDiscardPlanAuthorized} role={role}>
+          <RoleAuth authorized={authorized.approveDiscardPlanAuthorized}>
             {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
               <div className="row">
                 <div className="six columns">
@@ -134,10 +134,8 @@ const PlanDetails = ({
               </div>
             )}
           </RoleAuth>
-          {(plan.status !== PLAN_STATUS.APPROVED || readOnly) &&
-            <BackToProjectButton plan={plan} />
-          }
         </div>
+        {(plan.status !== PLAN_STATUS.APPROVED || readOnly) && <BackToProjectButton plan={plan} />}
       </div>
     )}
   </div>
