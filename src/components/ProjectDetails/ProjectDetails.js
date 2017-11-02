@@ -79,6 +79,7 @@ const ProjectDetails = ({
               href={`${formProjectUrl(project.projectId, 'edit')}`}
               icon="fa-pencil"
               text={t('button.edit_project')}
+              disabled={project.completed}
             />
           </RoleAuth>
           <RoleAuth authorized={authorized.completeProjectAuthorized} role={role}>
@@ -108,7 +109,7 @@ const ProjectDetails = ({
           <PlansList project={project} plans={plans} />
         </div>
 
-        {!project.completed && <div className="row">
+        <div className="row">
           <div className="six columns">
             <LinkButton
               className="u-full-width"
@@ -119,16 +120,18 @@ const ProjectDetails = ({
           </div>
           <div className="six columns">
             <RoleAuth authorized={authorized.createPlanAuthorized} role={role}>
-              <LinkButton
-                className="button-primary u-full-width"
-                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
-                icon="fa-plus"
-                text={t('button.add_plans')}
-              />
+              { project.completed
+                ? <span>&nbsp;</span>
+                : <LinkButton
+                  className="button-primary u-full-width"
+                  href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+                  icon="fa-plus"
+                  text={t('button.add_plans')}
+                />
+              }
             </RoleAuth>
           </div>
         </div>
-        }
       </div>
     )}
   </div>

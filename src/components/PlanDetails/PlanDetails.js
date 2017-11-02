@@ -1,9 +1,10 @@
 import React from 'react';
+import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
-import { getCurrentPlan, getCurrentProject } from '../../selectors';
-import { actions } from '../../redux/plans';
+import { getCurrentPlan, getCurrentProject, getLatestPlanVersion } from '../../selectors';
+import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
@@ -23,19 +24,25 @@ import authorized from '../../constants/user_authorization';
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
+  const plan = getCurrentPlan(state);
+  const latestPlan = getLatestPlanVersion(state);
 
   return {
+    project,
+    plan,
     role: state.user.role,
     error: state.projectDetails.error,
-    plan: getCurrentPlan(state),
     isFetching: state.planDetails.isFetching,
-    readOnly: project && project.completed,
+    // use prop instead of propEq because it's undef safe
+    readOnly: R.prop('planId', latestPlan) !== R.prop('planId', plan) ||
+      (project && project.completed),
   };
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  approvePlan: actions.approvePlan,
-  removePlan: actions.removePlan,
+  approvePlan: planActions.approvePlan,
+  removePlan: planActions.removePlan,
+  acceptToMaintenance: planActions.acceptToMaintenance,
 }, dispatch);
 
 const mergeProps = (stateProps, actionCreators) => ({
@@ -43,6 +50,7 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   approvePlan: () => actionCreators.approvePlan(stateProps.plan),
   removePlan: () => actionCreators.removePlan(stateProps.plan),
+  acceptToMaintenance: () => actionCreators.acceptToMaintenance(stateProps.plan),
 });
 
 /**
@@ -52,15 +60,18 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {object} props.error Error from remove or approve plan actions
  * @param {function} props.approvePlan Approve plan action
  * @param {function} props.removePlan Remove plan action
+ * @param {function} props.acceptToMaintenance Accept to maintenance action
  * @param {boolean} props.isFetching Is an ajax request being processed
  */
 const PlanDetails = ({
-  role,
+  project,
   plan,
+  role,
   readOnly,
   error,
   approvePlan,
   removePlan,
+  acceptToMaintenance,
   isFetching,
 }) => (
   <div className="PlanDetails">
@@ -77,8 +88,16 @@ const PlanDetails = ({
     {!error && plan && (
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
-        {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-          <div className="text-right">
+        <div className="PlanDetails__actions text-right">
+          {project.completed && plan.status === PLAN_STATUS.APPROVED && (
+            <Button
+              disabled={plan.maintenanceDuty}
+              text={t('button.approve_to_maintenance')}
+              icon="fa-check"
+              onClick={acceptToMaintenance}
+            />
+          )}
+          {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
             <RoleAuth authorized={authorized.createPlanAuthorized} role={role}>
               <LinkButton
                 icon="fa-plus"
@@ -86,10 +105,10 @@ const PlanDetails = ({
                 href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
               />
             </RoleAuth>
-          </div>
-        )}
+          )}
+        </div>
         <PlanVersionHistory />
-        <PlanCommentsSection />
+        {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
           <RoleAuth authorized={authorized.approveDiscardPlanAuthorized} role={role}>
             {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
@@ -115,7 +134,9 @@ const PlanDetails = ({
               </div>
             )}
           </RoleAuth>
-          {plan.status !== PLAN_STATUS.APPROVED && <BackToProjectButton plan={plan} />}
+          {(plan.status !== PLAN_STATUS.APPROVED || readOnly) &&
+            <BackToProjectButton plan={plan} />
+          }
         </div>
       </div>
     )}

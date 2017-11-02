@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions } from './PlanVersionHistory.ducks';
-import { listAllPlanVersions, getCurrentProject } from '../../selectors';
+import { listAllPlanVersions, getCurrentPlan, getCurrentProject } from '../../selectors';
 import t from '../../locale';
 import IconButton from '../common/IconButton';
 import LoadingOverlay from '../common/LoadingOverlay';
@@ -11,6 +11,7 @@ import PlansList from '../PlansList';
 
 const mapStateToProps = state => ({
   project: getCurrentProject(state),
+  plan: getCurrentPlan(state),
   error: state.planVersionHistory.error,
   isFetching: state.planVersionHistory.isFetching,
   isToggled: state.planVersionHistory.isToggled,
@@ -36,6 +37,7 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {boolean} props.isFetching
  */
 const PlanVersionHistory = ({
+  plan,
   project,
   allVersions = [],
   togglePlanHistory,
@@ -45,10 +47,10 @@ const PlanVersionHistory = ({
   <section className="PlanVersionHistory">
     <div className="PlanVersionHistory__title">
       <h3>{t('plan.version_history.title')}</h3>
-      <IconButton
+      {!!plan.version && <IconButton
         className={`fa-lg ${isToggled ? 'fa-minus' : 'fa-plus'}`}
         onClick={togglePlanHistory}
-      />
+      />}
     </div>
     {isToggled && (
       <div className="PlanVersionHistory__list-container">
@@ -62,6 +64,11 @@ const PlanVersionHistory = ({
           project={project}
           plans={allVersions}
         />
+      </div>
+    )}
+    {!isToggled && !plan.version && (
+      <div className="PlanVersionHistory__first-version">
+        {t('plan.version_history.placeholder')}
       </div>
     )}
   </section>

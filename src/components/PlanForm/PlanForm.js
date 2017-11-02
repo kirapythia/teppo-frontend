@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { reduxForm } from 'redux-form';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
@@ -48,9 +49,12 @@ const mapStateToProps = (state, ownProps) => {
   const project = getCurrentProject(state) || {};
   const { plan } = ownProps;
   const allPlans = listPlans(state);
+  const fieldProps = fieldsWithValidations.map(f =>
+    (f.name !== 'files' ? f : R.assoc('multiple', !plan, f))
+  );
 
   return {
-    fields: fieldsWithValidations,
+    fields: fieldProps,
     formSendError: state.planForm.error,
     cancelHref: formProjectUrl(project.projectId),
     validate: plan
@@ -70,7 +74,6 @@ const mapStateToProps = (state, ownProps) => {
  * @return {object}
  */
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
-  clearSendError: actions.clearSendError,
   submitAction: ownProps.plan
     ? actions.versionPlan
     : actions.savePlan,

@@ -10,6 +10,7 @@ import * as PlanVersionHistory from '../components/PlanVersionHistory';
 import projectReducer, * as Project from './project/project.reducer';
 import userReducer, * as Users from './users/users.ducks';
 import * as Plans from './plans';
+import * as FileUpload from '../components/FileUploadDialog';
 
 /**
  * All redux reducers as an object. Reducer name as key and reducer function as value
@@ -27,5 +28,6 @@ export default {
   [Project.NAME]: projectReducer,
   [Plans.NAME]: Plans.reducer,
   [Users.NAME]: userReducer,
+  [FileUpload.NAME]: FileUpload.reducer,
   [PlanVersionHistory.NAME]: PlanVersionHistory.reducer,
 };

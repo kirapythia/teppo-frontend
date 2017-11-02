@@ -35,7 +35,7 @@ export const formProjectDetailFields = project => ([
   { label: t('project.hansuProjectId'), value: project.hansuProjectId },
   { label: t('plan.primary_id'), value: project.mainNo },
   { label: t('project.created'), value: `${serverDateToString(project.createdAt)} (${project.createdBy})` },
-  { label: t('project.updated'), value: `${serverDateToString(project.updatedAt)} (${project.updatedBy})` },
+  { label: t('project.updated'), value: project.updatedAt ? `${serverDateToString(project.updatedAt)} (${project.updatedBy})` : '' },
   { label: t('project.completed'), value: project.completed },
   { label: t('project.description'), value: project.description },
 ]);

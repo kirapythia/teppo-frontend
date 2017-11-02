@@ -6,6 +6,7 @@ import PLAN_STATUS from '../../constants/plan-status';
 import { createPlan, removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
+import { actionTypes as PlanVersionHistory } from '../../components/PlanVersionHistory';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -14,7 +15,7 @@ import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
 export const NAME = 'plans';
 
 export const actionTypes = {
-  APPROVE_PLAN: 'pythia-webclient/PlanDetails/APPROVE_PLAN',
+  UPDATE_PLAN: 'pythia-webclient/PlanDetails/UPDATE_PLAN',
 
   UPDATE_PLAN_SUCCESS: 'pythia-webclient/PlanDetails/UPDATE_PLAN_SUCCESS',
   UPDATE_PLAN_ERROR: 'pythia-webclient/PlanDetails/UPDATE_PLAN_ERROR',
@@ -28,7 +29,13 @@ export const actionTypes = {
 
 export const actions = {
   approvePlan: createAction(
-    actionTypes.APPROVE_PLAN,
+    actionTypes.UPDATE_PLAN,
+    plan => ({ ...plan, status: PLAN_STATUS.APPROVED }),
+  ),
+
+  acceptToMaintenance: createAction(
+    actionTypes.UPDATE_PLAN,
+    plan => ({ ...plan, maintenanceDuty: true }),
   ),
 
   updatePlanSuccess: createAction(
@@ -70,13 +77,13 @@ export const actions = {
 const byId = listToMapBy('planId');
 
 export default handleActions({
-  // Handle approve plan action. Update plan object in the server.
-  [actionTypes.APPROVE_PLAN]: (state, action) => loop(
+  // Handle plan update action. Update plan object in the server.
+  [actionTypes.UPDATE_PLAN]: (state, action) => loop(
     state,
     Cmd.run(updatePlan, {
       successActionCreator: actions.updatePlanSuccess,
       failActionCreator: actions.updatePlanError,
-      args: [{ ...action.payload, status: PLAN_STATUS.APPROVED }],
+      args: [action.payload],
     })
   ),
 
@@ -106,8 +113,11 @@ export default handleActions({
   [combineActions(
     PlanForm.PLAN_SAVE_SUCCESS,
     actionTypes.UPDATE_PLAN_SUCCESS,
-  )]: (state, action) => byId(mapToList(state)
-    .concat(Array.isArray(action.payload) ? action.payload[0] : action.payload)),
+  )]: (state, action) => byId(mapToList(state).concat(action.payload)),
+
+  // fetch plan version history and add them to the state
+  [PlanVersionHistory.FETCH_PLAN_HISTORY_SUCCESS]: (state, action) =>
+    byId(mapToList(state).concat(action.payload.plans)),
 
   // handle project fetch success
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.plans),

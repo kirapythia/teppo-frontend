@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import t from '../../locale';
+import Modal from './Modal';
 import './LoadingOverlay.css';
 
 /**
@@ -10,7 +11,7 @@ import './LoadingOverlay.css';
  * @param {JSXElement[]} props.children
  */
 const LoadingOverlay = ({ isVisible, text = `${t('lang.loading')}...`, size = 'large' }) => (
-  <div className={cx('LoadingOverlay', { 'LoadingOverlay--visible': isVisible })}>
+  <Modal isVisible={isVisible} className="LoadingOverlay">
     <div className="LoadingOverlay__content">
       <div className="LoadingOverlay__spinner">
         <i className={cx('fa fa-pulse fa-spinner', {
@@ -21,7 +22,7 @@ const LoadingOverlay = ({ isVisible, text = `${t('lang.loading')}...`, size = 'l
       </div>
       <span>{text}</span>
     </div>
-  </div>
+  </Modal>
 );
 
 export default LoadingOverlay;

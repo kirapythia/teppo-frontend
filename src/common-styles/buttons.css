@@ -6,8 +6,17 @@ button, .button {
   text-overflow: ellipsis;
 }
 
-button[disabled], .button[disabled] {
+button a, .button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button[disabled], .button[disabled], .button.disabled {
   opacity: .6;
+}
+
+a.disabled {
+  pointer-events: none;
 }
 
 .button-green {
