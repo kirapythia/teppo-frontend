@@ -6,8 +6,8 @@ import { HOME } from '../constants/routes';
  * Middleware for route authentication. Validates every
  * route change, redirects to home page if validation fails.
  */
-const authenticationMiddleware = () => next => action =>
-  ((action.type !== LOCATION_CHANGED || authenticate())
+const authenticationMiddleware = store => next => action =>
+  ((action.type !== LOCATION_CHANGED || authenticate(store.getState().user, action))
     ? next(action)
     : next(push(HOME)));
 

@@ -19,6 +19,8 @@ import Button from '../common/Button';
 import LoadingOverlay from '../common/LoadingOverlay';
 import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
+import RoleAuth from '../RoleAuth';
+import authorized from '../../constants/user_authorization';
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
@@ -86,50 +88,54 @@ const PlanDetails = ({
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
-            <Button
-              disabled={plan.maintenanceDuty}
-              text={t('button.approve_to_maintenance')}
-              icon="fa-check"
-              onClick={acceptToMaintenance}
-            />
+            <RoleAuth authorized={authorized.planMaintenanceApproval}>
+              <Button
+                disabled={plan.maintenanceDuty}
+                text={t('button.approve_to_maintenance')}
+                icon="fa-check"
+                onClick={acceptToMaintenance}
+              />
+            </RoleAuth>
           )}
           {!readOnly && plan.status === PLAN_STATUS.APPROVED && (
-            <LinkButton
-              icon="fa-plus"
-              text={t('button.new_plan_version')}
-              href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
-            />
+            <RoleAuth authorized={authorized.createPlanAuthorized}>
+              <LinkButton
+                icon="fa-plus"
+                text={t('button.new_plan_version')}
+                href={formPlanUrl(plan.projectId, plan.planId, 'edit')}
+              />
+            </RoleAuth>
           )}
         </div>
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
-          {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
-            <div className="row">
-              <div className="six columns">
-                <Button
-                  className="button-red u-full-width"
-                  icon="fa-times"
-                  text={t('button.discard_plan')}
-                  onClick={removePlan}
-                  disabled={!plan.version || isFetching}
-                />
+          <RoleAuth authorized={authorized.approveDiscardPlanAuthorized}>
+            {!readOnly && plan.status === PLAN_STATUS.WAITING_FOR_APPROVAL && (
+              <div className="row">
+                <div className="six columns">
+                  <Button
+                    className="button-red u-full-width"
+                    icon="fa-times"
+                    text={t('button.discard_plan')}
+                    onClick={removePlan}
+                    disabled={!plan.version || isFetching}
+                  />
+                </div>
+                <div className="six columns">
+                  <Button
+                    className="button-green u-full-width"
+                    icon="fa-check"
+                    text={t('button.approve_plan')}
+                    onClick={approvePlan}
+                    disabled={isFetching}
+                  />
+                </div>
               </div>
-              <div className="six columns">
-                <Button
-                  className="button-green u-full-width"
-                  icon="fa-check"
-                  text={t('button.approve_plan')}
-                  onClick={approvePlan}
-                  disabled={isFetching}
-                />
-              </div>
-            </div>
-          )}
-          {(plan.status !== PLAN_STATUS.APPROVED || readOnly) &&
-            <BackToProjectButton plan={plan} />
-          }
+            )}
+          </RoleAuth>
         </div>
+        {(plan.status !== PLAN_STATUS.APPROVED || readOnly) && <BackToProjectButton plan={plan} />}
       </div>
     )}
   </div>

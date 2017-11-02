@@ -4,7 +4,7 @@ import { loop, Cmd } from 'redux-loop';
 import { LOCATION_CHANGED } from 'redux-little-router';
 
 import { fetchProjectList } from './model';
-import { HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS } from '../../constants/routes';
+import { PROJECTS, PROJECT, EDIT_PROJECT, PROJECT_DETAILS } from '../../constants/routes';
 
 /**
  * Export reducer's name
@@ -36,8 +36,7 @@ const initialState = {
 export default handleActions({
   [LOCATION_CHANGED]: (state, action) => {
     const currentlocation = action.payload.route;
-
-    if (R.contains(currentlocation, [HOME, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
+    if (R.contains(currentlocation, [PROJECTS, PROJECT, EDIT_PROJECT, PROJECT_DETAILS])) {
       return loop(
         { ...state, isFetching: true },
         Cmd.run(fetchProjectList, {

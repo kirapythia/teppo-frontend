@@ -189,3 +189,6 @@ export const formProjectUrl = (projectId = '', slug = '') => appendSlug(`/projec
  * @return {string}
  */
 export const formPlanUrl = (projectId, planId = '', slug = '') => appendSlug(`${formProjectUrl(projectId)}/plan/${planId}`, slug);
+
+// call given fn only when enter is pressed
+export const filterEnter = fn => e => (e.key === 'Enter' && fn());

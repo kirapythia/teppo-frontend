@@ -2,6 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import t from '../../locale';
 import Button from '../common/Button';
+import RoleAuth from '../RoleAuth';
+import authorized from '../../constants/user_authorization';
 import PreviewImage from '../common/PreviewImage';
 
 const chooseActionButton = (comment, callback) => (comment.approved
@@ -38,7 +40,11 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
       </div>
       {comment.ptext}
     </div>
-    {!readOnly && (<div>{chooseActionButton(comment, onApproveClick)}</div>)}
+    {!readOnly && (
+      <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
+        <div>{chooseActionButton(comment, onApproveClick)}</div>
+      </RoleAuth>
+    )}
   </li>
 );
 

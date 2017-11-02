@@ -1,0 +1,19 @@
+.RoleListItem button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  border: 0;
+}
+
+.RoleListItem button:hover,
+.RoleListItem button:focus {
+  color: #1EAEDB;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.RoleListItem .fa {
+  color: grey;
+}
+

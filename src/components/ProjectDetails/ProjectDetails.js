@@ -15,6 +15,8 @@ import { ProjectList } from '../ProjectList';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
 import { actions } from './ProjectDetails.ducks';
+import RoleAuth from '../RoleAuth';
+import authorized from '../../constants/user_authorization';
 
 import './ProjectDetails.css';
 
@@ -70,25 +72,29 @@ const ProjectDetails = ({
         />
 
         <div className="ProjectDetails__actions">
-          <LinkButton
-            disabled={project.completed}
-            href={`${formProjectUrl(project.projectId, 'edit')}`}
-            icon="fa-pencil"
-            text={t('button.edit_project')}
-          />
-          {project.completed
-            ? <Button
-              icon="fa-undo"
-              text={t('button.project_complete_revert')}
-              className="button-red"
-              onClick={toggleProjectCompletion}
+          <RoleAuth authorized={authorized.editProjectAuthorized}>
+            <LinkButton
+              href={`${formProjectUrl(project.projectId, 'edit')}`}
+              icon="fa-pencil"
+              text={t('button.edit_project')}
+              disabled={project.completed}
             />
-            : <Button
-              icon="fa-check"
-              text={t('button.project_complete')}
-              onClick={toggleProjectCompletion}
-            />
-          }
+          </RoleAuth>
+          <RoleAuth authorized={authorized.completeProjectAuthorized}>
+            {project.completed
+              ? <Button
+                icon="fa-undo"
+                text={t('button.project_complete_revert')}
+                className="button-red"
+                onClick={toggleProjectCompletion}
+              />
+              : <Button
+                icon="fa-check"
+                text={t('button.project_complete')}
+                onClick={toggleProjectCompletion}
+              />
+            }
+          </RoleAuth>
         </div>
 
         <div>
@@ -107,19 +113,21 @@ const ProjectDetails = ({
               className="u-full-width"
               icon="fa-angle-left"
               text={t('button.back_to_project_list')}
-              href={ROUTES.HOME}
+              href={ROUTES.PROJECTS}
             />
           </div>
           <div className="six columns">
-            {project.completed
-              ? <span>&nbsp;</span>
-              : <LinkButton
-                className="button-primary u-full-width"
-                href={`${formProjectUrl(project.projectId, 'plan/new')}`}
-                icon="fa-plus"
-                text={t('button.add_plans')}
-              />
-            }
+            <RoleAuth authorized={authorized.createPlanAuthorized}>
+              { project.completed
+                ? <span>&nbsp;</span>
+                : <LinkButton
+                  className="button-primary u-full-width"
+                  href={`${formProjectUrl(project.projectId, 'plan/new')}`}
+                  icon="fa-plus"
+                  text={t('button.add_plans')}
+                />
+              }
+            </RoleAuth>
           </div>
         </div>
       </div>
