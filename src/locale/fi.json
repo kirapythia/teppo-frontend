@@ -77,6 +77,7 @@
   "plan.message.edit_success": "Suunnitelmaa ${mainNo}/${subNo} päivitettiin onnistuneesti!",
   "plan.message.update_success": "Suunnitelmaa ${mainNo}/${subNo} päivitettiin onnistuneesti!",
   "plan.version_history.title": "Versiohistoria",
+  "plan.version_history.placeholder": "Suunnitelmalla ei ole aikaisempia versioita",
   "plan.version_history.loading": "Ladataan versiohistoriaa...",
   "plan.pdfFile": "PDF-tiedosto",
   "plan.xmlFile": "XML-tiedosto",

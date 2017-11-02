@@ -17,3 +17,8 @@
 .PlanVersionHistory__title h3 {
   flex: 1;
 }
+
+.PlanVersionHistory__first-version {
+  margin-bottom: 2rem;
+  font-style: italic;
+}

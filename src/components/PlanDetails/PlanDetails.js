@@ -79,7 +79,7 @@ const PlanDetails = ({
     {!error && plan && (
       <div>
         <ShowDetails fields={formPlanDetailFields(plan)} />
-        <div className="text-right">
+        <div className="PlanDetails__actions text-right">
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
             <Button
               disabled={plan.maintenanceDuty}
