@@ -1,6 +1,6 @@
 # Pythia Webclient
 
-A web client for using Pythia REST API. See [application wiki](https://github.com/kirapythia/pythia-webclient/wiki/) for more information.
+A web client for using [Pythia REST API](https://github.com/kirapythia/pythia-backend). See [application wiki](https://github.com/kirapythia/pythia-webclient/wiki/) for more information.
 
 ## Getting Started
 
