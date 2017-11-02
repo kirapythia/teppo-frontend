@@ -71,6 +71,7 @@ const ProjectDetails = ({
 
         <div className="ProjectDetails__actions">
           <LinkButton
+            disabled={project.completed}
             href={`${formProjectUrl(project.projectId, 'edit')}`}
             icon="fa-pencil"
             text={t('button.edit_project')}
