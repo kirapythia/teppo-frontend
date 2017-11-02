@@ -15,8 +15,8 @@ const {
 
 // redux middleware
 const middleware = [
-  routerMiddleware,
   authenticationMiddleware,
+  routerMiddleware,
 ];
 
 // only use logger in development environment

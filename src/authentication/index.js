@@ -1,4 +1,4 @@
-// import * as Routes from '../constants/routes';
+import { HOME, NOT_FOUND_PAGE } from '../constants/routes';
 import authorized from '../constants/user_authorization';
 
 /**
@@ -9,11 +9,15 @@ import authorized from '../constants/user_authorization';
 
 
 const authenticate = (user, action) => {
-  const rules = authorized[action.payload.route];
-  if (!user) return false;
-  return rules ?
-    (rules.indexOf(user.role) > -1)
-    : true;
+  const { route } = action.payload;
+  const rules = authorized[route];
+  // if user is not present then check the route
+  // the home page and the 404 page does not require login
+  if (!user.user) return [HOME, NOT_FOUND_PAGE].indexOf(route) > -1;
+  // if rules for a page transition exist then check that user's
+  // role is permitted to access this route otherwise all users
+  // are allowed
+  return !rules || rules.indexOf(user.role) > -1;
 };
 
 export default authenticate;
