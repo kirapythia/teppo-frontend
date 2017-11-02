@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './UserPanel.css';
 
-const mapStateToProps = () => ({
-  user: 'Sirpa Suunnittelija',
+const mapStateToProps = state => ({
+  user: state.user.user,
 });
 
 const UserPanel = ({ user }) => (
