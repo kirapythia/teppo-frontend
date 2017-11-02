@@ -6,6 +6,7 @@ import PLAN_STATUS from '../../constants/plan-status';
 import { createPlan, removePlan, updatePlan } from './model';
 import { actionTypes as PlanForm } from '../../components/PlanForm';
 import { actionTypes as ProjectDetails } from '../../components/ProjectDetails';
+import { actionTypes as PlanVersionHistory } from '../../components/PlanVersionHistory';
 
 /**
  * Export reducer's name. Will be registerd to
@@ -113,6 +114,10 @@ export default handleActions({
     PlanForm.PLAN_SAVE_SUCCESS,
     actionTypes.UPDATE_PLAN_SUCCESS,
   )]: (state, action) => byId(mapToList(state).concat(action.payload)),
+
+  // fetch plan version history and add them to the state
+  [PlanVersionHistory.FETCH_PLAN_HISTORY_SUCCESS]: (state, action) =>
+    byId(mapToList(state).concat(action.payload.plans)),
 
   // handle project fetch success
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) => byId(action.payload.plans),
