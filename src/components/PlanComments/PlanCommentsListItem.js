@@ -35,9 +35,7 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
       }
     </div>
     <div className="PlanCommentsListItem__body">
-      <div className="PlanCommentsListItem__author">
-        <a href="mailto:seija.suunnittelija@espoo.fi">Seija Suunnittelija</a>
-      </div>
+      <div className="PlanCommentsListItem__author">{comment.createdBy}</div>
       {comment.ptext}
     </div>
     {!readOnly && (

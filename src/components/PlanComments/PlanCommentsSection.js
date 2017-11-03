@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 
   return {
     plan,
+    user: state.user.user,
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
@@ -64,6 +65,7 @@ const mergeProps = (stateProps, actionCreators) => ({
  * @param {object} props
  * @param {object} props.plan
  * @param {object} props.comments
+ * @param {string} props.user
  * @param {function} props.addComment
  * @param {function} props.clearCommentAddError
  * @param {function} props.clearCommentEditError
@@ -73,6 +75,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  user,
   readOnly,
   addComment,
   toggleCommentApproval,
@@ -95,6 +98,7 @@ const PlanCommentsSection = ({
       <h4>{t('plan.comments.form.title')}</h4>
       <PlanCommentForm
         plan={plan}
+        initialValues={{ createdBy: user }}
         addComment={addComment}
         formSendError={formSendError}
         clearError={clearCommentAddError}
