@@ -35,5 +35,7 @@ npm start
 See https://github.com/kirapythia/pythia-webclient/wiki/List-of-dependencies for a list of dependencies
 
 ## License
+MIT License
 
-TODO: Add license
+https://github.com/kirapythia/pythia-webclient/blob/master/LICENSE
+
