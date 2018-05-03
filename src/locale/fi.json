@@ -1,5 +1,5 @@
 {
-  "app.name": "Pythia Client",
+  "app.name": "Teppo-tietoportaali",
   "button.add_plans": "Lisää suunnitelmia",
   "button.approve_to_maintenance": "Hyväksy kunnossapitoon",
   "button.approve": "Hyväksy",
@@ -32,7 +32,7 @@
   "common.version": "Revisio",
   "dropzone.placeholder": "Paina Valitse tiedosto -painiketta tai raahaa haluamasi xml- tai pdf-tiedostot tähän ruutuun.",
   "files.no_files": "Ei lisättyjä tiedostoja",
-  "footer.copyright": "Espoon Kaupunki",
+  "footer.copyright": "Espoon Kaupunki 2018",
   "header.project.plans": "Projektiin liittyvät suunnitelmat",
   "home.title": "Valitse käyttäjä",
   "lang.loading": "Ladataan",

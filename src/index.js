@@ -1,5 +1,5 @@
-import 'skeleton-css/css/skeleton.css';
 import 'skeleton-css/css/normalize.css';
+import 'skeleton-css/css/skeleton.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'react-select/dist/react-select.css';
 
