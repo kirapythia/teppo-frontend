@@ -7,7 +7,7 @@ A web client for using [Teppo REST API](../../../teppo-backend). See [applicatio
 
 ## Getting Started
 
-See [getting statrted](../../wiki/Getting-Started) for prerequisites and install instructions
+TODO See [Getting Started](../../wiki/Getting-Started) for prerequisites and install instructions
 
 ## Running the tests
 
