@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { isURL, parseFileNameFromURL } from '../../utils';
+import t from '../../locale'; // common.yes common.no
 import './ShowDetails.css';
 
 /**
@@ -13,8 +14,8 @@ const formatValue = (value) => {
   if (isURL(value)) return <a href={value} target="_blank">{parseFileNameFromURL(value)}</a>;
   if (typeof value === 'boolean') {
     return value
-      ? <i className="fa fa-check text-success" />
-      : <i className="fa fa-times text-danger" />;
+      ? <span>{t('common.yes')}</span>
+      : <span>{t('common.no')}</span>;
   }
   return value;
 };
