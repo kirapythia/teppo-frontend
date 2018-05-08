@@ -1,10 +1,13 @@
-# Pythia Webclient
+# Teppo Frontend
 
-A web client for using [Pythia REST API](https://github.com/kirapythia/pythia-backend). See [application wiki](https://github.com/kirapythia/pythia-webclient/wiki/) for more information.
+TODO wiki pages   
+Further development of [Kirapythia](https://github.com/kirapythia)
+
+A web client for using [Teppo REST API](../../../teppo-backend). See [application wiki](../../wiki/) for more information.
 
 ## Getting Started
 
-See https://github.com/kirapythia/pythia-webclient/wiki/Getting-Started for prerequisites and install instructions
+See [getting statrted](../../wiki/Getting-Started) for prerequisites and install instructions
 
 ## Running the tests
 
@@ -32,10 +35,7 @@ npm start
 
 ## Built With
 
-See https://github.com/kirapythia/pythia-webclient/wiki/List-of-dependencies for a list of dependencies
+TODO wiki: See a [list of dependencies](../../wiki/List-of-dependencies )
 
 ## License
-MIT License
-
-https://./LICENSE
-
+[MIT License](./LICENSE)
