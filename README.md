@@ -37,5 +37,5 @@ See https://github.com/kirapythia/pythia-webclient/wiki/List-of-dependencies for
 ## License
 MIT License
 
-https://github.com/kirapythia/pythia-webclient/blob/master/LICENSE
+https://./blob/master/LICENSE
 
