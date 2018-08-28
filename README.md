@@ -2,9 +2,9 @@
 
 TODO wiki pages
 
-Further development of [Kirapythia](https://github.com/kirapythia)
+Further development of [Teppo](https://github.com/espoon-voltti?q=teppo)
 
-A web client for using [Teppo REST API](../../../teppo-backend). See [application wiki](../../wiki/) for more information.
+A web client for using [Teppo REST API](https://github.com/espoon-voltti/teppo-backend). See [application wiki](../../wiki/) for more information.
 
 ## Getting Started
 
@@ -33,6 +33,12 @@ To run the development server
 ```
 npm start
 ```
+
+## Environments
+
+To toggle between AWS / local backend, change proxy target setting in package.json
+- AWS:      "http://52.214.196.107:8080" 
+- Local:    "http://localhost:8080"
 
 ## Built With
 
