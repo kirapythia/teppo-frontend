@@ -128,7 +128,7 @@ export const formPlanIdentifier = R.pipe(
  * @return {string[]}
  */
 export const getPlanFileUrls = R.pipe(
-  R.props(['pdfUrl', 'xmlUrl']),
+  R.props(['pdfUrl', 'xmlUrl', 'dwgUrl']),
   R.filter(Boolean),
 );
 

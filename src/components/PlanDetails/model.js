@@ -18,4 +18,5 @@ export const formPlanDetailFields = plan => ([
   { label: t('plan.updated'), value: plan.updatedAt ? `${serverDateToString(plan.updatedAt)} (${plan.updatedBy})` : '' },
   { label: t('plan.pdfFile'), value: plan.pdfUrl },
   { label: t('plan.xmlFile'), value: plan.xmlUrl },
+  { label: t('plan.dwgFile'), value: plan.dwgUrl },
 ]);
