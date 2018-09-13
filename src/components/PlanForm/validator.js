@@ -30,11 +30,11 @@ const listsContainSameValues = (listA, listB) => !!R.intersection(listA, listB).
  * @return {string[]}
  */
 const pluckAllFileNamesWithoutVersion = R.pipe(
-  R.map(R.props(['pdfUrl', 'xmlUrl', 'dwgUrl'])),
+  R.map(R.props(['pdfUrl', 'xmlUrl', 'dwgUrl', 'dxfUrl'])),
   R.flatten,
   R.filter(Boolean),
   R.map(parseFileNameFromURL),
-  R.map(v => v.replace(/_\d{1}(?=\.(pdf|xml|dwg)$)/, ''))
+  R.map(v => v.replace(/_\d{1}(?=\.(pdf|xml|dwg|dxf)$)/, ''))
 );
 
 /**
