@@ -19,4 +19,5 @@ export const formPlanDetailFields = plan => ([
   { label: t('plan.pdfFile'), value: plan.pdfUrl },
   { label: t('plan.xmlFile'), value: plan.xmlUrl },
   { label: t('plan.dwgFile'), value: plan.dwgUrl },
+  { label: t('plan.dxfFile'), value: plan.dxfUrl },
 ]);

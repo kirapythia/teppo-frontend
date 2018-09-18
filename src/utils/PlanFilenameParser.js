@@ -25,7 +25,7 @@ const isValidMainNo = (value = 0) => value && +value >= 2000;
  */
 const isValidSubNo = (value = 0) => value && isBetween(1, 1199, +value);
 
-const PLAN_FILENAME_EXP = /^(\d{4,})_(\d{3,4})([a-z]{1,2})?(_\d)?\.(pdf|xml|dwg)$/i;
+const PLAN_FILENAME_EXP = /^(\d{4,})_(\d{3,4})([a-z]{1,2})?(_\d)?\.(pdf|xml|dwg|dxf)$/i;
 
 /**
  * Check if filename is a valid plan file's name
