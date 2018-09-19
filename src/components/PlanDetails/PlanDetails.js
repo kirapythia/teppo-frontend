@@ -109,6 +109,7 @@ const PlanDetails = ({
               />
             </RoleAuth>
           )}
+
         </div> 
 
         <img src={iconSVG} className="Profile-image" alt="svg testi" />
