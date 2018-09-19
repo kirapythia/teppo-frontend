@@ -9,6 +9,7 @@ import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
 import t from '../../locale';
+
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
@@ -21,6 +22,9 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
+import SVGInline from 'react-svg-inline';
+import RegionSelect from 'react-region-select';
+import iconSVG from '../common/6602_013.svg';
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
@@ -107,6 +111,9 @@ const PlanDetails = ({
             </RoleAuth>
           )}
         </div>
+        
+        <img src={iconSVG} className="Profile-image" alt="svg testi" />
+
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
