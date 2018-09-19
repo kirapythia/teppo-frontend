@@ -10,6 +10,7 @@
     "react-dom": "^16.0.0",
     "react-dropzone": "^4.1.3",
     "react-redux": "^5.0.6",
+    "react-region-select": "^2.3.0",
     "react-scripts": "^1.0.14",
     "react-select": "^1.0.0-rc.10",
     "react-test-renderer": "^16.0.0",
