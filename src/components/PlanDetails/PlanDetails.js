@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
-import SVGRegionSelect from 'react-region-select';
+
 import { getCurrentPlan, getCurrentProject, getLatestPlanVersion } from '../../selectors';
 import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
@@ -15,6 +15,7 @@ import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
 import PlanCommentsSection from '../PlanComments';
+import SVGRegionSelect from '../SVGRegionSelect';
 import BackToProjectButton from '../common/BackToProjectButton';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
