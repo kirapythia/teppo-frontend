@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
+import SVGRegionSelect from 'react-region-select';
 import { getCurrentPlan, getCurrentProject, getLatestPlanVersion } from '../../selectors';
 import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
@@ -22,7 +23,7 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
-import RegionSelect from 'react-region-select';
+
 import iconSVG from '../common/6602_013.svg';
 
 const mapStateToProps = (state) => {
@@ -109,10 +110,11 @@ const PlanDetails = ({
               />
             </RoleAuth>
           )}
-        </div> 
-
-        <img src={iconSVG} className="Profile-image" alt="svg testi" />
-
+        </div>
+        <SVGRegionSelect />
+        <div className="SVGRegionSelect__actions">
+          <img src={iconSVG} className="Profile-image" alt="svg testi" />
+        </div>
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
