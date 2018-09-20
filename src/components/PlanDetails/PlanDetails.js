@@ -113,9 +113,6 @@ const PlanDetails = ({
           )}
         </div>
         <SVGRegionSelect />
-        <div className="SVGRegionSelect__actions">
-          <img src={iconSVG} className="Profile-image" alt="svg testi" />
-        </div>
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
