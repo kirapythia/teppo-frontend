@@ -3,14 +3,12 @@ import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { Link } from 'redux-little-router';
 import { connect } from 'react-redux';
-
 import { getCurrentPlan, getCurrentProject, getLatestPlanVersion } from '../../selectors';
 import { actions as planActions } from '../../redux/plans';
 import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
 import t from '../../locale';
-
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
@@ -24,8 +22,6 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
-
-import iconSVG from '../common/6602_013.svg';
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);

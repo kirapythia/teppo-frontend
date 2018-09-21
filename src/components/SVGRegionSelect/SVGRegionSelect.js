@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RegionSelect from 'react-region-select';
 import objectAssign from 'object-assign';
 import iconSVG from '../common/6602_013.svg';
-
+import style from './SVGRegionSelect.css'
 
 class SVGRegionSelect extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class SVGRegionSelect extends Component {
 
 
     return (
-      <div style={{ display: 'inline' }}>
+      <div style={{ display: 'grid' }}>
         <RegionSelect
           maxRegions={1}
           regions={this.state.regions}
@@ -78,11 +78,10 @@ class SVGRegionSelect extends Component {
           debug
           onChange={this.onChange}
           regionRenderer={this.regionRenderer}
-          style={{ border: '1px solid black' }}
+          style={{ border: '1px solid #0FA0CE' }}
         >
           <img src={iconSVG} className="Profile-image" alt="svg testi" />
-        </RegionSelect>   
-
+        </RegionSelect>
       </div>
 
     );
