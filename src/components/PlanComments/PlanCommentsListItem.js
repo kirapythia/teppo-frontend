@@ -29,20 +29,25 @@ const chooseActionButton = (comment, callback) => (comment.approved
 const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
     <div className="PlanCommentsListItem__image">
+
       {comment.url
         ? <PreviewImage url={comment.url} size={60} />
         : <i className="fa fa-2x fa-comment-o" aria-hidden />
       }
     </div>
     <div className="PlanCommentsListItem__body">
+
       <div className="PlanCommentsListItem__author">{comment.createdBy}</div>
       {comment.ptext}
     </div>
+    <button type="button">Katso Alue</button>
+    {comment.updatedAt}
     {!readOnly && (
       <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
         <div>{chooseActionButton(comment, onApproveClick)}</div>
       </RoleAuth>
     )}
+
   </li>
 );
 
