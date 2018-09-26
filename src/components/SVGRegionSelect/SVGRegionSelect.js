@@ -80,7 +80,7 @@ class SVGRegionSelect extends Component {
           regionRenderer={this.regionRenderer}
           style={{ border: '1px solid #0FA0CE' }}
         >
-          <img src={iconSVG} className="Profile-image" alt="svg testi" />
+          <img src={iconSVG} className="Profile-image" alt="svg testi" style={{ transform: 'scale(1.5)'}} />
         </RegionSelect>
       </div>
 
