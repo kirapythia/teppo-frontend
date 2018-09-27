@@ -86,6 +86,7 @@
   "plan.xmlFile": "XML-tiedosto",
   "plan.dwgFile": "DWG-tiedosto",
   "plan.dxfFile": "DXF-tiedosto",
+  "plan.svgFile": "SVG-tiedosto",
   "plan.error.edit.no_id": "Suunnitelman päivitys ilman id:tä ei onnistus",
   "plan.error.save.no_project_id": "Suunnitelmaa ei voida tallentaa ilman projektin tunnistetta. Ole hyvä, ja yritä käynnistää sovellus uudelleen.",
   "plan.error.save.no_mainNo": "Suunnitelmaa ei voida tallentaa ilman projektin päänumeroa. Ole hyvä, ja yritä käynnistää sovellus uudelleen.",
