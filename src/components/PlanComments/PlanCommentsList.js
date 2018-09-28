@@ -25,7 +25,7 @@ const GroupedListOfAllComments = (comments, toggleCommentApproval, readOnly) => 
     <div>
       {Object.keys(groupedComments).map(commentGroup => (
         <div key={commentGroup}>
-          <b>{commentGroup}</b>
+          <b>{parseCategoryFromGroupName(commentGroup)}</b>
           <ul className="PlanCommentsList clear-list-styles">
             {groupedComments[commentGroup].map(comment => (
               <PlanCommentsListItem
@@ -40,6 +40,10 @@ const GroupedListOfAllComments = (comments, toggleCommentApproval, readOnly) => 
       ))}
     </div>
 )};
+
+const parseCategoryFromGroupName = (group) => {
+  return group.slice(group.indexOf('(') + 1, group.indexOf(')')).toUpperCase();
+};
 
 /**
  * A list component for dislaying a list of comments
