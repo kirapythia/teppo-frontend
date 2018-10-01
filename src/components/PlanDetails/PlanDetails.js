@@ -22,6 +22,10 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
