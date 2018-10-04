@@ -22,10 +22,8 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
+
 
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
@@ -80,6 +78,7 @@ const PlanDetails = ({
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
 
+
     {isFetching && <LoadingOverlay isVisible={isFetching} />}
 
     {error && (
@@ -90,8 +89,10 @@ const PlanDetails = ({
     )}
     {!error && plan && (
       <div>
+     
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
+          <h1>{plan.svgUrl}</h1>
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
             <RoleAuth authorized={authorized.planMaintenanceApproval}>
               <Button
