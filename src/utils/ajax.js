@@ -142,9 +142,9 @@ export const formPlanApiUrl = ({ projectId, planId }) => `${formProjectApiUrl({ 
  * @param {number} plan.projectId
  * @param {number} plan.planId
  * @param {object} comment
- * @param {number} comment.textId
+ * @param {number} comment.ptextId
  * @param {string} slug
  * @return {string}
  */
-export const formCommentApiUrl = ({ projectId, planId }, { textId } = {}, slug = '') =>
-  `${formPlanApiUrl({ projectId, planId })}/comments/${textId || ''}${slug ? `/${slug}` : ''}`;
+export const formCommentApiUrl = ({ projectId, planId }, { ptextId } = {}, slug = '') =>
+  `${formPlanApiUrl({ projectId, planId })}/comments/${ptextId || ''}${slug ? `/${slug}` : ''}`;
