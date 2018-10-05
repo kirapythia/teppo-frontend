@@ -9,11 +9,11 @@ import * as ROUTES from '../../constants/routes';
 import PLAN_STATUS from '../../constants/plan-status';
 import { formPlanUrl } from '../../utils';
 import t from '../../locale';
-
 import ShowDetails from '../ShowDetails';
 import Message from '../common/Message';
 import { formPlanDetailFields } from './model';
 import PlanCommentsSection from '../PlanComments';
+import SVGRegionSelect from '../SVGRegionSelect';
 import BackToProjectButton from '../common/BackToProjectButton';
 import LinkButton from '../common/LinkButton';
 import Button from '../common/Button';
@@ -22,6 +22,7 @@ import PlanVersionHistory from '../PlanVersionHistory';
 import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
+
 
 
 const mapStateToProps = (state) => {
@@ -77,6 +78,7 @@ const PlanDetails = ({
   <div className="PlanDetails">
     <h2>{t('plan.details.title')}</h2>
 
+
     {isFetching && <LoadingOverlay isVisible={isFetching} />}
 
     {error && (
@@ -87,8 +89,10 @@ const PlanDetails = ({
     )}
     {!error && plan && (
       <div>
+     
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
+          <h1>{plan.svgUrl}</h1>
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
             <RoleAuth authorized={authorized.planMaintenanceApproval}>
               <Button
@@ -109,8 +113,7 @@ const PlanDetails = ({
             </RoleAuth>
           )}
         </div>
-  
-
+        <SVGRegionSelect />
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
