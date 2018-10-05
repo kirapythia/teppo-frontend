@@ -5,4 +5,7 @@ export default {
   PLANNER: 'Sirpa Suunnittelija (konsultti)',
   MAINTENANCE: 'Kaija Kunnossapito (infrapalvelupäällikkö)',
   VIEWER: 'Kalle Katselija (kommentoija)',
+  GEO: 'Gabriel Geoteknikko (Geotekniikka)',
+  SAHKO: 'Sakari Sähkäri (Sähkö/valaistustekniikka)',
+  HSY: 'Vesa Vesihuoltosuunnittelija (Vesihuoltosuunnitelma)'
 };
