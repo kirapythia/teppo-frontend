@@ -55,14 +55,14 @@ describe('Saving a comment', () => {
 describe('Updating a comment', () => {
   it('should put to the update url', () => {
     const plan = { planId: 2, projectId: 1 };
-    const comment = { textId: 3 };
+    const comment = { ptextId: 3 };
     fetch.mockResponseOnce('{}', { ok: true, status: 200 });
     return editComment(plan, comment);
   });
 
   it('should post the given comment', () => {
     const plan = { planId: 2, projectId: 1 };
-    const comment = { textId: 3, text: 'Comment text' };
+    const comment = { ptextId: 3, ptext: 'Comment text' };
     const call = fetch.mockResponseOnce('{}', { ok: true, status: 200 });
 
     return editComment(plan, comment)
@@ -74,7 +74,7 @@ describe('Updating a comment', () => {
 
   it('should reject promise with an error when request fails', () => {
     const plan = { planId: 2, projectId: 1 };
-    const comment = { textId: 3 };
+    const comment = { ptextId: 3 };
     fetch.mockResponseOnce('{}', { ok: false, status: 400 });
     return editComment(plan, comment)
       .catch(err => expect(err instanceof ServerResponseError).toEqual(true));
@@ -82,7 +82,7 @@ describe('Updating a comment', () => {
 
   it('should reject promise with an error containing response status', () => {
     const plan = { planId: 2, projectId: 1 };
-    const comment = { textId: 3 };
+    const comment = { ptextId: 3 };
     fetch.mockResponseOnce('{}', { ok: false, status: 403 });
     return editComment(plan, comment).catch(err => expect(err.status).toEqual(403));
   });
@@ -90,7 +90,7 @@ describe('Updating a comment', () => {
   it('should reject with an error containing a message', () => {
     const expected = t('network.error.comment.edit');
     const plan = { planId: 2, projectId: 1 };
-    const comment = { textId: 3 };
+    const comment = { ptextId: 3 };
     fetch.mockResponseOnce('{}', { ok: false, status: 404 });
     return editComment(plan, comment).catch(err => expect(err.message).toEqual(expected));
   });
