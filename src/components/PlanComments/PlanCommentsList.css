@@ -4,11 +4,6 @@
   border-bottom: 2px solid rgba(30, 174, 219, .5);
 }
 
-.PlanCommentsListItem hover {
-  background-color: rgba(248, 147, 177, 0.966);
-  
-}
-
 
 .PlanCommentsListItem > div:not(:last-child) {
   margin-right: 1rem;
