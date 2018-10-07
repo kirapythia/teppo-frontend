@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
-import PLAN_STATUS from '../../constants/plan-status';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import RegionSelect from 'react-region-select';
 import objectAssign from 'object-assign';
@@ -25,6 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addComment: actions.addComment,
+  regions: actions.addregion,
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
@@ -50,7 +50,12 @@ class SVGRegionSelect extends Component {
     this.regionRenderer = this.regionRenderer.bind(this);
     this.onChange = this.onChange.bind(this);
     this.state = {
-      regions: [],
+      get regions() {
+        return this._regions;
+      },
+      set regions(value) {
+        this._regions = value;
+      },
     };
   }
   onChange(regions) {
@@ -89,7 +94,7 @@ class SVGRegionSelect extends Component {
   regionRenderer(regionProps) {
     if (!regionProps.isChanging) {
       return (
-          <div style={{ position: 'absolute', right: 0, bottom: '-1.5em' }}>
+        <div style={{ position: 'absolute', right: 0, bottom: '-1.5em' }}>
           <select
             onChange={event => this.changeRegionData(regionProps.index, event)}
             value={regionProps.data.dataType}
@@ -109,7 +114,7 @@ class SVGRegionSelect extends Component {
 
     // console.log('svgregionsselect', stateProps.plan);
     return (
-        <div style={{ display: 'grid' }}>
+      <div style={{ display: 'grid' }}>
         <RegionSelect
           maxRegions={1}
           regions={this.state.regions}
@@ -119,10 +124,10 @@ class SVGRegionSelect extends Component {
           onChange={this.onChange}
           regionRenderer={this.regionRenderer}
           style={{ border: '1px solid #0FA0CE' }}
-          >
+        >
           <svg viewBox="0 0 200 200" className="icon">
-            <use xlinkHref={iconSVG} height="200" width="200" />
-          </svg>
+              <use xlinkHref={iconSVG} height="200" width="200" />
+            </svg>
 
         </RegionSelect>
       </div>
