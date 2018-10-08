@@ -79,11 +79,15 @@ export const isNumber = value => !Number.isNaN(Number(value));
 export const isString = value => typeof value === 'string';
 
 /**
- * Map number to corresponding version character (0 => A, 1 => B...)
+ * Map number to corresponding version character (0 => '', 1 => A, 2 => B...)
  * @param {number} number
  * @param {string}
  */
-export const versionToCharacter = (number = 0) => String.fromCharCode(65 + Number(number));
+export const versionToCharacter = (number = 0) => {
+  if (number === 0) return '';
+  if (number > 0 && number < 27) return String.fromCharCode(64 + Number(number));
+  return String.fromCharCode(65, 38 + Number(number));
+};
 
 /**
  * Get given props from an object and concatenate them into a string
