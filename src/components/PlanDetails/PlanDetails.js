@@ -92,7 +92,6 @@ const PlanDetails = ({
      
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
-          <h1>{plan.svgUrl}</h1>
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
             <RoleAuth authorized={authorized.planMaintenanceApproval}>
               <Button
