@@ -28,7 +28,7 @@ export const withTimeout = (timeout, ...promises) => Promise.race([
  * @param {string} value
  * @return {string}
  */
-export const isURL = value => /^http(s?):\/\//.test(value);
+export const isURL = value => /^http(s?):\/\//.test(value) || /^file:\/\/\//.test(value);
 
 /**
  * Parse file name from a url
