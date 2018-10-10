@@ -3,11 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
+import SVGInline from 'react-svg-inline';
 import RegionSelect from 'react-region-select';
 import objectAssign from 'object-assign';
-import iconSVG from '../common/6602_013.svg';
+import iconSVG from '../common/200100102.svg';
 import style from './SVGRegionSelect.css';
 
+
+/* eslint import/no-webpack-loader-syntax: off */
 /* Select needed props from the global state
  * @param {object} state
  * @return {object} props
@@ -125,10 +128,11 @@ class SVGRegionSelect extends Component {
           regionRenderer={this.regionRenderer}
           style={{ border: '1px solid #0FA0CE' }}
         >
-          <svg viewBox="0 0 200 200" className="icon">
-              <use xlinkHref={iconSVG} height="200" width="200" />
-            </svg>
-
+          <SVGInline
+            viewBox="0 0 3000 2000"
+            svg={iconSVG}
+            component="svg"
+          />
         </RegionSelect>
       </div>
 

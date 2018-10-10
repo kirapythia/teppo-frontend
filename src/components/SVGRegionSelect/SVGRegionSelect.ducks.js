@@ -38,8 +38,8 @@ export default handleActions({
       ? R.omit(['commentAddError', 'commentEditError'], state)
       : state;
   },
-  [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) =>
-    ({ ...state, comments: byId(listAllComments(action.payload)) }),
+  [ProjectDetails.FETCH_PROJECT_SUCCESSA]: (state, action) =>
+    ({ ...state, comments: byId(listAllComments(action.payload)), regions: [] }),
   // handle add comment action
 
 

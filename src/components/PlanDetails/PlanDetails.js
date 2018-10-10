@@ -113,7 +113,7 @@ const PlanDetails = ({
             </RoleAuth>
           )}
         </div>
-        <SVGRegionSelect />
+        <SVGRegionSelect plan={plan} />
         <PlanVersionHistory />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
