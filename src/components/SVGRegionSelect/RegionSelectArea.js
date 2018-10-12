@@ -69,8 +69,9 @@ const regionRenderer = (regionProps) => {
 };
 
 
-const RegionSelectArea = {
-  background: 'rgba(255, 0, 0, 0.5)',
-};
+const RegionSelectArea = ({plans, comments, svgregions}) =>
+(
+  <div/>
+)
 
 export default RegionSelectArea;

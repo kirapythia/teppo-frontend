@@ -131,7 +131,7 @@ const SVGRegionSelect = ({
   <div style={{ display: 'grid' }}>
     <RegionSelectArea
       maxRegions={1}
-      regions={this.state.svgregions}
+      regions={svgregions}
            // regionStyle={regionStyle}
       constraint
       debug
