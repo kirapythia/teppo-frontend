@@ -9,7 +9,7 @@ const listOfComments = (comments, toggleCommentApproval, readOnly) => (
   <ul className="PlanCommentsList clear-list-styles">
     {comments.map(comment => (
       <PlanCommentsListItem
-        key={comment.textId}
+        key={comment.ptextId}
         comment={comment}
         readOnly={readOnly}
         onApproveClick={toggleCommentApproval}

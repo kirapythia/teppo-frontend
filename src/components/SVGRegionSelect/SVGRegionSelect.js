@@ -5,7 +5,9 @@ import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import SVGInline from 'react-svg-inline';
 import RegionSelect from 'react-region-select';
-import objectAssign from 'object-assign';
+
+import RegionSelectArea from './RegionSelectArea';
+
 import iconSVG from '../common/200100102.svg';
 import style from './SVGRegionSelect.css';
 
@@ -15,13 +17,15 @@ import style from './SVGRegionSelect.css';
  * @param {object} state
  * @return {object} props
  */
+
+
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
+  const svgregions = state.regions;
   return {
     plan,
+    svgregions,
     user: state.user.user,
-    formSendError: state.comments.commentAddError,
-    commentEditError: state.comments.commentEditError,
   };
 };
 
@@ -46,7 +50,7 @@ const mergeProps = (stateProps, actionCreators) => ({
     actionCreators.areaOnChange(stateProps.plan, comment),
 });
 
-
+/*
 class SVGRegionSelect extends Component {
   constructor(props) {
     super(props);
@@ -115,29 +119,35 @@ class SVGRegionSelect extends Component {
       background: 'rgba(255, 0, 0, 0.5)',
     };
 
-    // console.log('svgregionsselect', stateProps.plan);
-    return (
-      <div style={{ display: 'grid' }}>
-        <RegionSelect
-          maxRegions={1}
-          regions={this.state.regions}
-          regionStyle={regionStyle}
-          constraint
-          debug
-          onChange={this.onChange}
-          regionRenderer={this.regionRenderer}
-          style={{ border: '1px solid #0FA0CE' }}
-        >
-          <SVGInline
-            viewBox="0 0 3000 2000"
-            svg={iconSVG}
-            component="svg"
-          />
-        </RegionSelect>
-      </div>
+    */
 
-    );
-  }
-}
+const SVGRegionSelect = ({
+  plan,
+  comments,
+  svgregions,
+
+}) => (
+
+  <div style={{ display: 'grid' }}>
+    <RegionSelect
+      maxRegions={1}
+      regions={this.state.svgregions}
+           // regionStyle={regionStyle}
+      constraint
+      debug
+      onChange={this.onChange}
+      regionRenderer={this.regionRenderer}
+      style={{ border: '1px solid #0FA0CE' }}
+    >
+      <SVGInline
+          viewBox="0 0 3000 2000"
+          svg={iconSVG}
+          component="svg"
+        />
+    </RegionSelect>
+  </div>
+
+);
+
 
 export default connect(mapStateToProps, mergeProps)(SVGRegionSelect);

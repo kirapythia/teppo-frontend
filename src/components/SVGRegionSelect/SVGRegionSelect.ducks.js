@@ -32,12 +32,7 @@ const listAllComments = R.pipe(
 );
 
 export default handleActions({
-  [LOCATION_CHANGED]: (state, action) => {
-    const { route } = action.payload;
-    return route === PLAN_DETAILS
-      ? R.omit(['commentAddError', 'commentEditError'], state)
-      : state;
-  },
+ 
   [ProjectDetails.FETCH_PROJECT_SUCCESSA]: (state, action) =>
     ({ ...state, comments: byId(listAllComments(action.payload)), regions: [] }),
   // handle add comment action
