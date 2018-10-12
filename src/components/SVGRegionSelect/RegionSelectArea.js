@@ -1,6 +1,7 @@
 import React from 'react';
 import objectAssign from 'object-assign';
-
+import SVGInline from 'react-svg-inline';
+import iconSVG from '../common/200100102.svg';
 
 /* this.regionRenderer = this.regionRenderer.bind(this),
 this.onChange = this.onChange.bind(this),
@@ -15,9 +16,9 @@ this.state = {
 };
 
 
-const onChange = (regions) => {
+const onChange = (svgregions) => {
   this.setState({
-    regions,
+    svgregions,
   });
 };
 
@@ -71,7 +72,11 @@ const regionRenderer = (regionProps) => {
 
 const RegionSelectArea = ({plans, comments, svgregions}) =>
 (
-  <div/>
+  <SVGInline
+        viewBox="0 0 3000 2000"
+        svg={iconSVG}
+        component="svg"
+      />
 )
 
 export default RegionSelectArea;
