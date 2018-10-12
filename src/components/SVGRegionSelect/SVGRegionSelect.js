@@ -129,7 +129,7 @@ const SVGRegionSelect = ({
 }) => (
 
   <div style={{ display: 'grid' }}>
-    <RegionSelect
+    <RegionSelectArea
       maxRegions={1}
       regions={this.state.svgregions}
            // regionStyle={regionStyle}
@@ -144,7 +144,7 @@ const SVGRegionSelect = ({
           svg={iconSVG}
           component="svg"
         />
-    </RegionSelect>
+    </RegionSelectArea>
   </div>
 
 );
