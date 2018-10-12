@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
-import SVGInline from 'react-svg-inline';
-import RegionSelect from 'react-region-select';
+
+
 
 import RegionSelectArea from './RegionSelectArea';
 
-import iconSVG from '../common/200100102.svg';
+
 import style from './SVGRegionSelect.css';
 
 
@@ -129,22 +129,7 @@ const SVGRegionSelect = ({
 }) => (
 
   <div style={{ display: 'grid' }}>
-    <RegionSelectArea
-      maxRegions={1}
-      regions={svgregions}
-           // regionStyle={regionStyle}
-      constraint
-      debug
-      onChange={this.onChange}
-      regionRenderer={this.regionRenderer}
-      style={{ border: '1px solid #0FA0CE' }}
-    >
-      <SVGInline
-          viewBox="0 0 3000 2000"
-          svg={iconSVG}
-          component="svg"
-        />
-    </RegionSelectArea>
+    <RegionSelectArea/>
   </div>
 
 );
