@@ -146,8 +146,8 @@ export default handleActions({
   // Handle comment approval toggle error action. Revert comment's
   // approved status to what it was before send.
   [TOGGLE_COMMENT_APPROVAL_ERROR]: (state, action) => {
-    const { comment: { textId, approved } } = action.meta;
-    const updated = { ...state.comments[textId], approved };
+    const { comment: { ptextId, approved } } = action.meta;
+    const updated = { ...state.comments[ptextId], approved };
     return {
       ...state,
       commentEditError: action.payload,
