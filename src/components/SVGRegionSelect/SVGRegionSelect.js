@@ -5,7 +5,6 @@ import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 
 
-
 import RegionSelectArea from './RegionSelectArea';
 
 
@@ -21,7 +20,7 @@ import style from './SVGRegionSelect.css';
 
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
-  const svgregions = state.regions;
+  const svgregions = state.svgregions.regions;
   return {
     plan,
     svgregions,
@@ -123,13 +122,17 @@ class SVGRegionSelect extends Component {
 
 const SVGRegionSelect = ({
   plan,
-  comments,
+  comment,
   svgregions,
 
 }) => (
 
   <div style={{ display: 'grid' }}>
-    <RegionSelectArea/>
+    <RegionSelectArea
+      svgurl={plan.svgUrl}
+      regions={svgregions.regions}
+      comment={comment}
+    />
   </div>
 
 );

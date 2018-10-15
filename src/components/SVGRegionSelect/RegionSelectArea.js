@@ -3,6 +3,7 @@ import objectAssign from 'object-assign';
 import SVGInline from 'react-svg-inline';
 import iconSVG from '../common/200100102.svg';
 import RegionSelect from 'react-region-select';
+import { notStrictEqual } from 'assert';
 
 /* this.regionRenderer = this.regionRenderer.bind(this),
 this.onChange = this.onChange.bind(this),
@@ -71,12 +72,12 @@ const regionRenderer = (regionProps) => {
 };
 
 
-const RegionSelectArea = ({ plans, comments, svgregions }) =>
+const RegionSelectArea = ({ plans, comments,svgurl, svgregions }) =>
   (
     <RegionSelect
       maxRegions={1}
       regions={svgregions}
-           // regionStyle={regionStyle}
+           // regionStyle={regionStyle}     
       constraint
       debug
       onChange={this.onChange}
@@ -84,10 +85,10 @@ const RegionSelectArea = ({ plans, comments, svgregions }) =>
       style={{ border: '1px solid #0FA0CE' }}
     >
       <SVGInline
-      viewBox="0 0 3000 2000"
-      svg={iconSVG}
-      component="svg"
-    />
+        viewBox="0 0 3000 2000"
+        svg={iconSVG}
+        component="svg"
+      />
 
     </RegionSelect>
 
