@@ -42,11 +42,11 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
       <div className="PlanCommentsListItem__author">{comment.createdBy}</div>
       {comment.ptext}
     </div>
-    <Moment format="DD.MM.YYYY HH:MM">{comment.updatedAt}</Moment>
+    <Moment format="DD.MM.YYYY HH:mm">{comment.updatedAt}</Moment>
     <button type="button">Katso Alue</button>
     
 
-    <Moment format="DD.MM.YYYY HH:MM">{comment.createdAt}</Moment>
+    <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment>
     {!readOnly && (
       <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
         <div>{chooseActionButton(comment, onApproveClick)}</div>
