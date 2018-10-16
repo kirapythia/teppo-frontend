@@ -5,28 +5,9 @@ import iconSVG from '../common/200100102.svg';
 import RegionSelect from 'react-region-select';
 import { notStrictEqual } from 'assert';
 
-/* this.regionRenderer = this.regionRenderer.bind(this),
-this.onChange = this.onChange.bind(this),
-*/
-this.state = {
-  get svgregions() {
-    return this._svgregions;
-  },
-  set svgregions(value) {
-    this._svgregions = value;
-  },
-};
-
-
-const onChange = (svgregions) => {
-  this.setState({
-    svgregions,
-  });
-};
-
 
 const changeRegionData = (index, event) => {
-  const region = this.state.svgregions[index];
+  const region = this.state.SvgRegions[index];
   let color;
   switch (event.target.value) {
     case '1':
@@ -45,13 +26,15 @@ const changeRegionData = (index, event) => {
   region.data.regionStyle = {
     background: color,
   };
-  this.onChange([
+  /*
+  onChange([
     ...this.state.regions.slice(0, index),
     objectAssign({}, region, {
       data: objectAssign({}, region.data, { dataType: event.target.value }),
     }),
     ...this.state.regions.slice(index + 1),
   ]);
+  */
 };
 
 const regionRenderer = (regionProps) => {
@@ -72,7 +55,7 @@ const regionRenderer = (regionProps) => {
 };
 
 
-const RegionSelectArea = ({ plans, comments,svgurl, svgregions }) =>
+const RegionSelectArea = ({ svgurl, svgregions, comment, onChange }) =>
   (
     <RegionSelect
       maxRegions={1}
@@ -80,8 +63,8 @@ const RegionSelectArea = ({ plans, comments,svgurl, svgregions }) =>
            // regionStyle={regionStyle}     
       constraint
       debug
-      onChange={this.onChange}
-      regionRenderer={this.regionRenderer}
+      onChange={onChange}
+      regionRenderer={regionRenderer}
       style={{ border: '1px solid #0FA0CE' }}
     >
       <SVGInline
