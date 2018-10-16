@@ -7,36 +7,29 @@ import { listToMapBy } from '../../utils';
 import { PLAN_DETAILS } from '../../constants/routes';
 import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
-export const NAME = 'svgregions';
+export const NAME = 'SvgRegions';
 
 const SVG_SUCCESS = 'pythia-webclient/PlanComments/SVG_SUCCESS';
 
 
 export const actions = {
-  addregion: createAction(
+  addRegion: createAction(
     SVG_SUCCESS
   ),
 };
 
 const initialState = {
   regions: [],
-};
-
-const byId = listToMapBy('ptextId');
-
-const listAllComments = R.pipe(
-  R.prop('plans'),
-  R.pluck('commentValues'),
-  R.flatten,
-  R.filter(Boolean),
-);
+}; 
 
 export default handleActions({
- 
-  [ProjectDetails.FETCH_PROJECT_SUCCESSA]: (state, action) =>
-    ({ ...state, comments: byId(listAllComments(action.payload)), regions: [] }),
-  // handle add comment action
-
-
-  [SVG_SUCCESS]: state => R.omit(['commentEditError'], state),
+  [SVG_SUCCESS]: (state, action) => {
+    switch (action.payload[0].isChanging) {
+      case true:
+        return { ...state, regions: action.payload };
+      default:
+        return { ...state };
+    }
+    
+  }
 }, initialState);
