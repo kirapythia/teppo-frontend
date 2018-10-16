@@ -22,7 +22,7 @@ const initialState = {
   regions: [],
 };
 
-const byId = listToMapBy('textId');
+const byId = listToMapBy('ptextId');
 
 const listAllComments = R.pipe(
   R.prop('plans'),

@@ -32,7 +32,7 @@ describe('Initializing route', () => {
 describe('Saving a comment', () => {
   it('should call saveComment with given comment from action.payload', () => {
     const plan = {};
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addComment(plan, comment);
     const result = reducer({}, action);
 
@@ -71,7 +71,7 @@ describe('Saving a comment', () => {
 describe('Save comment success', () => {
   it('should clear the comment form', () => {
     const state = { comments: {} };
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addCommentSuccess(comment);
     const result = reducer(state, action);
     expect(result).toEqual(loop(
@@ -82,7 +82,7 @@ describe('Save comment success', () => {
 
   it('should add comment received from the server to the map of comments', () => {
     const state = { comments: {} };
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addCommentSuccess(comment);
     const [result] = reducer(state, action);
     expect(result.comments['1']).toBe(comment);
@@ -90,7 +90,7 @@ describe('Save comment success', () => {
 
   it('should not discard previously added comments', () => {
     const state = { comments: { 2: {} } };
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addCommentSuccess(comment);
     const [result] = reducer(state, action);
     expect(result.comments['2']).not.toBe(undefined);
@@ -98,7 +98,7 @@ describe('Save comment success', () => {
 
   it('should not discard other members of the state', () => {
     const state = { comments: {}, a: 1 };
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addCommentSuccess(comment);
     const [result] = reducer(state, action);
     expect(result.a).toBe(state.a);
@@ -106,7 +106,7 @@ describe('Save comment success', () => {
 
   it('should not mutate the state object', () => {
     const state = { comments: {} };
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.addCommentSuccess(comment);
     const [result] = reducer(state, action);
     expect(result).not.toBe(state);
@@ -148,7 +148,7 @@ describe('Toggling comment\'s approval', () => {
   it('should run toggleCommentApprovalError if comment edit fails', () => {
     const plan = {};
     const error = new Error();
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const action = actions.toggleCommentApproval(plan, comment, true);
     const result = reducer({}, action);
     const cmd = getCmd(result);
@@ -169,7 +169,7 @@ describe('Toggling comment\'s approval', () => {
 
   it('should change the given comment\'s approved flag to true', () => {
     const plan = {};
-    const comment = { textId: 1, approved: false };
+    const comment = { ptextId: 1, approved: false };
     const state = { comments: { 1: comment } };
     const action = actions.toggleCommentApproval(plan, comment, true);
     const [result] = reducer(state, action);
@@ -178,7 +178,7 @@ describe('Toggling comment\'s approval', () => {
 
   it('should change the given comment\'s approved flag to false', () => {
     const plan = {};
-    const comment = { textId: 1, approved: false };
+    const comment = { ptextId: 1, approved: false };
     const state = { comments: { 1: comment } };
     const action = actions.toggleCommentApproval(plan, comment, false);
     const [result] = reducer(state, action);
@@ -187,7 +187,7 @@ describe('Toggling comment\'s approval', () => {
 
   it('should not mutate the comments map', () => {
     const plan = {};
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const state = { comments: {} };
     const action = actions.toggleCommentApproval(plan, comment);
     const [result] = reducer(state, action);
@@ -219,7 +219,7 @@ describe('Comment approval toggle failure', () => {
   });
 
   it('should revert the given comment\'s approved flag to false', () => {
-    const comment = { textId: 1, approved: true };
+    const comment = { ptextId: 1, approved: true };
     const state = { comments: { 1: comment } };
     const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);
@@ -227,7 +227,7 @@ describe('Comment approval toggle failure', () => {
   });
 
   it('should revert the given comment\'s approved flag to true', () => {
-    const comment = { textId: 1, approved: false };
+    const comment = { ptextId: 1, approved: false };
     const state = { comments: { 1: comment } };
     const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);
@@ -235,7 +235,7 @@ describe('Comment approval toggle failure', () => {
   });
 
   it('should not mutate the comments map', () => {
-    const comment = { textId: 1 };
+    const comment = { ptextId: 1 };
     const state = { comments: {} };
     const action = actions.toggleCommentApprovalError(new Error(), comment);
     const result = reducer(state, action);

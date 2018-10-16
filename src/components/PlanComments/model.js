@@ -52,4 +52,4 @@ export const editComment = (plan, comment) =>
    * @param {object} comment comment object
    */
 export const updateComment = (comments, comment) =>
-  ({ ...comments, [comment.textId]: comment });
+  ({ ...comments, [comment.ptextId]: comment });
