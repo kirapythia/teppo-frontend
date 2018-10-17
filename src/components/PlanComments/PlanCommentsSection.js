@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
+    coordinates: state.SvgRegions.regions[0],
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
     readOnly: (project && project.completed) || !isPlanApproved,
@@ -57,7 +58,7 @@ const mergeProps = (stateProps, actionCreators) => ({
   toggleCommentApproval: (comment, isApproved) =>
     actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
   addComment: comment =>
-    actionCreators.addComment(stateProps.plan, comment),
+    actionCreators.addComment(stateProps.plan, comment, stateProps.coordinates),
 });
 
 /**
@@ -75,6 +76,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  coordinates,
   user,
   readOnly,
   addComment,
@@ -96,12 +98,14 @@ const PlanCommentsSection = ({
     />
     {!readOnly && <div>
       <h4>{t('plan.comments.form.title')}</h4>
+      <p>{JSON.stringify(coordinates)}</p>
       <PlanCommentForm
         plan={plan}
-        initialValues={{ createdBy: user }}
+        initialValues={{ createdBy: user, x: coordinates.x, y: coordinates.y, width: coordinates.width, height: coordinates.height }}
         addComment={addComment}
         formSendError={formSendError}
         clearError={clearCommentAddError}
+        coordinates={coordinates}
       />
     </div>}
   </section>
