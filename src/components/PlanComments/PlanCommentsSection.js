@@ -57,8 +57,16 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   toggleCommentApproval: (comment, isApproved) =>
     actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
-  addComment: comment =>
-    actionCreators.addComment(stateProps.plan, comment, stateProps.coordinates),
+  addComment: comment => {
+    const commentWithCoordinates = {
+      ...comment,
+      x: stateProps.coordinates.x,
+      y: stateProps.coordinates.y,
+      width: stateProps.coordinates.width,
+      height: stateProps.coordinates.height
+    };
+    return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
+  }
 });
 
 /**
