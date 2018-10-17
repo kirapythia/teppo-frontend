@@ -84,7 +84,6 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
-  coordinates,
   user,
   readOnly,
   addComment,
@@ -106,14 +105,12 @@ const PlanCommentsSection = ({
     />
     {!readOnly && <div>
       <h4>{t('plan.comments.form.title')}</h4>
-      <p>{JSON.stringify(coordinates)}</p>
       <PlanCommentForm
         plan={plan}
-        initialValues={{ createdBy: user, x: coordinates.x, y: coordinates.y, width: coordinates.width, height: coordinates.height }}
+        initialValues={{ createdBy: user }}
         addComment={addComment}
         formSendError={formSendError}
         clearError={clearCommentAddError}
-        coordinates={coordinates}
       />
     </div>}
   </section>

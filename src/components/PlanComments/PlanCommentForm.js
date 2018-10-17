@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, change } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import t from '../../locale';
 import { renderField } from '../../forms/form-utils';
 import { NAME } from './PlanComments.ducks';
@@ -35,15 +35,13 @@ const formConfig = {
  */
 const PlanCommentForm = ({
   plan,
-  coordinates,
   addComment,
   handleSubmit,
   clearError,
   formSendError,
   valid,
   pristine,
-  submitting,
-  dispatch
+  submitting
 }) => (
   <form className="PlanCommentForm" onSubmit={handleSubmit(addComment)}>
     { formSendError && <Message message={formSendError.message} onClose={clearError} /> }
@@ -64,13 +62,6 @@ const PlanCommentForm = ({
       component={renderField}
       placeholder={t('plan.comments.file.placeholder')}
       multiple={false}
-    />
-
-    <Field 
-      name="x"
-      component={props => 
-        <input type="hidden" value={coordinates.x}/>
-      }
     />
 
     <div className="PlanCommentForm__actions row">

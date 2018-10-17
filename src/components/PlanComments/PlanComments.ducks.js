@@ -26,7 +26,7 @@ export const actions = {
    */
   addComment: createAction(
     ADD_COMMENT,
-    (plan, comment, coordinates) => ({ plan, comment, coordinates })
+    (plan, comment) => ({ plan, comment })
   ),
   /**
    * Action fired after a comment was successfully added
@@ -118,7 +118,7 @@ export default handleActions({
     Cmd.run(saveComment, {
       successActionCreator: actions.addCommentSuccess,
       failActionCreator: actions.addCommentError,
-      args: [action.payload.plan, action.payload.comment, action.payload.coordinates],
+      args: [action.payload.plan, action.payload.comment],
     })
   ),
   // handle successfull add
