@@ -8,9 +8,6 @@ import SVGInline from 'react-svg-inline';
 import iconSVG from '../common/200100102.svg';
 import RegionSelect from 'react-region-select';
 import { notStrictEqual } from 'assert';
-
-import RegionSelectArea from './RegionSelectArea';
-
 import style from './SVGRegionSelect.css';
 
 const mapStateToProps = (state) => {
@@ -116,21 +113,3 @@ const SVGRegionSelect = ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(SVGRegionSelect);
-
-
-/*
-
-
-<RegionSelect
-svgurl={plan.svgUrl}
-regions={svgregions.regions}
-comment={comment}
-onChange={addRegion}
-/>
-<SVGInline
-viewBox="0 0 3000 2000"
-svg={iconSVG}
-component="svg"
-/>
-</RegionSelect>
-*/
