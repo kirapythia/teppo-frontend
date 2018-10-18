@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
+    coordinates: state.SvgRegions.regions[0],
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
     readOnly: (project && project.completed) || !isPlanApproved,
@@ -56,8 +57,16 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...actionCreators,
   toggleCommentApproval: (comment, isApproved) =>
     actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
-  addComment: comment =>
-    actionCreators.addComment(stateProps.plan, comment),
+  addComment: comment => {
+    const commentWithCoordinates = {
+      ...comment,
+      x: stateProps.coordinates.x,
+      y: stateProps.coordinates.y,
+      width: stateProps.coordinates.width,
+      height: stateProps.coordinates.height
+    };
+    return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
+  }
 });
 
 /**
