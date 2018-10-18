@@ -12,11 +12,21 @@ import style from './SVGRegionSelect.css';
 
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
-  const svgregions = state.SvgRegions.regions;
+  const selectedComment = state.comments.selected;
+  const svgregions = !selectedComment 
+    ? state.SvgRegions.regions
+    : [{
+      x: selectedComment.comment.x,
+      y: selectedComment.comment.y,
+      width: selectedComment.comment.width,
+      height: selectedComment.comment.height,
+      data: {}
+    }];
 
   return {
     plan,
     svgregions,
+    selectedComment,
     user: state.user.user,
   };
 };
