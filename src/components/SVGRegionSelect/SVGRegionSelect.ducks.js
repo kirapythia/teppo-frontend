@@ -19,8 +19,8 @@ export const actions = {
 };
 
 const initialState = {
-  regions: [{ x: 0, y: 0, width: 0, height: 0 }],
-}; 
+  regions: [{ x: 0, y: 0, width: 0, height: 0, data: {} }],
+};
 
 export default handleActions({
   [SVG_SUCCESS]: (state, action) => {
@@ -30,6 +30,5 @@ export default handleActions({
       default:
         return { ...state };
     }
-    
-  }
+  },
 }, initialState);
