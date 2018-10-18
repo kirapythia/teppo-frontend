@@ -44,6 +44,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
+  selectComment: actions.selectComment
 }, dispatch);
 
 /**
@@ -66,7 +67,9 @@ const mergeProps = (stateProps, actionCreators) => ({
       height: stateProps.coordinates.height
     };
     return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
-  }
+  },
+  selectComment: comment => 
+    actionCreators.selectComment(comment)
 });
 
 /**
@@ -92,6 +95,7 @@ const PlanCommentsSection = ({
   clearCommentEditError,
   formSendError,
   commentEditError,
+  selectComment
 }) => (
   <section className="PlanComments__container">
     <h3>{t('plan.comments.title')}</h3>
@@ -102,6 +106,7 @@ const PlanCommentsSection = ({
       readOnly={readOnly}
       comments={comments}
       toggleCommentApproval={toggleCommentApproval}
+      selectComment={selectComment}
     />
     {!readOnly && <div>
       <h4>{t('plan.comments.form.title')}</h4>
