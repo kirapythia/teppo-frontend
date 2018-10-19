@@ -5,7 +5,7 @@ import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan, getCurrentProject } from '../../selectors';
 import objectAssign from 'object-assign';
 import SVGInline from 'react-svg-inline';
-import iconSVG from '../common/200100102.svg';
+import iconSVG from '../common/2345_001.pdf.svg';
 import RegionSelect from 'react-region-select';
 import { notStrictEqual } from 'assert';
 import style from './SVGRegionSelect.css';
@@ -106,14 +106,13 @@ const SVGRegionSelect = ({
     <RegionSelect
       maxRegions={1}
       regions={svgregions}
-      debug
       onChange={addRegion}
       regionStyle={regionStyle}
-      regionRenderer={regionRenderer}
+      // regionRenderer={regionRenderer}
       style={{ border: '1px solid #0FA0CE' }}
     >
       <SVGInline
-        viewBox="0 0 3000 2000"
+        viewBox="0 0 4385 2245"
         svg={iconSVG}
         component="svg"
       />

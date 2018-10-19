@@ -98,16 +98,6 @@ const PlanCommentsSection = ({
   selectComment
 }) => (
   <section className="PlanComments__container">
-    <h3>{t('plan.comments.title')}</h3>
-    { commentEditError &&
-      <Message message={commentEditError.message} onClose={clearCommentEditError} />
-    }
-    <PlanCommentsList
-      readOnly={readOnly}
-      comments={comments}
-      toggleCommentApproval={toggleCommentApproval}
-      selectComment={selectComment}
-    />
     {!readOnly && <div>
       <h4>{t('plan.comments.form.title')}</h4>
       <PlanCommentForm
@@ -118,6 +108,16 @@ const PlanCommentsSection = ({
         clearError={clearCommentAddError}
       />
     </div>}
+    <h3>{t('plan.comments.title')}</h3>
+    { commentEditError &&
+      <Message message={commentEditError.message} onClose={clearCommentEditError} />
+    }
+    <PlanCommentsList
+      readOnly={readOnly}
+      comments={comments}
+      toggleCommentApproval={toggleCommentApproval}
+      selectComment={selectComment}
+    />
   </section>
 );
 
