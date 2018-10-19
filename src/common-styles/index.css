@@ -51,6 +51,9 @@ h1, h2, h3 {
   border-color: #ffeeba;
 }
 
+.container {
+  max-width: none;
+}
 
 @media (min-width: 550px) {
   h1 { font-size: 4.4rem; }

@@ -112,8 +112,8 @@ const PlanDetails = ({
             </RoleAuth>
           )}
         </div>
-        <SVGRegionSelect plan={plan} />
         <PlanVersionHistory />
+        <SVGRegionSelect plan={plan} />
         {!readOnly && <PlanCommentsSection /> }
         <div className="PlanDetails__actions">
           <RoleAuth authorized={authorized.approveDiscardPlanAuthorized}>

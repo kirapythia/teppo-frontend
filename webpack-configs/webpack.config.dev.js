@@ -213,10 +213,13 @@ module.exports = {
               },
             ],
           },
-		{
-			test: /\.svg$/,
-			loader:  require.resolve('raw-loader'),
-		},
+
+          // Converted svg files need to be loaded with raw-loader, so that they can be shown as inline SVG
+          // Conversion generates files with names like 2345_001.dwg.svg (or correspondingly *.dxf.svg / *pdf.svg)
+          {
+            test: /\.(dwg|dxf|pdf).svg$/,
+            loader:  require.resolve('raw-loader'),
+          },
 		
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.

@@ -17,6 +17,7 @@ const TOGGLE_COMMENT_APPROVAL = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_AP
 const TOGGLE_COMMENT_APPROVAL_ERROR = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL_ERROR';
 const CLEAR_COMMENT_ADD_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_ADD_ERROR';
 const CLEAR_COMMENT_EDIT_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_EDIT_ERROR';
+const SELECT_COMMENT = 'pythia-webclient/PlanComments/SELECT_COMMENT';
 
 export const actions = {
   /**
@@ -28,6 +29,17 @@ export const actions = {
     ADD_COMMENT,
     (plan, comment) => ({ plan, comment })
   ),
+
+  /**
+   * Action to set a single comment as selected (for sending coordinates to SVG region)
+   * @param {object} comment
+   * @return {object}
+   */
+  selectComment: createAction(
+    SELECT_COMMENT,
+    (comment) => ({ comment })
+  ),
+  
   /**
    * Action fired after a comment was successfully added
    * @param {object} comment
@@ -36,6 +48,7 @@ export const actions = {
   addCommentSuccess: createAction(
     ADD_COMMENT_SUCCESS
   ),
+
   /**
    * Action fired after comment adding fails
    * @param {object} error
@@ -81,7 +94,7 @@ export const actions = {
    */
   clearCommentEditError: createAction(
     CLEAR_COMMENT_EDIT_ERROR,
-  ),
+  )
 };
 
 /**
@@ -121,6 +134,9 @@ export default handleActions({
       args: [action.payload.plan, action.payload.comment],
     })
   ),
+  [SELECT_COMMENT]: (state, action) => {
+    return { ...state, selected: action.payload };
+  },
   // handle successfull add
   [ADD_COMMENT_SUCCESS]: (state, action) => loop(
     { ...state, comments: updateComment(state.comments, action.payload) },

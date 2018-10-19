@@ -28,7 +28,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
  * @param {object} props
  * @param {object} props.comment
  */
-const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
+const PlanCommentsListItem = ({ comment, onApproveClick, onSelectComment, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
     <div className="PlanCommentsListItem__image">
 
@@ -43,7 +43,7 @@ const PlanCommentsListItem = ({ comment, onApproveClick, readOnly }) => (
       {comment.ptext}
     </div>
     <Moment format="DD.MM.YYYY HH:mm">{comment.updatedAt}</Moment>
-    <button type="button">Katso Alue</button>
+    <button type="button" onClick={() => onSelectComment(comment)}>Katso Alue</button>
     
 
     <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment>
