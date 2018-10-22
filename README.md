@@ -10,6 +10,7 @@ A web client for using [Teppo REST API](https://github.com/espoon-voltti/teppo-b
 # To Load SVG:s correctly inline, default webpack config needs to be modified.
 
 Simply add configuration object to module.loaders like this.
+
           {
             test: /\.(dwg|dxf|pdf).svg$/,
             loader:  require.resolve('raw-loader'),
