@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
+    selectedComment: state.comments.selected ? state.comments.selected.comment : null,
     coordinates: state.SvgRegions.regions[0],
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
@@ -95,6 +96,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  selectedComment,
   user,
   readOnly,
   addComment,
@@ -123,6 +125,7 @@ const PlanCommentsSection = ({
     <PlanCommentsList
       readOnly={readOnly}
       comments={comments}
+      selectedComment={selectedComment}
       toggleCommentApproval={toggleCommentApproval}
       selectComment={selectComment}
     />

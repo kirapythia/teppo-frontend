@@ -34,8 +34,10 @@ const getInitials = (fullName) => {
  * @param {object} props
  * @param {object} props.comment
  */
-const PlanCommentsListItem = ({ comment, onApproveClick, onSelectComment, readOnly }) => (
-  <li className={cx('PlanCommentsListItem', { 'PlanCommentsListItem--approved': comment.approved })}>
+const PlanCommentsListItem = ({ comment, selectedComment, onApproveClick, onSelectComment, readOnly }) => (
+  <li className={cx('PlanCommentsListItem', { 
+      'PlanCommentsListItem--approved': comment.approved, 
+      'PlanCommentsListItem--selected': comment && selectedComment && comment == selectedComment })}>
     <div className="PlanCommentsListItem__image">
 
       {comment.url
