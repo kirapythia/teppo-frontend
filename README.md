@@ -16,7 +16,7 @@ Simply add configuration object to module.loaders like this.
             loader:  require.resolve('raw-loader'),
           },
 
-Previously webpack.config files can be found in the webpack.configs directory. Copy these files and overwrite the files in /node.modules/react-scripts/configs/
+Previously webpack.config files can be found in the `webpack-configs` directory. Copy these files and overwrite the files in `node_modules/react-scripts/configs/`
 
 ## Getting Started
 
