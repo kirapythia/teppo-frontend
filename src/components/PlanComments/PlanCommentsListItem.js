@@ -29,6 +29,9 @@ const getInitials = (fullName) => {
   return initials;
 }
 
+const isCurrentCommentSelected = (comment, selectedComment) => 
+  comment && selectedComment && comment.ptextId === selectedComment.ptextId;
+
 /**
  * A single row in comments list
  * @param {object} props
@@ -37,26 +40,28 @@ const getInitials = (fullName) => {
 const PlanCommentsListItem = ({ comment, selectedComment, onApproveClick, onSelectComment, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 
       'PlanCommentsListItem--approved': comment.approved, 
-      'PlanCommentsListItem--selected': comment && selectedComment && comment.ptextId === selectedComment.ptextId })}>
+      'PlanCommentsListItem--selected': isCurrentCommentSelected(comment, selectedComment)})}>
     <div className="PlanCommentsListItem__image">
-
       {comment.url
         ? <PreviewImage url={comment.url} size={60} />
         : <i className="fa fa-2x fa-comment-o" aria-hidden />
       }
     </div>
     <div>
-      <button type="button" onClick={() => onSelectComment(comment)}>Katso Alue</button>
+      {!isCurrentCommentSelected(comment, selectedComment) 
+        ? <button type="button" onClick={() => onSelectComment(comment)}>{t('button.select_comment')}</button>
+        : <button type="button" onClick={() => onSelectComment(null)}>{t('button.unselect_comment')}</button>
+      }
     </div>
     <div className="PlanCommentsListItem__body">
       <div className="PlanCommentsListItem__author">{comment.createdBy}</div>
       {comment.ptext}
     </div>
     <div>
-      <div>Luotu: <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment></div>
+      <div>{t('plan.comments.created_at')}: <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment></div>
       {comment.approved && comment.approvedAt && comment.approvedBy && (
         <div>
-          Hyväksytty: <Moment format="DD.MM.YYYY HH:mm">{comment.approvedAt}</Moment> 
+          {t('plan.comments.approved_at')}: <Moment format="DD.MM.YYYY HH:mm">{comment.approvedAt}</Moment> 
           &nbsp;
           {getInitials(comment.approvedBy)}
         </div>

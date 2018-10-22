@@ -17,7 +17,7 @@ const TOGGLE_COMMENT_APPROVAL = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_AP
 const TOGGLE_COMMENT_APPROVAL_ERROR = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL_ERROR';
 const CLEAR_COMMENT_ADD_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_ADD_ERROR';
 const CLEAR_COMMENT_EDIT_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_EDIT_ERROR';
-const TOGGLE_COMMENT_SELECTION = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_SELECTION';
+const SELECT_COMMENT = 'pythia-webclient/PlanComments/SELECT_COMMENT';
 
 export const actions = {
   /**
@@ -35,8 +35,8 @@ export const actions = {
    * @param {object} comment
    * @return {object}
    */
-  toggleCommentSelection: createAction(
-    TOGGLE_COMMENT_SELECTION,
+  selectComment: createAction(
+    SELECT_COMMENT,
     (comment) => ({ comment })
   ),
   
@@ -134,7 +134,7 @@ export default handleActions({
       args: [action.payload.plan, action.payload.comment],
     })
   ),
-  [TOGGLE_COMMENT_SELECTION]: (state, action) => {
+  [SELECT_COMMENT]: (state, action) => {
     return { ...state, selected: action.payload };
   },
   // handle successfull add
