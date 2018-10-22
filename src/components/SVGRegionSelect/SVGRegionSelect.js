@@ -108,6 +108,7 @@ const SVGRegionSelect = ({
       regions={svgregions}
       onChange={addRegion}
       regionStyle={regionStyle}
+      constraint
       // regionRenderer={regionRenderer}
       style={{ border: '1px solid #0FA0CE' }}
     >
