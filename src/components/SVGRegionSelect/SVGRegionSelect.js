@@ -13,7 +13,7 @@ import style from './SVGRegionSelect.css';
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
   const selectedComment = state.comments.selected;
-  const svgregions = !selectedComment 
+  const svgregions = (!selectedComment || !selectedComment.comment)
     ? state.SvgRegions.regions
     : [{
       x: selectedComment.comment.x,

@@ -37,7 +37,7 @@ const getInitials = (fullName) => {
 const PlanCommentsListItem = ({ comment, selectedComment, onApproveClick, onSelectComment, readOnly }) => (
   <li className={cx('PlanCommentsListItem', { 
       'PlanCommentsListItem--approved': comment.approved, 
-      'PlanCommentsListItem--selected': comment && selectedComment && comment == selectedComment })}>
+      'PlanCommentsListItem--selected': comment && selectedComment && comment.ptextId === selectedComment.ptextId })}>
     <div className="PlanCommentsListItem__image">
 
       {comment.url

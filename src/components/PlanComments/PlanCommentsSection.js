@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
-  selectComment: actions.selectComment
+  toggleCommentSelection: actions.toggleCommentSelection
 }, dispatch);
 
 /**
@@ -77,8 +77,13 @@ const mergeProps = (stateProps, actionCreators) => ({
     };
     return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
   },
-  selectComment: comment => 
-    actionCreators.selectComment(comment)
+  toggleCommentSelection: comment => {
+      if (stateProps.selectedComment && stateProps.selectedComment.ptextId === comment.ptextId) {
+        comment = null;
+      }
+      return actionCreators.toggleCommentSelection(comment)
+    }
+
 });
 
 /**
@@ -105,7 +110,7 @@ const PlanCommentsSection = ({
   clearCommentEditError,
   formSendError,
   commentEditError,
-  selectComment
+  toggleCommentSelection
 }) => (
   <section className="PlanComments__container">
     {!readOnly && <div>
@@ -127,7 +132,7 @@ const PlanCommentsSection = ({
       comments={comments}
       selectedComment={selectedComment}
       toggleCommentApproval={toggleCommentApproval}
-      selectComment={selectComment}
+      selectComment={toggleCommentSelection}
     />
   </section>
 );
