@@ -23,6 +23,12 @@ const chooseActionButton = (comment, callback) => (comment.approved
   />
 );
 
+const getInitials = (fullName) => {
+  const names = fullName.substring(0, fullName.indexOf('(')-1).split(" ");
+  const initials = names.map(name => name[0] + ".");
+  return initials;
+}
+
 /**
  * A single row in comments list
  * @param {object} props
@@ -45,8 +51,14 @@ const PlanCommentsListItem = ({ comment, onApproveClick, onSelectComment, readOn
       {comment.ptext}
     </div>
     <div>
-      <div>Päivitetty: <Moment format="DD.MM.YYYY HH:mm">{comment.updatedAt}</Moment></div>
       <div>Luotu: <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment></div>
+      {comment.approved && comment.approvedAt && comment.approvedBy && (
+        <div>
+          Hyväksytty: <Moment format="DD.MM.YYYY HH:mm">{comment.approvedAt}</Moment> 
+          &nbsp;
+          {getInitials(comment.approvedBy)}
+        </div>
+      )}
     </div>
     {!readOnly && (
       <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
