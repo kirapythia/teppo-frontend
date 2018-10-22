@@ -37,16 +37,17 @@ const PlanCommentsListItem = ({ comment, onApproveClick, onSelectComment, readOn
         : <i className="fa fa-2x fa-comment-o" aria-hidden />
       }
     </div>
+    <div>
+      <button type="button" onClick={() => onSelectComment(comment)}>Katso Alue</button>
+    </div>
     <div className="PlanCommentsListItem__body">
-
       <div className="PlanCommentsListItem__author">{comment.createdBy}</div>
       {comment.ptext}
     </div>
-    <Moment format="DD.MM.YYYY HH:mm">{comment.updatedAt}</Moment>
-    <button type="button" onClick={() => onSelectComment(comment)}>Katso Alue</button>
-    
-
-    <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment>
+    <div>
+      <div>Päivitetty: <Moment format="DD.MM.YYYY HH:mm">{comment.updatedAt}</Moment></div>
+      <div>Luotu: <Moment format="DD.MM.YYYY HH:mm">{comment.createdAt}</Moment></div>
+    </div>
     {!readOnly && (
       <RoleAuth authorized={authorized.planCommentsListItemAuthorized}>
         <div>{chooseActionButton(comment, onApproveClick)}</div>
