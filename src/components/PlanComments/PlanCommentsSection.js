@@ -56,8 +56,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const mergeProps = (stateProps, actionCreators) => ({
   ...stateProps,
   ...actionCreators,
-  toggleCommentApproval: (comment, isApproved) =>
-    actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
+  toggleCommentApproval: (comment, isApproved) => {
+    if (isApproved) {
+      comment.approvedBy = stateProps.user;
+      comment.approvedAt = new Date().toISOString();
+    } else {
+      comment.approvedBy = null;
+      comment.approvedAt = null;
+    }
+    return actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved);
+  },
   addComment: comment => {
     const commentWithCoordinates = {
       ...comment,
