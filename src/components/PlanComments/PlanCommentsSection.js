@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
+    selectedComment: state.comments.selected ? state.comments.selected.comment : null,
     coordinates: state.SvgRegions.regions[0],
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
@@ -56,8 +57,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const mergeProps = (stateProps, actionCreators) => ({
   ...stateProps,
   ...actionCreators,
-  toggleCommentApproval: (comment, isApproved) =>
-    actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
+  toggleCommentApproval: (comment, isApproved) => {
+    if (isApproved) {
+      comment.approvedBy = stateProps.user;
+      comment.approvedAt = new Date().toISOString();
+    } else {
+      comment.approvedBy = null;
+      comment.approvedAt = null;
+    }
+    return actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved);
+  },
   addComment: comment => {
     const commentWithCoordinates = {
       ...comment,
@@ -68,8 +77,10 @@ const mergeProps = (stateProps, actionCreators) => ({
     };
     return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
   },
-  selectComment: comment => 
-    actionCreators.selectComment(comment)
+  selectComment: comment => {
+      return actionCreators.selectComment(comment)
+    }
+
 });
 
 /**
@@ -87,6 +98,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  selectedComment,
   user,
   readOnly,
   addComment,
@@ -115,6 +127,7 @@ const PlanCommentsSection = ({
     <PlanCommentsList
       readOnly={readOnly}
       comments={comments}
+      selectedComment={selectedComment}
       toggleCommentApproval={toggleCommentApproval}
       selectComment={selectComment}
     />
