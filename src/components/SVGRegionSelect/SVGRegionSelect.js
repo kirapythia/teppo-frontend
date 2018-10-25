@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan } from '../../selectors';
+import SVGImage from './SVGImage';
 import iconSVG from '../common/2345_001.pdf.svg';
 
 // import './SVGRegionSelect.css';
@@ -59,15 +60,21 @@ const SVGRegionSelect = ({
       style={{
         border: '1px solid #0FA0CE',
         backgroundImage: 'url(' + plan.svgUrl + ')',
-        height: '600px',
+        height: '500px',
+        backgroundSize: 'auto 500px',
+        backgroundRepeat: 'no-repeat',
        }}
     >
-      {false &&
-        <SVGInline
-          viewBox="0 0 4385 2245"
-          svg={iconSVG}
-          component="svg"
-        />
+      { /*
+        <div>
+          <SVGImage svgUrl={plan.svgUrl} />
+          <SVGInline
+            viewBox="0 0 4385 2245"
+            svg={iconSVG}
+            component="svg"
+          />
+        </div>
+        */
       }
     </RegionSelect>
   </div>
