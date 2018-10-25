@@ -3,22 +3,24 @@ import * as _ from 'lodash';
 import PlanCommentsListItem from './PlanCommentsListItem';
 import t from '../../locale';
 import './PlanCommentsList.css';
-import USER_ROLES from '../../constants/user_roles';
 
-const listOfComments = (comments, selectedComment, toggleCommentApproval, selectComment, readOnly) => (
-  <ul className="PlanCommentsList clear-list-styles">
-    {comments.map(comment => (
-      <PlanCommentsListItem
-        key={comment.ptextId}
-        comment={comment}
-        selectedComment={selectedComment}
-        readOnly={readOnly}
-        onApproveClick={toggleCommentApproval}
-        onSelectComment={selectComment}
-      />
-    ))}
-  </ul>
-);
+const listOfComments =
+  (comments, selectedComment, toggleCommentApproval, selectComment, readOnly) => (
+    <ul className="PlanCommentsList clear-list-styles">
+      {comments.map(comment => (
+        <PlanCommentsListItem
+          key={comment.ptextId}
+          comment={comment}
+          selectedComment={selectedComment}
+          readOnly={readOnly}
+          onApproveClick={toggleCommentApproval}
+          onSelectComment={selectComment}
+        />
+      ))}
+    </ul>
+  );
+
+const parseCategoryFromGroupName = group => group.slice(group.indexOf('(') + 1, group.indexOf(')')).toUpperCase();
 
 const groupedListOfAllComments = (comments, selectedComment, toggleCommentApproval, selectComment, readOnly) => {
   const groupedComments = _.groupBy(comments, c => c.createdBy);
@@ -32,10 +34,6 @@ const groupedListOfAllComments = (comments, selectedComment, toggleCommentApprov
       ))}
     </div>
 )};
-
-const parseCategoryFromGroupName = (group) => {
-  return group.slice(group.indexOf('(') + 1, group.indexOf(')')).toUpperCase();
-};
 
 /**
  * A list component for dislaying a list of comments

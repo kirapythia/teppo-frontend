@@ -23,8 +23,6 @@ import './PlanDetails.css';
 import RoleAuth from '../RoleAuth';
 import authorized from '../../constants/user_authorization';
 
-
-
 const mapStateToProps = (state) => {
   const project = getCurrentProject(state);
   const plan = getCurrentPlan(state);
@@ -89,7 +87,6 @@ const PlanDetails = ({
     )}
     {!error && plan && (
       <div>
-     
         <ShowDetails fields={formPlanDetailFields(plan)} />
         <div className="PlanDetails__actions text-right">
           {project.completed && plan.status === PLAN_STATUS.APPROVED && (
