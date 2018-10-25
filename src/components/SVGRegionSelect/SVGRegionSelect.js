@@ -1,14 +1,12 @@
 import React from 'react';
-import SVGInline from 'react-svg-inline';
+// import SVGInline from 'react-svg-inline';
 import RegionSelect from 'react-region-select';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan } from '../../selectors';
-import SVGImage from './SVGImage';
-import iconSVG from '../common/2345_001.pdf.svg';
-
-// import './SVGRegionSelect.css';
+// import SVGImage from './SVGImage';
+// import iconSVG from '../common/2345_001.pdf.svg';
 
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
@@ -65,7 +63,8 @@ const SVGRegionSelect = ({
         backgroundRepeat: 'no-repeat',
        }}
     >
-      { /*
+      {
+        /*
         <div>
           <SVGImage svgUrl={plan.svgUrl} />
           <SVGInline
