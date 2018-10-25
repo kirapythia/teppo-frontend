@@ -25,7 +25,7 @@ const chooseActionButton = (comment, callback) => (comment.approved
 
 const getInitials = (fullName) => {
   const names = fullName.substring(0, fullName.indexOf('(') - 1).split(' ');
-  const initials = names.map(name => name[0] + '.');
+  const initials = names.map(name => `${name[0]}.`);
   return initials;
 };
 

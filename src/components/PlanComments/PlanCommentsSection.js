@@ -66,7 +66,7 @@ const mergeProps = (stateProps, actionCreators) => ({
       modifiedComment.approvedBy = null;
       modifiedComment.approvedAt = null;
     }
-    return actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved);
+    return actionCreators.toggleCommentApproval(stateProps.plan, modifiedComment, isApproved);
   },
   addComment: (comment) => {
     const commentWithCoordinates = {
