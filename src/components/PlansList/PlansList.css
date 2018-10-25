@@ -28,8 +28,8 @@
   cursor: pointer;
 }
 
-.PlanListItem__fileUrl:not(:last-child):after {
-  content: ", ";
+.PlanListItem__fileUrl {
+  margin-right: 10px;
 }
 
 .PlansListItem:hover {

@@ -27,6 +27,8 @@ const mapStateToProps = (state) => {
     comments: isPlanApproved
       ? getSortedComments(state)
       : getApprovedCommentsFromPreviousVersion(state),
+    selectedComment: state.comments.selected ? state.comments.selected.comment : null,
+    coordinates: state.SvgRegions.regions[0],
     formSendError: state.comments.commentAddError,
     commentEditError: state.comments.commentEditError,
     readOnly: (project && project.completed) || !isPlanApproved,
@@ -43,6 +45,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
+  selectComment: actions.selectComment
 }, dispatch);
 
 /**
@@ -54,10 +57,30 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const mergeProps = (stateProps, actionCreators) => ({
   ...stateProps,
   ...actionCreators,
-  toggleCommentApproval: (comment, isApproved) =>
-    actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved),
-  addComment: comment =>
-    actionCreators.addComment(stateProps.plan, comment),
+  toggleCommentApproval: (comment, isApproved) => {
+    if (isApproved) {
+      comment.approvedBy = stateProps.user;
+      comment.approvedAt = new Date().toISOString();
+    } else {
+      comment.approvedBy = null;
+      comment.approvedAt = null;
+    }
+    return actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved);
+  },
+  addComment: comment => {
+    const commentWithCoordinates = {
+      ...comment,
+      x: stateProps.coordinates.x,
+      y: stateProps.coordinates.y,
+      width: stateProps.coordinates.width,
+      height: stateProps.coordinates.height
+    };
+    return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
+  },
+  selectComment: comment => {
+      return actionCreators.selectComment(comment)
+    }
+
 });
 
 /**
@@ -75,6 +98,7 @@ const mergeProps = (stateProps, actionCreators) => ({
 const PlanCommentsSection = ({
   plan,
   comments,
+  selectedComment,
   user,
   readOnly,
   addComment,
@@ -83,17 +107,9 @@ const PlanCommentsSection = ({
   clearCommentEditError,
   formSendError,
   commentEditError,
+  selectComment
 }) => (
   <section className="PlanComments__container">
-    <h3>{t('plan.comments.title')}</h3>
-    { commentEditError &&
-      <Message message={commentEditError.message} onClose={clearCommentEditError} />
-    }
-    <PlanCommentsList
-      readOnly={readOnly}
-      comments={comments}
-      toggleCommentApproval={toggleCommentApproval}
-    />
     {!readOnly && <div>
       <h4>{t('plan.comments.form.title')}</h4>
       <PlanCommentForm
@@ -104,6 +120,17 @@ const PlanCommentsSection = ({
         clearError={clearCommentAddError}
       />
     </div>}
+    <h3>{t('plan.comments.title')}</h3>
+    { commentEditError &&
+      <Message message={commentEditError.message} onClose={clearCommentEditError} />
+    }
+    <PlanCommentsList
+      readOnly={readOnly}
+      comments={comments}
+      selectedComment={selectedComment}
+      toggleCommentApproval={toggleCommentApproval}
+      selectComment={selectComment}
+    />
   </section>
 );
 

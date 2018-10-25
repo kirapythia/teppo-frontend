@@ -6,6 +6,18 @@ Further development of [Teppo](https://github.com/espoon-voltti?q=teppo)
 
 A web client for using [Teppo REST API](https://github.com/espoon-voltti/teppo-backend). See [application wiki](../../wiki/) for more information.
 
+
+# To Load SVG:s correctly inline, default webpack config needs to be modified.
+
+Simply add configuration object to module.loaders like this.
+
+          {
+            test: /\.(dwg|dxf|pdf).svg$/,
+            loader:  require.resolve('raw-loader'),
+          },
+
+Previously webpack.config files can be found in the `webpack-configs` directory. Copy these files and overwrite the files in `node_modules/react-scripts/configs/`
+
 ## Getting Started
 
 TODO See [Getting Started](../../wiki/Getting-Started) for prerequisites and install instructions

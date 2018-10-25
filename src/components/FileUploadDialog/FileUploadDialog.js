@@ -97,14 +97,19 @@ const FileUploadDialog = ({
   <Modal isVisible={isBatchActive}>
     <div className="FileUploadDialog">
       <h4>{title}</h4>
-      <div>Lähetetään tiedostoa: {currentFile} ({currentRequest}/{totalRequests})</div>
+      <div>{t('plan.fileupload_dialog.uploading_file')}: {currentFile} ({currentRequest}/{totalRequests})</div>
       <div className="FileUploadDialog__indicator-wrapper">
-        <div className="FileUploadDialog__indicator-header">
-          <div className="text-left">0%</div>
-          <div className="text-right">100%</div>
-        </div>
-        <FileUploadIndicator {...{ isBatchDone, hasFailures, hasSucceeds, percentageDone }} />
+        <div className="FileUploadDialog__indicator-header"></div>
       </div>
+      {false && (
+        <div className="FileUploadDialog__indicator-wrapper">
+          <div className="FileUploadDialog__indicator-header">
+            <div className="text-left">0%</div>
+            <div className="text-right">100%</div>
+          </div>
+          <FileUploadIndicator {...{ isBatchDone, hasFailures, hasSucceeds, percentageDone }} />
+        </div>
+      )}
       <div className="text-right">
         <Button
           icon="fa-times"

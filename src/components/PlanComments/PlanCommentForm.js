@@ -41,7 +41,7 @@ const PlanCommentForm = ({
   formSendError,
   valid,
   pristine,
-  submitting,
+  submitting
 }) => (
   <form className="PlanCommentForm" onSubmit={handleSubmit(addComment)}>
     { formSendError && <Message message={formSendError.message} onClose={clearError} /> }

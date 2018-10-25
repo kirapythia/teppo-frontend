@@ -18,6 +18,10 @@
   color: rgba(79, 206, 29, 1);
 }
 
+.PlanCommentsListItem--selected {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
 .PlanCommentsListItem__image {
   width: 60px;
   height: 60px;
