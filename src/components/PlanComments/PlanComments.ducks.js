@@ -37,9 +37,9 @@ export const actions = {
    */
   selectComment: createAction(
     SELECT_COMMENT,
-    (comment) => ({ comment })
+    comment => ({ comment })
   ),
-  
+
   /**
    * Action fired after a comment was successfully added
    * @param {object} comment
@@ -94,7 +94,7 @@ export const actions = {
    */
   clearCommentEditError: createAction(
     CLEAR_COMMENT_EDIT_ERROR,
-  )
+  ),
 };
 
 /**
@@ -134,9 +134,7 @@ export default handleActions({
       args: [action.payload.plan, action.payload.comment],
     })
   ),
-  [SELECT_COMMENT]: (state, action) => {
-    return { ...state, selected: action.payload };
-  },
+  [SELECT_COMMENT]: (state, action) => ({ ...state, selected: action.payload }),
   // handle successfull add
   [ADD_COMMENT_SUCCESS]: (state, action) => loop(
     { ...state, comments: updateComment(state.comments, action.payload) },
