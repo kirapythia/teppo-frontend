@@ -1,11 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import * as R from 'ramda';
 import { LOCATION_CHANGED } from 'redux-little-router';
-import { loop, Cmd } from 'redux-loop';
-import { reset } from 'redux-form';
-import { listToMapBy } from '../../utils';
-import { PLAN_DETAILS } from '../../constants/routes';
-import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
 export const NAME = 'SvgRegions';
 
@@ -23,6 +17,7 @@ const initialState = {
 };
 
 export default handleActions({
+  [LOCATION_CHANGED]: state => ({ ...state, regions: initialState.regions }),
   [SVG_SUCCESS]: (state, action) => {
     switch (action.payload[0].isChanging) {
       case true:
