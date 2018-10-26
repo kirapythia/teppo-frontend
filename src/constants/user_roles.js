@@ -7,5 +7,5 @@ export default {
   VIEWER: 'Kalle Katselija (kommentoija)',
   GEO: 'Gabriel Geoteknikko (Geotekniikka)',
   SAHKO: 'Sakari Sähkäri (Sähkö/valaistustekniikka)',
-  HSY: 'Vesa Vesihuoltosuunnittelija (Vesihuoltosuunnitelma)'
+  HSY: 'Vesa Vesihuoltosuunnittelija (Vesihuoltosuunnitelma)',
 };

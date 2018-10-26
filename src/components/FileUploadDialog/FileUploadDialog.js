@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import cx from 'classnames';
+// import cx from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import t from '../../locale';
@@ -48,6 +48,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
  * @param {object} props
  * @see {FileUploadDialog}
  */
+/*
 const FileUploadIndicator = ({ isBatchDone, hasFailures, hasSucceeds, percentageDone }) => (
   <div className="FileUploadDialog__indicator-track">
     <div
@@ -62,7 +63,7 @@ const FileUploadIndicator = ({ isBatchDone, hasFailures, hasSucceeds, percentage
     </div>
   </div>
 );
-
+*/
 /**
  * Dialog component for visualising file upload
  * @param {object} props
@@ -87,11 +88,11 @@ const FileUploadDialog = ({
   currentFile,
   currentRequest,
   totalRequests,
-  percentageDone,
+  // percentageDone,
   clearBatch,
   isBatchActive,
-  hasFailures,
-  hasSucceeds,
+  // hasFailures,
+  // hasSucceeds,
   isBatchDone,
 }) => (
   <Modal isVisible={isBatchActive}>
@@ -99,9 +100,10 @@ const FileUploadDialog = ({
       <h4>{title}</h4>
       <div>{t('plan.fileupload_dialog.uploading_file')}: {currentFile} ({currentRequest}/{totalRequests})</div>
       <div className="FileUploadDialog__indicator-wrapper">
-        <div className="FileUploadDialog__indicator-header"></div>
+        <div className="FileUploadDialog__indicator-header" />
       </div>
-      {false && (
+      {
+        /*
         <div className="FileUploadDialog__indicator-wrapper">
           <div className="FileUploadDialog__indicator-header">
             <div className="text-left">0%</div>
@@ -109,7 +111,8 @@ const FileUploadDialog = ({
           </div>
           <FileUploadIndicator {...{ isBatchDone, hasFailures, hasSucceeds, percentageDone }} />
         </div>
-      )}
+        */
+      }
       <div className="text-right">
         <Button
           icon="fa-times"

@@ -1,16 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
-import * as R from 'ramda';
-import { LOCATION_CHANGED } from 'redux-little-router';
-import { loop, Cmd } from 'redux-loop';
-import { reset } from 'redux-form';
-import { listToMapBy } from '../../utils';
-import { PLAN_DETAILS } from '../../constants/routes';
-import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
 export const NAME = 'SvgRegions';
 
 const SVG_SUCCESS = 'pythia-webclient/PlanComments/SVG_SUCCESS';
-
 
 export const actions = {
   addRegion: createAction(
