@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
-  selectComment: actions.selectComment
+  selectComment: actions.selectComment,
 }, dispatch);
 
 /**
@@ -58,28 +58,27 @@ const mergeProps = (stateProps, actionCreators) => ({
   ...stateProps,
   ...actionCreators,
   toggleCommentApproval: (comment, isApproved) => {
+    const modifiedComment = Object.assign({}, comment);
     if (isApproved) {
-      comment.approvedBy = stateProps.user;
-      comment.approvedAt = new Date().toISOString();
+      modifiedComment.approvedBy = stateProps.user;
+      modifiedComment.approvedAt = new Date().toISOString();
     } else {
-      comment.approvedBy = null;
-      comment.approvedAt = null;
+      modifiedComment.approvedBy = null;
+      modifiedComment.approvedAt = null;
     }
-    return actionCreators.toggleCommentApproval(stateProps.plan, comment, isApproved);
+    return actionCreators.toggleCommentApproval(stateProps.plan, modifiedComment, isApproved);
   },
-  addComment: comment => {
+  addComment: (comment) => {
     const commentWithCoordinates = {
       ...comment,
       x: stateProps.coordinates.x,
       y: stateProps.coordinates.y,
       width: stateProps.coordinates.width,
-      height: stateProps.coordinates.height
+      height: stateProps.coordinates.height,
     };
     return actionCreators.addComment(stateProps.plan, commentWithCoordinates);
   },
-  selectComment: comment => {
-      return actionCreators.selectComment(comment)
-    }
+  selectComment: comment => actionCreators.selectComment(comment),
 
 });
 
@@ -107,7 +106,7 @@ const PlanCommentsSection = ({
   clearCommentEditError,
   formSendError,
   commentEditError,
-  selectComment
+  selectComment,
 }) => (
   <section className="PlanComments__container">
     {!readOnly && <div>
