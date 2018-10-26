@@ -23,6 +23,9 @@ yarn-error.log*
 .idea/
 *.iml
 
+*.bak
+*.orig
+
 # Jenkins/Make metafiles
 .built
 teppofront.code-workspace
