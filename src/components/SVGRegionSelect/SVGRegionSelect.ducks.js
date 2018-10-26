@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import { LOCATION_CHANGED } from 'redux-little-router';
 
 export const NAME = 'SvgRegions';
 

@@ -121,7 +121,7 @@ export default handleActions({
     const { route } = action.payload;
     return route === PLAN_DETAILS
       ? R.omit(['commentAddError', 'commentEditError'], state)
-      : state;
+      : R.omit(['selected'], state);
   },
   [ProjectDetails.FETCH_PROJECT_SUCCESS]: (state, action) =>
     ({ ...state, comments: byId(listAllComments(action.payload)) }),
