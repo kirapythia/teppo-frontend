@@ -3,7 +3,7 @@ import { LOCATION_CHANGED } from 'redux-little-router';
 
 export const NAME = 'SvgRegions';
 
-const SVG_SUCCESS = 'pythia-webclient/PlanComments/SVG_SUCCESS';
+export const SVG_SUCCESS = 'pythia-webclient/PlanComments/SVG_SUCCESS';
 
 export const actions = {
   addRegion: createAction(
