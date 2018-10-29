@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 import { listToMapBy } from '../../utils';
 import { editComment, saveComment, updateComment } from './model';
 import { PLAN_DETAILS } from '../../constants/routes';
-import { SVG_SUCCESS } from '../SVGRegionSelect/SVGRegionSelect.ducks';
+import { actions as SVGActions, SVG_SUCCESS } from '../SVGRegionSelect/SVGRegionSelect.ducks';
 import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
 export const NAME = 'comments';
@@ -14,6 +14,7 @@ export const NAME = 'comments';
 const ADD_COMMENT = 'pythia-webclient/PlanComments/ADD_COMMENT';
 const ADD_COMMENT_SUCCESS = 'pythia-webclient/PlanComments/ADD_COMMENT_SUCCESS';
 const ADD_COMMENT_ERROR = 'pythia-webclient/PlanComments/ADD_COMMENT_ERROR';
+const COMMENT_CHANGED = 'pythia-webclient/PlanComments/COMMENT_CHANGED';
 const TOGGLE_COMMENT_APPROVAL = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL';
 const TOGGLE_COMMENT_APPROVAL_ERROR = 'pythia-webclient/PlanComments/TOGGLE_COMMENT_APPROVAL_ERROR';
 const CLEAR_COMMENT_ADD_ERROR = 'pythia-webclient/PlanComments/CLEAR_COMMENT_ADD_ERROR';
@@ -39,6 +40,15 @@ export const actions = {
   selectComment: createAction(
     SELECT_COMMENT,
     comment => ({ comment })
+  ),
+
+  /**
+   * Action to fire when comment field is changed
+   * @param {object} comment
+   * @return {object}
+   */
+  commentChanged: createAction(
+    COMMENT_CHANGED
   ),
 
   /**
@@ -128,19 +138,23 @@ export default handleActions({
     ({ ...state, comments: byId(listAllComments(action.payload)) }),
   // handle add comment action
   [ADD_COMMENT]: (state, action) => loop(
-    R.omit(['commentAddError'], state),
+    R.omit(['commentAddError', 'selected'], state),
     Cmd.run(saveComment, {
       successActionCreator: actions.addCommentSuccess,
       failActionCreator: actions.addCommentError,
       args: [action.payload.plan, action.payload.comment],
     })
   ),
+  [COMMENT_CHANGED]: state => R.omit(['selected'], state),
   [SELECT_COMMENT]: (state, action) => ({ ...state, selected: action.payload }),
   [SVG_SUCCESS]: state => R.omit(['selected'], state),
   // handle successfull add
   [ADD_COMMENT_SUCCESS]: (state, action) => loop(
     { ...state, comments: updateComment(state.comments, action.payload) },
-    Cmd.action(reset(NAME))
+    Cmd.list([
+      Cmd.action(reset(NAME)),
+      Cmd.action(SVGActions.resetRegion()),
+    ])
   ),
   // handle add failure
   [ADD_COMMENT_ERROR]: (state, action) => ({ ...state, commentAddError: action.payload }),

@@ -37,6 +37,7 @@ const PlanCommentForm = ({
   plan,
   addComment,
   handleSubmit,
+  commentChanged,
   clearError,
   formSendError,
   valid,
@@ -52,6 +53,7 @@ const PlanCommentForm = ({
       label={t('comment.text')}
       component={renderField}
       validation={{ required: true }}
+      onChange={commentChanged}
     />
 
     <Field
