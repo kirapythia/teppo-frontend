@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addRegion: actions.addRegion,
+  resetRegion: actions.resetRegion,
 }, dispatch);
 
 const mergeProps = (stateProps, actionCreators) => ({

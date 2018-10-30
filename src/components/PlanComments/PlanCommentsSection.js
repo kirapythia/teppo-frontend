@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
   addComment: actions.addComment,
+  commentChanged: actions.commentChanged,
   toggleCommentApproval: actions.toggleCommentApproval,
   clearCommentAddError: actions.clearCommentAddError,
   clearCommentEditError: actions.clearCommentEditError,
@@ -101,6 +102,7 @@ const PlanCommentsSection = ({
   user,
   readOnly,
   addComment,
+  commentChanged,
   toggleCommentApproval,
   clearCommentAddError,
   clearCommentEditError,
@@ -115,6 +117,7 @@ const PlanCommentsSection = ({
         plan={plan}
         initialValues={{ createdBy: user }}
         addComment={addComment}
+        commentChanged={commentChanged}
         formSendError={formSendError}
         clearError={clearCommentAddError}
       />
