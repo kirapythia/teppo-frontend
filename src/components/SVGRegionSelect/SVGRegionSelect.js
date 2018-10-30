@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan } from '../../selectors';
+import SVGRenderer from './SVGRenderer';
 // import SVGImage from './SVGImage';
 // import iconSVG from '../common/2345_001.pdf.svg';
 
@@ -48,7 +49,6 @@ const SVGRegionSelect = ({
   svgregions,
   addRegion,
 }) => (
-
   <div style={{ display: 'grid' }}>
     <RegionSelect
       maxRegions={1}
@@ -58,11 +58,11 @@ const SVGRegionSelect = ({
       constraint
       style={{
         border: '1px solid #0FA0CE',
-        backgroundImage: `url(${plan.svgUrl})`,
-        height: '500px',
+        height: '600px',
+        /* backgroundImage: `url(${plan.svgUrl})`,
         backgroundSize: 'auto 500px',
-        backgroundRepeat: 'no-repeat',
-       }}
+        backgroundRepeat: 'no-repeat', */
+      }}
     >
       {
         /*
@@ -75,6 +75,9 @@ const SVGRegionSelect = ({
           />
         </div>
         */
+        <div>
+          <SVGRenderer svgUrl={plan.svgUrl} />
+        </div>
       }
     </RegionSelect>
   </div>
