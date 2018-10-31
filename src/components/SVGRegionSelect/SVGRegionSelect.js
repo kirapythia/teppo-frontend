@@ -58,7 +58,7 @@ const SVGRegionSelect = ({
       constraint
       style={{
         border: '1px solid #0FA0CE',
-        height: '600px',
+        minHeight: '500px',
         /* backgroundImage: `url(${plan.svgUrl})`,
         backgroundSize: 'auto 500px',
         backgroundRepeat: 'no-repeat', */

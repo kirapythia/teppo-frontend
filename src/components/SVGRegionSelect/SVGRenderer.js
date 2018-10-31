@@ -6,6 +6,8 @@ export default class SVGRenderer extends React.Component {
     super(props);
     this.state = {
       svg: null,
+      svgWidth: 0,
+      svgHeight: 0,
       loading: false,
     };
   }
@@ -14,9 +16,11 @@ export default class SVGRenderer extends React.Component {
     fetch(this.props.svgUrl)
       .then(res => res.text())
       .then((text) => {
-        const parser = new DOMParser();
-        console.log(parser.parseFromString(text, 'text/xml'));
+        const svgDocument = new DOMParser().parseFromString(text, 'text/xml');
+        const svgElement = svgDocument.getElementById('svg2');
         this.setState({ svg: text });
+        this.setState({ svgWidth: svgElement.getAttribute('width') });
+        this.setState({ svgHeight: svgElement.getAttribute('height') });
       });
   }
 
@@ -27,7 +31,6 @@ export default class SVGRenderer extends React.Component {
     } else if (!svg) {
       return <div className="error" />;
     }
-    // return <div dangerouslySetInnerHTML={{ __html: this.state.svg }} />;
-    return <SVGInline viewBox="0 0 2230 1123" svg={this.state.svg} component="svg" />;
+    return <SVGInline viewBox={`0 0 ${this.state.svgWidth} ${this.state.svgHeight}`} svg={this.state.svg} component="svg" />;
   }
 }
