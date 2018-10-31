@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
   if (svgUrl !== svgStatus.svgUrl) {
-    const loadingSvgStatus = Object.assign({}, svgStatus);
+    const loadingSvgStatus = { ...svgStatus };
     loadingSvgStatus.svgUrl = svgUrl;
     loadingSvgStatus.loading = true;
     updateSvgStatus(loadingSvgStatus);
@@ -13,7 +13,7 @@ const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
       .then((text) => {
         const svgDocument = new DOMParser().parseFromString(text, 'text/xml');
         const svgElement = svgDocument.getElementsByTagName('svg')[0];
-        const loadedSvgStatus = Object.assign({}, loadingSvgStatus);
+        const loadedSvgStatus = { ...loadingSvgStatus };
         loadedSvgStatus.svg = text;
         loadedSvgStatus.svgWidth = svgElement.getAttribute('width');
         loadedSvgStatus.svgHeight = svgElement.getAttribute('height');
