@@ -17,7 +17,7 @@ export default class SVGRenderer extends React.Component {
       .then(res => res.text())
       .then((text) => {
         const svgDocument = new DOMParser().parseFromString(text, 'text/xml');
-        const svgElement = svgDocument.getElementById('svg2');
+        const svgElement = svgDocument.getElementsByTagName('svg')[0];
         this.setState({ svg: text });
         this.setState({ svgWidth: svgElement.getAttribute('width') });
         this.setState({ svgHeight: svgElement.getAttribute('height') });
