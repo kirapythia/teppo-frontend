@@ -7,16 +7,33 @@ Further development of [Teppo](https://github.com/espoon-voltti?q=teppo)
 A web client for using [Teppo REST API](https://github.com/espoon-voltti/teppo-backend). See [application wiki](../../wiki/) for more information.
 
 
-# To Load SVG:s correctly inline, default webpack config needs to be modified.
+# Development Notes October 31, 2018. To use SVGO optimizer that will significantly speed-up the load time required to load SVG plans inline. 
 
 Simply add configuration object to module.loaders like this.
 
           {
             test: /\.(dwg|dxf|pdf).svg$/,
-            loader:  require.resolve('raw-loader'),
+            use: [
+              'file-loader',
+              {
+                loader: 'image-webpack-loader',
+                options: {
+                  svgo: {
+                  }
+                }
+              }
+            ]
           },
 
 Previously webpack.config files can be found in the `webpack-configs` directory. Copy these files and overwrite the files in `node_modules/react-scripts/configs/`
+
+SVGO is an SVG image optimizer, we have found that the default PDF to SVG conversion files can be very large file sizes, so therefore to keep the file sizes not growing too large for client browsers, SVGO should be used.
+
+- please also note that due to time restrictions SVGO is loaded with Webpack in the front-end and the correct place for it should be in the backend. 
+- the correct place for SVGO optimization is in the backend after new plan file has been uploaded, and after SVGO optimization the optimized SVG file only should be uploaded to S3.
+
+# The SVG conversion was not tested at all with multi-file uploads. This needs to be tested and modified to work correctly.
+
 
 ## Getting Started
 

@@ -1,12 +1,10 @@
 import React from 'react';
-// import SVGInline from 'react-svg-inline';
 import RegionSelect from 'react-region-select';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from './SVGRegionSelect.ducks';
 import { getCurrentPlan } from '../../selectors';
-// import SVGImage from './SVGImage';
-// import iconSVG from '../common/2345_001.pdf.svg';
+import SVGRenderer from './SVGRenderer';
 
 const mapStateToProps = (state) => {
   const plan = getCurrentPlan(state);
@@ -23,6 +21,7 @@ const mapStateToProps = (state) => {
 
   return {
     plan,
+    svgStatus: state.SvgRegions.svgStatus,
     svgregions,
     selectedComment,
     user: state.user.user,
@@ -30,6 +29,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  updateSvgStatus: actions.updateSvgStatus,
   addRegion: actions.addRegion,
   resetRegion: actions.resetRegion,
 }, dispatch);
@@ -45,10 +45,11 @@ const regionStyle = {
 
 const SVGRegionSelect = ({
   plan,
+  svgStatus,
+  updateSvgStatus,
   svgregions,
   addRegion,
 }) => (
-
   <div style={{ display: 'grid' }}>
     <RegionSelect
       maxRegions={1}
@@ -58,24 +59,10 @@ const SVGRegionSelect = ({
       constraint
       style={{
         border: '1px solid #0FA0CE',
-        backgroundImage: `url(${plan.svgUrl})`,
-        height: '500px',
-        backgroundSize: 'auto 500px',
-        backgroundRepeat: 'no-repeat',
-       }}
+        minHeight: '500px',
+      }}
     >
-      {
-        /*
-        <div>
-          <SVGImage svgUrl={plan.svgUrl} />
-          <SVGInline
-            viewBox="0 0 4385 2245"
-            svg={iconSVG}
-            component="svg"
-          />
-        </div>
-        */
-      }
+      <SVGRenderer svgUrl={plan.svgUrl} svgStatus={svgStatus} updateSvgStatus={updateSvgStatus} />
     </RegionSelect>
   </div>
 );
