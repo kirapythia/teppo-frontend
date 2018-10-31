@@ -7,7 +7,7 @@ Further development of [Teppo](https://github.com/espoon-voltti?q=teppo)
 A web client for using [Teppo REST API](https://github.com/espoon-voltti/teppo-backend). See [application wiki](../../wiki/) for more information.
 
 
-# Development Notes October 31, 2018. To use SVGO optimizer that will significantly speed-up the load time required to load SVG plans inline. Uncomment the following line from webpack.config files.
+# Development Notes October 31, 2018. To use SVGO optimizer that will significantly speed-up the load time required to load SVG plans inline. 
 
 Simply add configuration object to module.loaders like this.
 
