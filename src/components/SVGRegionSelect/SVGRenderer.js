@@ -1,5 +1,6 @@
 import React from 'react';
 import SVGInline from 'react-svg-inline';
+import cx from 'classnames';
 
 const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
   if (svgUrl !== svgStatus.svgUrl) {
@@ -25,7 +26,7 @@ const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
 const SVGRenderer = ({ svgUrl, svgStatus, updateSvgStatus }) => {
   fetchSvgImage(svgUrl, svgStatus, updateSvgStatus);
   if (svgStatus.loading) {
-    return <div className="spinner" />;
+    return <i className={cx('fa fa-pulse fa-spinner fa-5x')} />;
   } else if (!svgStatus.svg) {
     return <div className="error" />;
   }
