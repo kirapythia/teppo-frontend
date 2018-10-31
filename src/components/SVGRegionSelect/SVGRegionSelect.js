@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
 
   return {
     plan,
+    svgStatus: state.SvgRegions.svgStatus,
     svgregions,
     selectedComment,
     user: state.user.user,
@@ -31,6 +32,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  updateSvgStatus: actions.updateSvgStatus,
   addRegion: actions.addRegion,
   resetRegion: actions.resetRegion,
 }, dispatch);
@@ -46,6 +48,8 @@ const regionStyle = {
 
 const SVGRegionSelect = ({
   plan,
+  svgStatus,
+  updateSvgStatus,
   svgregions,
   addRegion,
 }) => (
@@ -76,7 +80,7 @@ const SVGRegionSelect = ({
         </div>
         */
         <div>
-          <SVGRenderer svgUrl={plan.svgUrl} />
+          <SVGRenderer svgUrl={plan.svgUrl} svgStatus={svgStatus} updateSvgStatus={updateSvgStatus} />
         </div>
       }
     </RegionSelect>

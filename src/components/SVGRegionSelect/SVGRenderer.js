@@ -1,36 +1,35 @@
 import React from 'react';
 import SVGInline from 'react-svg-inline';
 
-export default class SVGRenderer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      svg: null,
-      svgWidth: 0,
-      svgHeight: 0,
-      loading: false,
-    };
-  }
-
-  componentDidMount() {
-    fetch(this.props.svgUrl)
+const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
+  if (!svgStatus.svgUrl) {
+    const loadingSvgStatus = Object.assign({}, svgStatus);
+    loadingSvgStatus.svgUrl = svgUrl;
+    loadingSvgStatus.loading = true;
+    updateSvgStatus(loadingSvgStatus);
+    fetch(svgUrl)
       .then(res => res.text())
       .then((text) => {
         const svgDocument = new DOMParser().parseFromString(text, 'text/xml');
         const svgElement = svgDocument.getElementsByTagName('svg')[0];
-        this.setState({ svg: text });
-        this.setState({ svgWidth: svgElement.getAttribute('width') });
-        this.setState({ svgHeight: svgElement.getAttribute('height') });
+        const loadedSvgStatus = Object.assign({}, loadingSvgStatus);
+        loadedSvgStatus.svg = text;
+        loadedSvgStatus.svgWidth = svgElement.getAttribute('width');
+        loadedSvgStatus.svgHeight = svgElement.getAttribute('height');
+        loadedSvgStatus.loading = false;
+        updateSvgStatus(loadedSvgStatus);
       });
   }
+};
 
-  render() {
-    const { loading, svg } = this.state;
-    if (loading) {
-      return <div className="spinner" />;
-    } else if (!svg) {
-      return <div className="error" />;
-    }
-    return <SVGInline viewBox={`0 0 ${this.state.svgWidth} ${this.state.svgHeight}`} svg={this.state.svg} component="svg" />;
+const SVGRenderer = ({ svgUrl, svgStatus, updateSvgStatus }) => {
+  fetchSvgImage(svgUrl, svgStatus, updateSvgStatus);
+  if (svgStatus.loading) {
+    return <div className="spinner" />;
+  } else if (!svgStatus.svg) {
+    return <div className="error" />;
   }
-}
+  return <SVGInline viewBox={`0 0 ${svgStatus.svgWidth} ${svgStatus.svgHeight}`} svg={svgStatus.svg} component="svg" />;
+};
+
+export default SVGRenderer;

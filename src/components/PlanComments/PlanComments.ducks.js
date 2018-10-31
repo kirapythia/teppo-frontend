@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 import { listToMapBy } from '../../utils';
 import { editComment, saveComment, updateComment } from './model';
 import { PLAN_DETAILS } from '../../constants/routes';
-import { actions as SVGActions, SVG_SUCCESS } from '../SVGRegionSelect/SVGRegionSelect.ducks';
+import { actions as SVGActions, ADD_REGION } from '../SVGRegionSelect/SVGRegionSelect.ducks';
 import { actionTypes as ProjectDetails } from '../ProjectDetails';
 
 export const NAME = 'comments';
@@ -147,7 +147,7 @@ export default handleActions({
   ),
   [COMMENT_CHANGED]: state => R.omit(['selected'], state),
   [SELECT_COMMENT]: (state, action) => ({ ...state, selected: action.payload }),
-  [SVG_SUCCESS]: state => R.omit(['selected'], state),
+  [ADD_REGION]: state => R.omit(['selected'], state),
   // handle successfull add
   [ADD_COMMENT_SUCCESS]: (state, action) => loop(
     { ...state, comments: updateComment(state.comments, action.payload) },
