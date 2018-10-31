@@ -2,7 +2,7 @@ import React from 'react';
 import SVGInline from 'react-svg-inline';
 
 const fetchSvgImage = (svgUrl, svgStatus, updateSvgStatus) => {
-  if (!svgStatus.svgUrl) {
+  if (svgUrl !== svgStatus.svgUrl) {
     const loadingSvgStatus = Object.assign({}, svgStatus);
     loadingSvgStatus.svgUrl = svgUrl;
     loadingSvgStatus.loading = true;
